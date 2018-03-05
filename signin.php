@@ -1,6 +1,8 @@
 <?php 
   // 要件メモ
   // セッションにユーザーのidが存在すれば、サインインチェック
+  // ログインしたらもとの場所に戻したい
+  // 
 
   session_start();
 
@@ -10,7 +12,13 @@
     exit();
 
   // 他のファイルの読み込み
-    
+  require('dbconnect.php');
+
+  
+
+
+
+
 
 
   }
@@ -394,7 +402,7 @@
 
           <div class="container">
             <div class="row">
-              <div class="col-sm-5 col-sm-offset-1 mb-sm-40">
+              <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
                 <h4 class="font-alt">Signin</h4>
                 <hr class="divider-w mb-10">
                 <form class="form">
