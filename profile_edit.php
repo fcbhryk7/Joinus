@@ -83,6 +83,10 @@
     <!-- Main stylesheet and color file-->
     <link href="assets/css/style.css?<?php echo date('Ymd-Hi'); ?>" rel="stylesheet">
     <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
+
+    <!-- カレンダー表示用CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/pikaday-package.css">
+
   </head>
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
@@ -159,8 +163,8 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label">Birthday</label>
-                      <input name="input_birthday" class="form-control input-lg" type="text" value="<?php echo $profile['birthday'] ?>" placeholder="Birthday"/>
+                      <label class="control-label" for="datepicker">Birthday</label>
+                      <input name="input_birthday" id="datepicker" class="form-control input-lg" type="text" value="<?php echo $profile['birthday'] ?>" placeholder="Birthday"/>
                     </div>
                     <div class="form-group">
                       <label class="control-label">Profile</label>
@@ -269,5 +273,21 @@
     <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <!-- カレンダー表示用Jave Script -->
+    <script src="assets/js/moment.js"></script>
+    <script src="assets/js/pikaday.js"></script>
+    <script>
+        // calender表示
+        var picker = new Pikaday(
+        {
+            field: document.getElementById('datepicker'),
+            firstDay: 1,
+            minDate: new Date(1900, 01, 01),
+            maxDate: new Date(2020, 12, 31),
+            yearRange: [1900,2020]
+        });
+    </script>
+
   </body>
 </html>
