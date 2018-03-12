@@ -495,8 +495,8 @@
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 3</div>
                     <div class="team-name">Decision plan details</div>
-                    <div class="team-role">両者でプランの詳細を決めることができます。</div>
-                    <div class="team-role">チャットでの面倒なやりとりもありません。</div>
+                    <div class="team-role">Guests and hosts can decide the details of the trip.</div>
+                    <div class="team-role">Chat is not necessary.</div>
                   </div>
                 </div>
               </div>
@@ -505,9 +505,9 @@
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 4</div>
-                    <div class="team-name">プラン当日</div>
-                    <div class="team-role">ゲストは待ち合わせ場所に集合し、とっておきのプランを満喫します。</div>
-                    <div class="team-role">ホストはプランの案内をします。</div>
+                    <div class="team-name">On the day of plan</div>
+                    <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
+                    <div class="team-role">Host will show you the plan.</div>
                   </div>
                 </div>
               </div>
@@ -614,35 +614,35 @@
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
                 <h2 class="module-title font-alt">Our Services</h2>
-                <div class="module-subtitle font-serif">We have four 4つの特徴があります。</div>
+                <div class="module-subtitle font-serif">There are 4 features.</div>
               </div>
             </div>
             <div class="row multi-columns-row">
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <h3 class="features-title font-alt">ホストのプラン投稿機能</h3>
+                  <h3 class="features-title font-alt">Host plan posting function.</h3>
                   <p></p>
                 </div>
               </div>
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-bike"></span></div>
-                  <h3 class="features-title font-alt">ゲストのリクエスト機能</h3>
+                  <h3 class="features-title font-alt">Guest request function.</h3>
                   <p></p>
                 </div>
               </div>
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-tools"></span></div>
-                  <h3 class="features-title font-alt">チャットなしのプラン作成機能</h3>
+                  <h3 class="features-title font-alt">Plan creation without chat function.</h3>
                   <p></p>
                 </div>
               </div>
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-gears"></span></div>
-                  <h3 class="features-title font-alt">総合評価機能</h3>
+                  <h3 class="features-title font-alt">Comment function.</h3>
                   <p></p>
                 </div>
               </div>
