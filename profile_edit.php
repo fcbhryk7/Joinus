@@ -30,7 +30,7 @@
     // 以下でプロフィールを表示する
 ?>
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
