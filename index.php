@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>Triper</title>
+    <title>Joinus!</title>
     <!--  
     Favicons
     =============================================
@@ -64,10 +64,11 @@
       <div class="page-loader">
         <div class="loader">Loading...</div>
       </div>
+
       <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Triper</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Joinus!</a>
           </div>
           <div class="collapse navbar-collapse" id="custom-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -372,9 +373,9 @@
         </div>
         <div class="titan-caption">
           <div class="caption-content">
-            <div class="font-alt mb-40 titan-title-size-4">Triper</div>
-            <div class="font-alt mb-30 titan-title-size-2">さがそう。自由な旅先の過ごし方</div>
-            <div class="font-alt mb-30 titan-title-size-1">セブでの体験やイベント シェアリング・エコノミーサービス</div>
+            <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
+            <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
+            <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
             <a class="section-scroll btn btn-border-w btn-round" href="#about">About us</a>
           </div>
         </div>
@@ -462,7 +463,7 @@
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
                 <h2 class="module-title font-alt">How to use</h2>
-                <div class="module-subtitle font-serif">セブでのローカルな体験やイベントを簡単にシェアできます。</div>
+                <div class="module-subtitle font-serif">You can easily share the local experiences and events in Cebu.</div>
               </div>
             </div>
             <div class="row">
@@ -471,9 +472,9 @@
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 1</div>
-                    <div class="team-name">プランの検索</div>
-                    <div class="team-role">気に入ったプランを選択します。</div>
-                    <div class="team-role">ゲストはプランのリクエストができます。</div>
+                    <div class="team-name">Search for plans</div>
+                    <div class="team-role">Guests select favorite plan.</div>
+                    <div class="team-role">Guests can request plan.</div>
                   </div>
                 </div>
               </div>
@@ -482,9 +483,9 @@
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 2</div>
-                    <div class="team-name">予約の確定</div>
-                    <div class="team-role">ホストが承認します。</div>
-                    <div class="team-role">不明点は両者で詳細のやりとりに移行します。</div>
+                    <div class="team-name">Confirm reservation</div>
+                    <div class="team-role">Host a pproves.</div>
+                    <div class="team-role">The guest and the host will move to detailed communication.</div>
                   </div>
                 </div>
               </div>
@@ -493,7 +494,7 @@
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 3</div>
-                    <div class="team-name">プランの詳細決定</div>
+                    <div class="team-name">Decision plan details</div>
                     <div class="team-role">両者でプランの詳細を決めることができます。</div>
                     <div class="team-role">チャットでの面倒なやりとりもありません。</div>
                   </div>
@@ -523,6 +524,24 @@
               </div>
             </div>
           </div>
+
+          <div class="col-sm-8 col-sm-offset-2">
+            <h4 class="font-alt mb-0"><!-- タイトル --></h4>
+            <hr class="divider-w mt-10 mb-20">
+              <div role="tabpanel">
+                <ul class="nav nav-tabs font-alt" role="tablist">
+                  <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
+                  <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
+                  </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="support">プラン一覧です
+                  </div>
+                  <div class="tab-pane" id="sales">リクエスト一覧です
+                  </div>
+                </div>
+              </div>
+          </div>
+
           <div class="container">
             <div class="row">
               <div class="col-sm-12">
@@ -595,7 +614,7 @@
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
                 <h2 class="module-title font-alt">Our Services</h2>
-                <div class="module-subtitle font-serif">4つの特徴があります。</div>
+                <div class="module-subtitle font-serif">We have four 4つの特徴があります。</div>
               </div>
             </div>
             <div class="row multi-columns-row">
