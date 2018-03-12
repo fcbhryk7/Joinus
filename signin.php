@@ -1,7 +1,8 @@
 <?php 
   // 要件メモ
   // セッションにユーザーのidが存在すれば、サインインチェック
-  // ログインしたらもとの場所に戻したい
+  // ログインしたらもとの場所に戻したい ifで全て設定する
+  // likes.phpに乗っている$_SERVERをつかって調べることができる
   // 
 
   session_start();
@@ -14,15 +15,51 @@
   // 他のファイルの読み込み
   require('dbconnect.php');
 
-  
+    // 画面の送信ボタンが押されたとき発動 / $_POSTが空じゃない時に発動
+    if (!empty($_POST)) {
+      $email = $_POST['email'];
+      $password = $_POST['password'];
 
+      // $emailが空じゃないかつ&passwordが空じゃない
+      if ($email != '' && $password != '') {
+        $sql = 'SELECT * FROM `users` WHERE `email`=?';
+        $data = array($email);
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute($data);
 
+        $record = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<pre>';
+        echo '$_POST = ';
+        var_dump($record);
+        echo '</pre>';
 
+        if ($record == false) {
+          // メールアドレスミス
+        } else {
+          // パスワードが一致しているか
+          echo $record['password'];
+          echo '<br>';
+          echo $password;
+          echo '<br>';
+          // password_verify(普通文字列PW、ハッシュ文字列PW)
+          // 一致していればtrueを、そうでなければfalseを返す
+          $verify = password_verify($password, $record['password']);
 
+          if ($verify == true) {
+            // サインイン処理
 
+            // ①セッションにサインインユーザーのidを保存
+            $_SESSION['user']['id'] = $record['id'];
 
+            // 次のページに遷移するもの/exitとセット
+            header('Location: index.php');
+            exit();
+
+          }
+        }
+      }
+    } 
   }
-
 
  ?>
 
@@ -36,7 +73,7 @@
     Document Title
     =============================================
     -->
-    <title>Signin</title>
+    <title>Joinus! : Signin</title>
     <!--  
     Favicons
     =============================================
@@ -389,7 +426,9 @@
 
       <!-- Body -->
       <div class="main">
-        <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
+
+        <!-- メイン画像 -->
+        <!-- <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
           <div class="container">
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
@@ -397,15 +436,16 @@
               </div>
             </div>
           </div>
-        </section>
-        <section class="module">
+        </section> -->
 
+        <section class="module">
           <div class="container">
             <div class="row">
               <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
                 <h4 class="font-alt">Signin</h4>
                 <hr class="divider-w mb-10">
                 <form class="form">
+                  <div class="form-group" align="right"><a href="register/signup.php">Signup here</a></div>
                   <div class="form-group">
                     <input class="form-control" id="username" type="text" name="username" placeholder="Username"/>
                   </div>
