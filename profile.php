@@ -91,30 +91,26 @@
           <div class="container">
             <div class="row">
               <div class="col-xs-offset-1 col-xs-3" style="text-align: center;">
-                <img class="img-thumbnail" width="150" src="assets/images/elephant.jpg">
+                <img class="img-thumbnail" width="150" src="images/<?php echo $profile['image']; ?>">
               </div>
               <div class="col-xs-7">
                 <div class="well-small">
                   <label class="control-label">Entry</label>
                   <div class="well-small">
                     <?php echo $profile['created'] ?>
-                    <!-- <?php echo date('Y/m/d'); ?> -->
                   </div>
                   <label class="control-label">Name</label>
                   <div class="well-small">
-                    <!-- <?php echo $_POST['name'] ?> -->
                     <?php echo $profile['name'] ?>
                     <!-- user_name -->
                   </div>
                   <label class="control-label">Country</label>
                   <div class="well-small">
-                    <!-- <?php echo $_POST['name'] ?> -->
                     <?php echo $profile['country_name'] ?>
                     <!-- country_name -->
                   </div>
                   <label class="control-label">Gender</label>
                   <div class="well-small">
-                    <!-- <?php echo $_POST['gender'] ?> -->
                     <?php echo $profile['gender'] ?>
                     <!-- gender -->
                   </div>
@@ -136,15 +132,7 @@
                       <legend>Profile</legend>
                       <!-- <label class="control-label">Name</label> -->
                       <div class="well-small">
-                        <!-- <?php echo $_POST['name'] ?> -->
                         <?php echo $profile['profile'] ?>
-                        <!-- hogehogefugafuga -->
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
                       </div>
                     </fieldset>
                   </form>
