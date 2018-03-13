@@ -83,7 +83,7 @@
 
         // usersテーブルを更新
         $sql = 'UPDATE users SET image = ?, updated = NOW() WHERE user_id = ? ';
-        $data = array($submit_file_name, $_SESSION['id']);
+        $data = array($submit_file_name, $_SESSION['user']['id']);
         $stmt = $dbh->prepare($sql);
         $stmt->execute($data);
     }

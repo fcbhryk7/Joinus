@@ -3,16 +3,23 @@
     session_start(); //セッションスタート
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
+    require('user_session.php'); //セッション確認
 
     // 配列表示
-    echo_var_dump('$_POST',$_POST);
+    // echo_var_dump('$_POST',$_POST);
 
     // debug
-    $_SESSION['id']=1;
-    $user_id = $_SESSION['id'];
+    $_SESSION['user']['id']=1;
 
+    // $_REQUEST が空のときは index.php に強制遷移
+    if (empty($_REQUEST)) {
+        header('Location: index.php');
+        exit();
+    }
+
+    // プロフィール情報取得
     $sql = 'SELECT u.*, c.name AS country_name FROM users AS u, countries AS c WHERE u.country_id = c.country_id AND u.user_id = ?';
-    $data = array($_SESSION['id']);
+    $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
@@ -95,22 +102,22 @@
               </div>
               <div class="col-xs-7">
                 <div class="well-small">
-                  <label class="control-label">Entry</label>
                   <div class="well-small">
+                    <label class="control-label">Entry：</label>
                     <?php echo $profile['created'] ?>
                   </div>
-                  <label class="control-label">Name</label>
                   <div class="well-small">
+                    <label class="control-label">Name：</label>
                     <?php echo $profile['name'] ?>
                     <!-- user_name -->
                   </div>
-                  <label class="control-label">Country</label>
                   <div class="well-small">
+                    <label class="control-label">Country：</label>
                     <?php echo $profile['country_name'] ?>
                     <!-- country_name -->
                   </div>
-                  <label class="control-label">Gender</label>
                   <div class="well-small">
+                    <label class="control-label">Gender：</label>
                     <?php echo $profile['gender'] ?>
                     <!-- gender -->
                   </div>
@@ -118,7 +125,9 @@
                     <!-- <div class="col-xs-3 col-xs-offset-9"> -->
                     <div style="text-align: right;">
                       <!-- <button type="reset" class="btn btn-default">Cancel</button> -->
-                      <a class="btn btn-primary btn-lg" href="profile_edit.php">Edit</a>
+                      <?php if ($_SESSION['user']['id'] == $_REQUEST['id'] ) { ?>
+                      <a class="btn btn-primary btn-lg" href="profile_edit.php?id=<?php echo $_REQUEST['id']; ?>">Edit</a>
+                      <?php } ?>
                     </div>
                   </div>
                 </div>
@@ -126,7 +135,7 @@
 
               <!-- <hr class="divider-w"> -->
               <div class="col-xs-offset-1 col-xs-10">
-                <div class="well-small bs-component">
+                <div class="well-small bs-component mb-40">
                   <form method="POST" action="check.php" class="form-horizontal">
                     <fieldset>
                       <legend>Profile</legend>

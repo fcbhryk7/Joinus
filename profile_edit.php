@@ -3,17 +3,26 @@
     session_start(); //セッションスタート
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
+    require('user_session.php'); //セッション確認
 
     // 配列表示
-    echo_var_dump('$_POST',$_POST);
-    echo_var_dump('$_FILES',$_FILES);
+    // echo_var_dump('$_POST',$_POST);
+    // echo_var_dump('$_FILES',$_FILES);
 
-    // debug
-    $_SESSION['id']=1;
-    $user_id = $_SESSION['id'];
+    // $_REQUEST['id'] が空の場合は index.php へ強制遷移
+    if (empty($_REQUEST)) {
+        header('Location: index.php');
+        exit();
+    }
+
+    // サインイン時に格納したセッションIDと、抽出したIDが合致しなければ index.php へ強制遷移
+    if ($_SESSION['user']['id'] != $_REQUEST['id']) {
+        header('Location: index.php');
+        exit();
+    }
 
     $sql = 'SELECT u.*, c.name AS country_name FROM users AS u, countries AS c WHERE u.country_id = c.country_id AND u.user_id = ?';
-    $data = array($_SESSION['id']);
+    $data = array($_SESSION['user']['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
@@ -25,7 +34,7 @@
 
     // 滞在期間
     $staying_time = explode(' ', $profile['staying_time']);
-    echo_var_dump('$staying_time', $staying_time);
+    // echo_var_dump('$staying_time', $staying_time);
 
     // 以下でプロフィールを表示する
 ?>
@@ -119,7 +128,7 @@
                 </form>
               </div>
               <div class="col-sm-8 col-sm-offset-2">
-                <form method="POST" action="profile_confirm.php" class="form" role="form" >
+                <form method="POST" action="profile_update.php" class="form" role="form" >
                   <h4 class="font-alt mb-0">Edit Profile</h4>
                   <hr class="divider-w mt-10 mb-20">
                     <div class="form-group">
@@ -185,8 +194,8 @@
                     </div>
 
                     <div class="form-group" style="text-align: right;">
-                      <button type="submit" class="btn btn-info btn-md">Confirm</button>
-                      <button type="button" onclick="location.href = 'profile.php';" class="btn btn-default btn-md">Cancel</button>
+                      <button type="submit" class="btn btn-info btn-md">Update</button>
+                      <button type="button" onclick="location.href = 'profile.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
                     </div>
                 </form>
               </div>
