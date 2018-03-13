@@ -13,6 +13,27 @@
     }
   }
 
+  // htmlspecialcharsの独自関数
+  function h($var) {
+      return htmlspecialchars($var);
+  }
+
+  // 遷移前のURLを取得する関数
+  function get_page_name() {
+    if (!isset($_SERVER['HTTP_REFERER'])) {
+        return '';
+    }
+
+    $url = parse_url($_SERVER['HTTP_REFERER']);
+    $path = explode('/', $url['path']);
+
+    if($path[3] == 'register') {
+        return $path[4];
+    } else {
+        return $path[3];
+    }
+  }
+
   // 国名取得
   function get_country_name() {
       require('dbconnect.php'); //DB接続
