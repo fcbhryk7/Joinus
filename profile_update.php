@@ -3,17 +3,15 @@
     session_start(); //セッションスタート
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
+    require('user_session.php'); //セッション確認
 
     // 配列表示
     // echo_var_dump('$_POST',$_POST);
     // echo_var_dump('$_FILES',$_FILES);
 
-    // debug
-    $_SESSION['id']=1;
-
-    // POSTがからの場合はprofile.phpへ強制遷移
+    // POSTが空の場合は index.php へ強制遷移
     if (empty($_POST)) {
-        header('Location: profile.php');
+        header('Location: index.php');
         exit();
     }
 
@@ -33,7 +31,7 @@
     $data = array($country_name);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
-    
+
     $country = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // staying_timeを結合
@@ -41,11 +39,11 @@
 
     // usersテーブルを更新
     $sql = 'UPDATE users SET name = ?, gender = ?, country_id = ?, address = ?, callnumber = ?, staying_time = ?, profile = ?, birthday = ?, updated = NOW() WHERE user_id = ? ';
-    $data = array($name, $gender, $country['country_id'], $address, $callnumber, $staying_time, $profile, $birthday, $_SESSION['id']);
+    $data = array($name, $gender, $country['country_id'], $address, $callnumber, $staying_time, $profile, $birthday, $_SESSION['user']['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
-    header('Location: profile.php');
+    header('Location: profile.php?id=' . $_SESSION['user']['id']);
     exit();
-    
+
 ?>
