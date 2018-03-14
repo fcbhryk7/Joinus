@@ -3,6 +3,7 @@
     session_start(); //セッションスタート
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
+    require('user_session.php'); //セッション確認
 
     echo_var_dump('$_FILES', $_FILES);
     // echo_var_dump('$_POST', $_POST);
@@ -88,7 +89,7 @@
         $stmt->execute($data);
     }
 
-    header('Location: profile_edit.php');
+    header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
     exit();
 
 ?>
