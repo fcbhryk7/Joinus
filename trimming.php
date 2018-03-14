@@ -35,7 +35,7 @@
         $submit_file_name = $date_str . $file_name;
 
         // ファイルアップロードする関数
-        move_uploaded_file($_FILES['input_img_name']['tmp_name'], 'images/' . $submit_file_name);
+        move_uploaded_file($_FILES['input_img_name']['tmp_name'], 'user_profile_img/' . $submit_file_name);
 
         // トリミングの値設定
         $profileImageX = $_POST['profileImageX'];
@@ -45,7 +45,7 @@
 
 
         // $file = 'images/20180308081536kumamon.jpeg';
-        $file = 'images/' . $submit_file_name;
+        $file = 'user_profile_img/' . $submit_file_name;
 
         //元の画像のサイズを取得する
         // list($w, $h) = getimagesize($file);

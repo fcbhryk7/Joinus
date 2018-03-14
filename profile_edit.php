@@ -114,7 +114,7 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-8 col-sm-offset-2">
-                <img class="mb-20 img-thumbnail" width="150" src="images/<?php echo $profile['image']; ?>">
+                <img class="mb-20 img-thumbnail" width="150" src="user_profile_img/<?php echo $profile['image']; ?>">
                 <form method="POST" action="trimming.php" class="form" role="form" enctype="multipart/form-data">
                   <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="profile-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
                   <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
