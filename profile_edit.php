@@ -3,20 +3,29 @@
     session_start(); //セッションスタート
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
+    require('user_session.php'); //セッション確認
 
     // 配列表示
-    echo_var_dump('$_POST',$_POST);
-    echo_var_dump('$_FILES',$_FILES);
+    // echo_var_dump('$_POST',$_POST);
+    // echo_var_dump('$_FILES',$_FILES);
 
-    // debug
-    $_SESSION['id']=1;
-    $user_id = $_SESSION['id'];
-    
+    // $_REQUEST['id'] が空の場合は index.php へ強制遷移
+    if (empty($_REQUEST)) {
+        header('Location: index.php');
+        exit();
+    }
+
+    // サインイン時に格納したセッションIDと、抽出したIDが合致しなければ index.php へ強制遷移
+    if ($_SESSION['user']['id'] != $_REQUEST['id']) {
+        header('Location: index.php');
+        exit();
+    }
+
     $sql = 'SELECT u.*, c.name AS country_name FROM users AS u, countries AS c WHERE u.country_id = c.country_id AND u.user_id = ?';
-    $data = array($_SESSION['id']);
+    $data = array($_SESSION['user']['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
-    
+
     $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // 国名取得
@@ -25,7 +34,7 @@
 
     // 滞在期間
     $staying_time = explode(' ', $profile['staying_time']);
-    echo_var_dump('$staying_time', $staying_time);
+    // echo_var_dump('$staying_time', $staying_time);
 
     // 以下でプロフィールを表示する
 ?>
@@ -87,6 +96,9 @@
     <!-- カレンダー表示用CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/pikaday-package.css">
 
+    <!-- cropper CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/lib/cropper-3.1.6/dist/cropper.min.css">
+
   </head>
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
@@ -101,12 +113,22 @@
         <section class="module">
           <div class="container">
             <div class="row">
-              <form method="POST" action="profile_confirm.php" class="form" role="form" enctype="multipart/form-data">
-                <div class="col-sm-8 col-sm-offset-2">
-                  <img width="150" src="assets/fonts/elephant.jpg">
-                  <input type="file" name="input_img_name" accept="images/*">
-                </div>
-                <div class="col-sm-8 col-sm-offset-2">
+              <div class="col-sm-8 col-sm-offset-2">
+                <img class="mb-20 img-thumbnail" width="150" src="user_profile_img/<?php echo $profile['image']; ?>">
+                <form method="POST" action="trimming.php" class="form" role="form" enctype="multipart/form-data">
+                  <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="profile-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
+                  <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
+                  <img id="select-image" style="max-width:500px;">
+                  <!-- 切り抜き範囲をhiddenで保持する -->
+                  <input type="hidden" id="upload-image-x" name="profileImageX" value="0"/>
+                  <input type="hidden" id="upload-image-y" name="profileImageY" value="0"/>
+                  <input type="hidden" id="upload-image-w" name="profileImageW" value="0"/>
+                  <input type="hidden" id="upload-image-h" name="profileImageH" value="0"/>
+                  <button type="submit" id="image_upload" class="btn btn-default btn-round btn-xs" disabled="disabled">upload</button>
+                </form>
+              </div>
+              <div class="col-sm-8 col-sm-offset-2">
+                <form method="POST" action="profile_update.php" class="form" role="form" >
                   <h4 class="font-alt mb-0">Edit Profile</h4>
                   <hr class="divider-w mt-10 mb-20">
                     <div class="form-group">
@@ -172,11 +194,11 @@
                     </div>
 
                     <div class="form-group" style="text-align: right;">
-                      <button type="submit" class="btn btn-info btn-md">Confirm</button>
-                      <button type="button" onclick="location.href = 'profile.php';" class="btn btn-default btn-md">Cancel</button>
+                      <button type="submit" class="btn btn-info btn-md">Update</button>
+                      <button type="button" onclick="location.href = 'profile.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
                     </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div> <!-- row -->
           </div> <!-- container -->
         </section>
@@ -274,7 +296,7 @@
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!-- カレンダー表示用Jave Script -->
+    <!-- カレンダー表示用JS -->
     <script src="assets/js/moment.js"></script>
     <script src="assets/js/pikaday.js"></script>
     <script>
@@ -289,5 +311,40 @@
         });
     </script>
 
+    <!-- cropper JS -->
+    <script src="assets/lib/cropper-3.1.6/dist/cropper.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+          // 初期設定
+          var options =
+          {
+            aspectRatio: 1 / 1,
+            viewMode:1,
+            crop: function(e) {
+                  cropData = $('#select-image').cropper("getData");
+                  $("#upload-image-x").val(Math.floor(cropData.x));
+                  $("#upload-image-y").val(Math.floor(cropData.y));
+                  $("#upload-image-w").val(Math.floor(cropData.width));
+                  $("#upload-image-h").val(Math.floor(cropData.height));
+            },
+            zoomable:false,
+            minCropBoxWidth:162,
+            minCropBoxHeight:162
+          }
+
+          // 初期設定をセットする
+          $('#select-image').cropper(options);
+
+          $("#profile-image").change(function(){
+              // ファイル選択変更時に、選択した画像をCropperに設定する
+              $('#select-image').cropper('replace', URL.createObjectURL(this.files[0]));
+
+              // 無効化ボタンを解除
+              $('#image_upload').removeAttr('disabled');
+          });
+
+
+      });
+    </script>
   </body>
 </html>
