@@ -1,4 +1,37 @@
 <?php 
+  session_start();
+
+  echo '<pre>';
+  var_dump($_POST);
+  echo '</pre>';
+
+  // 変数の空定義
+  $title = '';
+  $tags = '';
+  $place = '';
+  $date = '';
+  $price = '';
+  $time = '';
+  $location = '';
+  $entry_field = '';
+
+
+  // もし戻ってきた時
+  if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'rewrite') {
+    // $_GET = array('action'=>'rewrite');
+    // $_POSTを偽造します
+    $_POST['input_name'] = $_SESSION['register']['name'];
+    $_POST['input_email'] = $_SESSION['register']['email'];
+    $_POST['input_password'] = $_SESSION['register']['password'];
+
+    // バリデーションメッセージ用 なんでも良いからデータを入れる
+    $errors['rewrite'] = true;
+  }
+
+
+
+
+
   if (!empty($_POST)) {
         echo '送信<br>';
 
@@ -23,7 +56,6 @@
             $errors['img_name'] = 'rewrite';
         }
   }
-
 
  ?>
 
@@ -416,15 +448,11 @@
                   <div class="col-sm-3">
                     <button class="btn btn-block btn-round btn-g" type="submit">Select</button>
                   </div>
-
-                  <div class="form-group">
-                    <input class="form-control input-lg" type="text" placeholder="仮Plan / Request select (pull down)"/>
-                  </div>
                   <div class="form-group">
                     <input class="form-control" type="text" placeholder="Title"/>
                   </div>
                   <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Category"/>
+                    <input class="form-control" type="text" placeholder="Tags"/>
                   </div>
                   
                   <span>Plan img</span><br>
