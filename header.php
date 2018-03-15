@@ -9,7 +9,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-              <a class="navbar-brand" href="index.html">Joinus!</a>
+              <a class="navbar-brand" href="../index.php">Joinus!</a>
           </div>
  <!-- けんさくまど -->
           <div class="row">
@@ -32,7 +32,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
                 <ul class="dropdown-menu">
-                  <li><a href="index_mp_fullscreen_video_background.html">My page</a></li>
+                  <li><a href="../profile.php">My page</a></li>
                   <li><a href="index_op_fullscreen_gradient_overlay.html">Bookmark</a></li>
                   <li><a href="index_agency.html">Create plan</a></li>
                   <li><a href="index_portfolio.html">Create request</a></li>

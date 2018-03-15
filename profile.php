@@ -3,20 +3,47 @@
     session_start(); //セッションスタート
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
+    require('user_session.php'); //セッション確認
 
     // 配列表示
-    echo_var_dump('$_POST',$_POST);
+    // echo_var_dump('$_POST',$_POST);
 
     // debug
-    $_SESSION['id']=1;
-    $user_id = $_SESSION['id'];
+    $_SESSION['user']['id']=1;
 
+    // $_REQUEST が空のときは index.php に強制遷移
+    if (empty($_REQUEST)) {
+        header('Location: index.php');
+        exit();
+    }
+
+    // プロフィール情報取得
     $sql = 'SELECT u.*, c.name AS country_name FROM users AS u, countries AS c WHERE u.country_id = c.country_id AND u.user_id = ?';
-    $data = array($_SESSION['id']);
+    $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
     $profile = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // お気に入りプランの取得
+    $sql = 'SELECT u.*, p.*, i.* FROM images AS i, favorites AS f, plans AS p, users AS u WHERE i.plan_id = p.plan_id AND f.plan_id = p.plan_id AND p.user_id = u.user_id AND p.request_type = 0 AND i.image_order = 1 AND f.user_id = ?';
+    $data = array($_REQUEST['id']);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute($data);
+
+    $favorite_plans = $stmt->fetchAll();
+
+    // echo_var_dump('$favorite_plans', $favorite_plans);
+
+    // お気に入りリクエストの取得
+    $sql = 'SELECT u.*, p.* FROM favorites AS f, plans AS p, users AS u WHERE f.plan_id = p.plan_id AND p.user_id = u.user_id AND p.request_type = 1 AND f.user_id = ?';
+    $data = array($_REQUEST['id']);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute($data);
+
+    $favorite_requests = $stmt->fetchAll();
+
+    // echo_var_dump('$favorite_requests', $favorite_requests);
 
 ?>
 <!DOCTYPE html>
@@ -91,30 +118,26 @@
           <div class="container">
             <div class="row">
               <div class="col-xs-offset-1 col-xs-3" style="text-align: center;">
-                <img class="img-thumbnail" width="150" src="assets/images/elephant.jpg">
+                <img class="img-thumbnail" width="150" src="user_profile_img/<?php echo $profile['image']; ?>">
               </div>
               <div class="col-xs-7">
                 <div class="well-small">
-                  <label class="control-label">Entry</label>
                   <div class="well-small">
+                    <label class="control-label">Entry：</label>
                     <?php echo $profile['created'] ?>
-                    <!-- <?php echo date('Y/m/d'); ?> -->
                   </div>
-                  <label class="control-label">Name</label>
                   <div class="well-small">
-                    <!-- <?php echo $_POST['name'] ?> -->
+                    <label class="control-label">Name：</label>
                     <?php echo $profile['name'] ?>
                     <!-- user_name -->
                   </div>
-                  <label class="control-label">Country</label>
                   <div class="well-small">
-                    <!-- <?php echo $_POST['name'] ?> -->
+                    <label class="control-label">Country：</label>
                     <?php echo $profile['country_name'] ?>
                     <!-- country_name -->
                   </div>
-                  <label class="control-label">Gender</label>
                   <div class="well-small">
-                    <!-- <?php echo $_POST['gender'] ?> -->
+                    <label class="control-label">Gender：</label>
                     <?php echo $profile['gender'] ?>
                     <!-- gender -->
                   </div>
@@ -122,7 +145,9 @@
                     <!-- <div class="col-xs-3 col-xs-offset-9"> -->
                     <div style="text-align: right;">
                       <!-- <button type="reset" class="btn btn-default">Cancel</button> -->
-                      <a class="btn btn-primary btn-lg" href="profile_edit.php">Edit</a>
+                      <?php if ($_SESSION['user']['id'] == $_REQUEST['id'] ) { ?>
+                      <a class="btn btn-primary btn-lg" href="profile_edit.php?id=<?php echo $_REQUEST['id']; ?>">Edit</a>
+                      <?php } ?>
                     </div>
                   </div>
                 </div>
@@ -130,21 +155,13 @@
 
               <!-- <hr class="divider-w"> -->
               <div class="col-xs-offset-1 col-xs-10">
-                <div class="well-small bs-component">
+                <div class="well-small bs-component mb-40">
                   <form method="POST" action="check.php" class="form-horizontal">
                     <fieldset>
                       <legend>Profile</legend>
                       <!-- <label class="control-label">Name</label> -->
                       <div class="well-small">
-                        <!-- <?php echo $_POST['name'] ?> -->
                         <?php echo $profile['profile'] ?>
-                        <!-- hogehogefugafuga -->
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
-                        hogehoge<br>
                       </div>
                     </fieldset>
                   </form>
@@ -159,48 +176,50 @@
                     <li><a href="#request" data-toggle="tab"><span class="icon-tools-2"></span>request</a></li>
                   </ul>
                   <div class="tab-content">
-                    <div class="tab-pane active" id="plan">The European languages are members of the same family. Their separate existence is a myth.
-
+                    <div class="tab-pane active" id="plan">
                       <div class="row">
-                        <a href="">
+                        <?php foreach ($favorite_plans AS $key => $plan) { ?>
+                        <a href="plan_detail.php?id=<?php echo $plan['plan_id']; ?>">
                         <!-- <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp"> -->
                           <div class="mb-sm-20 col-sm-6 col-md-3">
                             <div class="team-item">
-                              <div class="team-image"><img src="assets/images/elephant.jpg" alt="Member Photo" class="img-thumbnail" />
+                              <div class="team-image"><img src="images/<?php echo $plan['image_name']; ?>" alt="image" class="img-thumbnail" />
                                 <div class="team-detail">
-                                  <h5 class="font-alt">Hi all</h5>
-                                  <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                                  <h5 class="font-alt"><?php echo $plan['title']; ?></h5>
+                                  <!-- <p class="font-serif"></p> -->
                                 </div>
                               </div>
                               <div class="team-descr font-alt">
-                                <div class="team-name">Jim Stone</div>
-                                <div class="team-role">Art Director</div>
+                                <div class="team-name"><?php echo $plan['name']; ?></div>
+                                <!-- <div class="team-role">Art Director</div> -->
                               </div>
                             </div>
                           </div>
                         </a>
+                        <?php } ?>
                       </div> <!-- row -->
                     </div>
-                    <div class="tab-pane" id="request">To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words.
-
+                    <div class="tab-pane" id="request">
                       <div class="row">
-                        <a href="">
+                        <?php foreach ($favorite_requests AS $key => $request) { ?>
+                        <a href="request_detail.php?id=<?php echo $request['plan_id']; ?>">
                           <!-- <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp"> -->
                           <div class="mb-sm-20 col-sm-6 col-md-3">
                             <div class="team-item">
-                              <div class="team-image"><img src="assets/images/kumamon2.png" alt="Member Photo" class="img-thumbnail"/>
+                              <div class="team-image"><!-- <img src="images/<?php echo $request['image_name']; ?>" alt="image" class="img-thumbnail"/> -->
                                 <div class="team-detail">
-                                  <h5 class="font-alt">Hello</h5>
-                                  <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                                  <h5 class="font-alt"><?php echo $request['title']; ?></h5>
+                                  <!-- <p class="font-serif"></p> -->
                                 </div>
                               </div>
                               <div class="team-descr font-alt">
-                                <div class="team-name">Adele Snow</div>
-                                <div class="team-role">Account manager</div>
+                                <div class="team-name"><?php echo $request['name']; ?></div>
+                                <!-- <div class="team-role"></div> -->
                               </div>
                             </div>
                           </div>
                         </a>
+                        <?php } ?>
                       </div> <!-- row -->
                     </div>
                   </div>
