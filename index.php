@@ -390,6 +390,7 @@
             </span>
         </div>
 
+<<<<<<< HEAD
         <!--<div class="main">
         <section class="module" id="alt-features">
           <div class="container">
@@ -457,6 +458,8 @@
           </div>
         </section> -->
 
+=======
+>>>>>>> master
         <hr class="divider-w">
         <section class="module" id="team">
           <div class="container">
@@ -495,8 +498,13 @@
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 3</div>
                     <div class="team-name">Decision plan details</div>
+<<<<<<< HEAD
                     <div class="team-role">両者でプランの詳細を決めることができます。</div>
                     <div class="team-role">チャットでの面倒なやりとりもありません。</div>
+=======
+                    <div class="team-role">Guests and hosts can decide the details of the trip.</div>
+                    <div class="team-role">Chat is not necessary.</div>
+>>>>>>> master
                   </div>
                 </div>
               </div>
@@ -505,9 +513,15 @@
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 4</div>
+<<<<<<< HEAD
                     <div class="team-name">プラン当日</div>
                     <div class="team-role">ゲストは待ち合わせ場所に集合し、とっておきのプランを満喫します。</div>
                     <div class="team-role">ホストはプランの案内をします。</div>
+=======
+                    <div class="team-name">On the day of plan</div>
+                    <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
+                    <div class="team-role">Host will show you the plan.</div>
+>>>>>>> master
                   </div>
                 </div>
               </div>
@@ -534,16 +548,90 @@
                   <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
                   </ul>
                 <div class="tab-content">
+<<<<<<< HEAD
                   <div class="tab-pane active" id="support">プラン一覧です
                   </div>
                   <div class="tab-pane" id="sales">リクエスト一覧です
+=======
+                  <div class="tab-pane active" id="support">
+
+                    <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
+                          </div>
+                        </div>
+                      </div>
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
+                          </div>
+                        </div>
+                      </div>
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
+                          </div>
+                        </div>
+                      </div>
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="tab-pane" id="sales">
+
+                    <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
+                          </div>
+                        </div>
+                      </div>
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
+                          </div>
+                        </div>
+                      </div>
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
+                          </div>
+                        </div>
+                      </div>
+                      <div class="owl-item">
+                        <div class="col-sm-12">
+                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
+                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+>>>>>>> master
                   </div>
                 </div>
               </div>
           </div>
 
           <div class="container">
+<<<<<<< HEAD
             <div class="row">
+=======
+           <!--  <div class="row">
+>>>>>>> master
               <div class="col-sm-12">
                 <ul class="filter font-alt" id="filters">
                   <li><a class="current wow fadeInUp" href="#" data-filter="*">All</a></li>
@@ -551,9 +639,15 @@
                   <li><a class="wow fadeInUp" href="#" data-filter=".marketing" data-wow-delay="0.4s">Request</a></li>
                 </ul>
               </div>
+<<<<<<< HEAD
             </div>
           </div>
           <ul class="works-grid works-grid-gut works-grid-3 works-hover-w" id="works-grid">
+=======
+            </div> -->
+          </div>
+          <!-- <ul class="works-grid works-grid-gut works-grid-3 works-hover-w" id="works-grid">
+>>>>>>> master
             <li class="work-item illustration webdesign"><a href="portfolio_single_featured_image1.html">
                 <div class="work-image"><img src="assets/images/portfolio/grid-portfolio1.jpg" alt="Portfolio Item"/></div>
                 <div class="work-caption font-alt">
@@ -590,7 +684,11 @@
                   <h3 class="work-title">自由プラン</h3>
                   <div class="work-descr">Reika</div>
                 </div></a></li>
+<<<<<<< HEAD
           </ul>
+=======
+          </ul> -->
+>>>>>>> master
         </section>
 
         <!-- <section class="module-small bg-dark">
@@ -614,35 +712,55 @@
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
                 <h2 class="module-title font-alt">Our Services</h2>
+<<<<<<< HEAD
                 <div class="module-subtitle font-serif">We have four 4つの特徴があります。</div>
+=======
+                <div class="module-subtitle font-serif">There are 4 features.</div>
+>>>>>>> master
               </div>
             </div>
             <div class="row multi-columns-row">
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
+<<<<<<< HEAD
                   <h3 class="features-title font-alt">ホストのプラン投稿機能</h3>
+=======
+                  <h3 class="features-title font-alt">Host plan posting function.</h3>
+>>>>>>> master
                   <p></p>
                 </div>
               </div>
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-bike"></span></div>
+<<<<<<< HEAD
                   <h3 class="features-title font-alt">ゲストのリクエスト機能</h3>
+=======
+                  <h3 class="features-title font-alt">Guest request function.</h3>
+>>>>>>> master
                   <p></p>
                 </div>
               </div>
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-tools"></span></div>
+<<<<<<< HEAD
                   <h3 class="features-title font-alt">チャットなしのプラン作成機能</h3>
+=======
+                  <h3 class="features-title font-alt">Plan creation without chat function.</h3>
+>>>>>>> master
                   <p></p>
                 </div>
               </div>
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="features-item">
                   <div class="features-icon"><span class="icon-gears"></span></div>
+<<<<<<< HEAD
                   <h3 class="features-title font-alt">総合評価機能</h3>
+=======
+                  <h3 class="features-title font-alt">Comment function.</h3>
+>>>>>>> master
                   <p></p>
                 </div>
               </div>
@@ -680,6 +798,7 @@
           </div>
         </section>
 
+<<<<<<< HEAD
         <!-- <section class="module bg-dark-60 pt-0 pb-0 parallax-bg testimonial" data-background="assets/images/testimonial_bg.jpg">
           <div class="testimonials-slider pt-140 pb-140">
             <ul class="slides">
@@ -871,6 +990,8 @@
           </div>
         </section> -->
 
+=======
+>>>>>>> master
         <!-- Footer -->
         <div class="module-small bg-dark">
           <div class="container">
