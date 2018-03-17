@@ -63,7 +63,7 @@
         }
     }
 
-    if (!empty($errors)) {
+    if (empty($errors)) {
         $_SESSION['register']['email'] = $email;
         $_SESSION['register']['name'] = $name;
         $_SESSION['register']['password'] = $password;
@@ -76,7 +76,6 @@
     exit();
     }
     // $_SESSION['register'] = $_POST;
-
 
 ?>
 
