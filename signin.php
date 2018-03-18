@@ -124,6 +124,7 @@
       </div>
 
       <!-- ヘッダー読み込み -->
+      <?php //include('header.php'); ?>
 
       <!-- Body -->
       <div class="main">
@@ -135,24 +136,24 @@
                 <hr class="divider-w mb-10">
                 <form class="form">
                   <div class="form-group" align="right"><a href="register/signup.php">Signup here</a></div>
-                  <div class="form-group">
-                    <input class="form-control" id="email" type="text" name="email" placeholder="Email"/>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" id="username" type="text" name="username" placeholder="Username"/>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" id="password" type="password" name="password" placeholder="Password"/>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-round btn-b">Signin</button>
-                  </div>
+                  <form method="POST" action="signin.php">
+                    <div class="form-group">
+                      <input class="form-control" id="email" type="email" name="email" placeholder="Email"/>
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" id="password" type="password" name="password" placeholder="Password"/>
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-round btn-b">Signin</button>
+                    </div>
+                  </form>
                   <div class="form-group"><a href="">Forgot Password?</a></div>
                 </form>
               </div>
               <!-- Body終了 -->
 
               <!-- Footer -->
+              <?php //include('footer.php'); ?>
  
       </div>
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
