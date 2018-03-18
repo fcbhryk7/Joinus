@@ -1,18 +1,54 @@
-<?php 
+<?php
 
-    session_start(); //セッションスタート
-    require('dbconnect.php'); //DB接続
-    require('functions.php'); //ファンクション
+    // 検索窓について
+    // タグがらひっぱてきた情報をトップ画面へ
+    // インナージョインレフトジョイン
+    // タグとプランを紐づけて
+    // 後最新が出るために日付を
 
-    // タグ情報取得
-    $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
-    $data = array($_REQUEST['id']);
-    $stmt = $dbh->prepare($sql);
-    $stmt-> execute($data);
+    // session_start(); //セッションスタート
+    // require('dbconnect.php'); //DB接続
+    // require('functions.php'); //ファンクション
 
-    $tags =  $stmt->fetchAll();
+    // // タグ情報取得
+    // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
+    // // ?のなかを設定↓
+    // $data = array($_REQUEST['id']);
+    // $stmt = $dbh->prepare($sql);
+    // $stmt-> execute($data);
 
-    echo_var_dump('$tags', $tags);
+    // $tags =  $stmt->fetchAll();
+
+    // echo_var_dump('$tags', $tags);
+
+    // echo '<pre>';
+    // echo var_dump('$tags', $tags);
+    // echo '</pre>';
+
+    // バリデーション実装
+    // 空チェック
+    // なんのエラーか知るために、エラーを定義
+    // if (!empty($_POST)) {
+
+    //     //データ格納変数定義
+    //     $email = $_POST['input_email'];
+
+    //     // メールアドレスの空チェック
+    //     if ($email == '') {
+    //         $errors['email'] = 'blank';
+    //     }
+    // }
+
+    // if (empty($errors)) {
+    //     $_SESSION['register']['email'] = $email;
+
+    // header('Location: check.php');
+    // exit();
+    // }
+    // $_SESSION['register'] = $_POST;
+
+
+
 
  ?>
 
@@ -57,7 +93,12 @@
             </form>
           </div> -->
 
-<div class="row mb-60">
+          <form role="search" method="GET" action="index.php">
+          <input type="search" placeholder="keyword" name="s">
+          <input type="submit" class="button" value="search">
+          </form>
+
+<!-- <div class="row mb-60">
               <div class="col-sm-8 col-sm-offset-2">
                 <form role="form">
                   <div class="search-box">
@@ -66,7 +107,7 @@
                   </div>
                 </form>
               </div>
-            </div>
+            </div> -->
 
 
 <!-- ヘッダーメニューバー -->
