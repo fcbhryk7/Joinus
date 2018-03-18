@@ -21,7 +21,7 @@
                   <ul class="icon-list">
                     <li><a href="#">Create plan</a></li>
                     <li><a href="#">Create request</a></li>
-                    <li><a href="#">Help</a></li>
+                    <li><a href="/help.php">Help</a></li>
                   </ul>
                 </div>
               </div>
@@ -36,7 +36,7 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6">
-                <p class="copyright font-alt">&copy; 2018&nbsp;<a href="index.html">Joinus!</a>, All Rights Reserved</p>
+                <p class="copyright font-alt">&copy; 2018&nbsp;<a href="/index.php">Joinus!</a>, All Rights Reserved</p>
               </div>
 <!-- snsボタン -->
               <div class="col-sm-6">

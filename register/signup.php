@@ -63,7 +63,7 @@
         }
     }
 
-    if (!empty($errors)) {
+    if (empty($errors)) {
         $_SESSION['register']['email'] = $email;
         $_SESSION['register']['name'] = $name;
         $_SESSION['register']['password'] = $password;
@@ -72,11 +72,10 @@
         echo '<pre>';
         var_dump($errors);
         echo '</pre>';
-    // header('Location: check.php');
-    // exit();
+    header('Location: check.php');
+    exit();
     }
     // $_SESSION['register'] = $_POST;
-
 
 ?>
 
@@ -131,7 +130,7 @@
               <div class="col-sm-5">
                 <h4 class="font-alt">Signup</h4>
                 <hr class="divider-w mb-10">
-                <form class="form" method="POST" action="signup.php">
+                <form class="form" method="POST" action="">
 
 
                   <div class="form-group">
