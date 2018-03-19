@@ -9,47 +9,21 @@
     // echo_var_dump('$_POST',$_POST);
     // echo_var_dump('$_FILES',$_FILES);
 
-    // サインアップ後でない場合は、プロフィール画面へ遷移
-    if (isset($_SESSION['firsttime']) && $_SESSION['firsttime'] == 1) {
-        $_SESSION['firsttime'] = 0;
-        header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
-        exit();
-    }
-
     // $_REQUEST['id'] が空の場合は signin.php へ強制遷移
     if (!isset($_REQUEST['id']) || $_REQUEST['id'] == '' ) {
         header('Location: signin.php');
         exit();
     }
 
-    // サインイン時に格納したセッションIDと、抽出したIDが合致しなければ signin.php へ強制遷移
-    if ($_SESSION['user']['id'] != $_REQUEST['id']) {
-        header('Location: signin.php');
-        exit();
-    }
+    // $sql = '';
+    // $data = array($_SESSION['user']['id'], $_REQUEST['id']);
+    // $stmt = $dbh->prepare($sql);
+    // $stmt->execute($data);
 
-    $sql = 'SELECT u.*, c.name AS country_name FROM users AS u, countries AS c WHERE u.country_id = c.country_id AND u.user_id = ?';
-    $data = array($_SESSION['user']['id']);
-    $stmt = $dbh->prepare($sql);
-    $stmt->execute($data);
+    // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $profile = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // echo_var_dump('$profile',$profile);
-
-    // 国名取得
-    $countries = get_country_name();
-    // echo $countries[0]['name'];
-
-    // 滞在期間
-    if (isset($profile['staying_time']) && $profile['staying_time'] != '') {
-      $staying_time = explode(' ', $profile['staying_time']);
-    } else {
-      $staying_time = ['0','---'];
-    }
     // echo_var_dump('$staying_time', $staying_time);
 
-    // 以下でプロフィールを表示する
 ?>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
@@ -69,7 +43,7 @@
     <?php include('stylesheet_link.php'); ?>
 
     <!-- カレンダー表示用CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/css/pikaday-package.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery.datetimepicker.css">
 
     <!-- cropper CSS -->
     <link rel="stylesheet" type="text/css" href="assets/lib/cropper-3.1.6/dist/cropper.min.css">
@@ -108,67 +82,58 @@
                 <form method="POST" action="profile_update.php" class="form" role="form" >
                   <h4 class="font-alt mb-0">Edit Profile</h4>
                   <hr class="divider-w mt-10 mb-20">
-                    <div class="form-group">
-                      <label class="control-label">Name</label>
-                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php echo $profile['name'] ?>" placeholder="Name"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Gender</label>
-                      <!-- <input class="form-control input-lg" type="text" placeholder="Country"/> -->
-                      <select name="input_gender" class="form-control input-lg">
-                        <!-- <option <?php if ($profile['gender'] == '---') {echo 'selected';} ?>>---</option> -->
-                        <option <?php if ($profile['gender'] == 'female') {echo 'selected';} ?>>female</option>
-                        <option <?php if ($profile['gender'] == 'male') {echo 'selected';} ?>>male</option>
-                        <option <?php if ($profile['gender'] == 'other') {echo 'selected';} ?>>other</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Country</label>
-                      <!-- <input class="form-control input-lg" type="text" placeholder="Country"/> -->
-                      <select name="input_country" class="form-control input-lg">
-                        <!-- <option <?php if ($profile['gender'] == '---') {echo 'selected';} ?>>---</option> -->
 
-                        <?php foreach ($countries as $key => $value) { ?>
-                        <option <?php if ($countries[$key]['name'] == $profile['country_name']) {echo 'selected';} ?>>
-                          <?php echo $countries[$key]['name']; ?>
-                        </option>
-                        <?php } ?>
-                      </select>
-                    </div>
+                    <!-- title -->
                     <div class="form-group">
-                      <label class="control-label">Address</label>
-                      <input name="input_address" class="form-control input-lg" value="<?php echo $profile['address'] ?>" type="text" placeholder="Address"/>
+                      <label class="control-label">Title</label>
+                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php //echo $profile['name'] ?>" placeholder="Title"/>
                     </div>
+
+                    <!-- content -->
                     <div class="form-group">
-                      <label class="control-label">Callnumber</label>
-                      <input name="input_callnumber" class="form-control input-lg" type="text" value="<?php echo $profile['callnumber'] ?>" placeholder="Callnumber"/>
+                      <label class="control-label">Content</label>
+                      <textarea name="input_profile" class="form-control" rows="5" placeholder="Content"><?php //echo $profile['profile'] ?></textarea>
                     </div>
+
+                    <!-- destination -->
                     <div class="form-group">
-                      <label class="control-label">Staying time</label>
+                      <label class="control-label">Destination</label>
+                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php //echo $profile['name'] ?>" placeholder="Destination"/>
+                    </div>
+
+                    <!-- Start & End -->
+                    <div class="form-group">
                       <!-- <input name="input-staying-time" class="form-control input-lg" type="text" value="<?php echo $profile['staying_time'] ?>" placeholder="Staying time"/> -->
                       <div class="row">
                         <div class="col-xs-6">
-                          <input type="text" name="input_time_number" value="<?php echo $staying_time[0] ?>" class="form-control input-lg">
+                          <label class="control-label">Start time</label>
+                          <input type="text" name="input_time_number" value="<?php //echo $staying_time[0] ?>" class="form-control input-lg datetimepicker">
                         </div>
                         <div class="col-xs-6">
-                          <select name="input_time_unit" class="form-control input-lg">
-                            <option <?php if ($staying_time['1'] == '---') {echo 'selected';} ?>>---</option>
-                            <option <?php if ($staying_time['1'] == 'days') {echo 'selected';} ?>>days</option>
-                            <option <?php if ($staying_time['1'] == 'weeks') {echo 'selected';} ?>>weeks</option>
-                            <option <?php if ($staying_time['1'] == 'months') {echo 'selected';} ?>>months</option>
-                            <option <?php if ($staying_time['1'] == 'years') {echo 'selected';} ?>>years</option>
-                          </select>
+                          <label class="control-label">End time</label>
+                          <input type="text" name="input_time_number" value="<?php //echo $staying_time[0] ?>" class="form-control input-lg datetimepicker">
                         </div>
                       </div>
                     </div>
+
+                    <!-- rendezvous -->
                     <div class="form-group">
-                      <label class="control-label" for="datepicker">Birthday</label>
-                      <input name="input_birthday" id="datepicker" class="form-control input-lg" type="text" value="<?php echo $profile['birthday'] ?>" placeholder="Birthday"/>
+                      <label class="control-label">Rendezvous</label>
+                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php //echo $profile['name'] ?>" placeholder="Rendezvous"/>
                     </div>
+
+                    <!-- time -->
                     <div class="form-group">
-                      <label class="control-label">Profile</label>
-                      <textarea name="input_profile" class="form-control" rows="7" placeholder="Profile"><?php echo $profile['profile'] ?></textarea>
+                      <label class="control-label">Time</label>
+                      <input type="text" name="input_time_number" value="<?php //echo $staying_time[0] ?>" class="form-control input-lg datetimepicker">
                     </div>
+
+                    <!-- person -->
+                    <div class="form-group">
+                      <label class="control-label">The number of people</label>
+                      <input name="input_name" class="form-control input-lg" type="number" value="<?php //echo $profile['name'] ?>" placeholder="The number of people"/>
+                    </div>
+
 
                     <div class="form-group" style="text-align: right;">
                       <button type="submit" class="btn btn-info btn-md">Update</button>
@@ -191,16 +156,12 @@
 
     <!-- カレンダー表示用JS -->
     <script src="assets/js/moment.js"></script>
-    <script src="assets/js/pikaday.js"></script>
+    <!-- <script src="assets/js/pikaday.js"></script> -->
+    <script src="assets/js/jquery.datetimepicker.full.min.js"></script>
     <script>
         // calender表示
-        var picker = new Pikaday(
-        {
-            field: document.getElementById('datepicker'),
-            firstDay: 1,
-            minDate: new Date(1900, 01, 01),
-            maxDate: new Date(2020, 12, 31),
-            yearRange: [1900,2020]
+        $(function(){
+            $('.datetimepicker').datetimepicker();
         });
     </script>
 

@@ -7,15 +7,9 @@
     // 配列表示
     // echo_var_dump('$_POST',$_POST);
 
-    // リクエストがない場合はエラーメッセージ
-    if (!isset($_SESSION['user'])) {
-        echo '$_SESSIONが未定義です';
-        exit();
-    }
-
-    // $_POSTが空の場合は、トップページへ強制遷移
+    // $_POSTが未定義の場合は、signin.phpへ強制遷移
     if (empty($_POST)) {
-        header('Location: top.php');
+        header('Location: signin.php');
         exit();
     }
 
@@ -56,7 +50,7 @@
                 }
                 // 例外処理
                 catch (exception $e) {
-                   echo "インサート失敗" . $e->getMessage();
+                   echo "登録に失敗しました。" . $e->getMessage();
                   //ロールバック
                   $dbh->rollback();
                 }

@@ -32,11 +32,11 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
                 <ul class="dropdown-menu">
-                  <li><a href="../profile.php">My page</a></li>
+                  <li><a href="profile.php">My page</a></li>
                   <li><a href="index_op_fullscreen_gradient_overlay.html">Bookmark</a></li>
                   <li><a href="index_agency.html">Create plan</a></li>
                   <li><a href="index_portfolio.html">Create request</a></li>
-                  <li><a href="index_restaurant.html">Signout</a></li>
+                  <li><a href="signout.php">Signout</a></li>
                 </ul>
               </li>
             </ul>
