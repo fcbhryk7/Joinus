@@ -15,14 +15,12 @@
         exit();
     }
 
-    // $sql = '';
-    // $data = array($_SESSION['user']['id'], $_REQUEST['id']);
-    // $stmt = $dbh->prepare($sql);
-    // $stmt->execute($data);
+    $sql = 'SELECT * FROM plans WHERE user_id = ? AND plan_id = ?';
+    $data = array($_SESSION['user']['id'], $_REQUEST['id']);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute($data);
 
-    // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // echo_var_dump('$staying_time', $staying_time);
+    $plan = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -65,7 +63,7 @@
               <div class="col-sm-8 col-sm-offset-2">
                 <h4 class="font-alt mb-0">Edit Image</h4>
                 <hr class="divider-w mt-10 mb-20">
-                <img class="mb-20 img-thumbnail" width="150" src="user_profile_img/<?php echo $profile['image']; ?>">
+                <img class="mb-20 img-thumbnail" width="150" src="user_profile_img/<?php echo $plan['image']; ?>">
                 <form method="POST" action="trimming.php" class="form" role="form" enctype="multipart/form-data">
                   <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="profile-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
                   <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
@@ -86,32 +84,31 @@
                     <!-- title -->
                     <div class="form-group">
                       <label class="control-label">Title</label>
-                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php //echo $profile['name'] ?>" placeholder="Title"/>
+                      <input name="input_title" class="form-control input-lg" type="text"  value="<?php echo $plan['title'] ?>" placeholder="Title"/>
                     </div>
 
                     <!-- content -->
                     <div class="form-group">
                       <label class="control-label">Content</label>
-                      <textarea name="input_profile" class="form-control" rows="5" placeholder="Content"><?php //echo $profile['profile'] ?></textarea>
+                      <textarea name="input_content" class="form-control" rows="5" placeholder="Content"><?php echo $plan['content'] ?></textarea>
                     </div>
 
                     <!-- destination -->
                     <div class="form-group">
                       <label class="control-label">Destination</label>
-                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php //echo $profile['name'] ?>" placeholder="Destination"/>
+                      <input name="input_place" class="form-control input-lg" type="text"  value="<?php echo $plan['place'] ?>" placeholder="Destination"/>
                     </div>
 
                     <!-- Start & End -->
                     <div class="form-group">
-                      <!-- <input name="input-staying-time" class="form-control input-lg" type="text" value="<?php echo $profile['staying_time'] ?>" placeholder="Staying time"/> -->
                       <div class="row">
                         <div class="col-xs-6">
                           <label class="control-label">Start time</label>
-                          <input type="text" name="input_time_number" value="<?php //echo $staying_time[0] ?>" class="form-control input-lg datetimepicker">
+                          <input type="text" name="input_start_datetime" value="<?php echo $plan['start_datetime'] ?>" class="form-control input-lg datetimepicker">
                         </div>
                         <div class="col-xs-6">
                           <label class="control-label">End time</label>
-                          <input type="text" name="input_time_number" value="<?php //echo $staying_time[0] ?>" class="form-control input-lg datetimepicker">
+                          <input type="text" name="input_end_datetime" value="<?php echo $plan['end_datetime'] ?>" class="form-control input-lg datetimepicker">
                         </div>
                       </div>
                     </div>
@@ -119,21 +116,26 @@
                     <!-- rendezvous -->
                     <div class="form-group">
                       <label class="control-label">Rendezvous</label>
-                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php //echo $profile['name'] ?>" placeholder="Rendezvous"/>
+                      <input name="input_location" class="form-control input-lg" type="text"  value="<?php echo $plan['location'] ?>" placeholder="Rendezvous"/>
                     </div>
 
                     <!-- time -->
                     <div class="form-group">
                       <label class="control-label">Time</label>
-                      <input type="text" name="input_time_number" value="<?php //echo $staying_time[0] ?>" class="form-control input-lg datetimepicker">
+                      <input type="text" name="input_time" value="<?php echo $plan['time'] ?>" class="form-control input-lg datetimepicker">
                     </div>
 
                     <!-- person -->
                     <div class="form-group">
                       <label class="control-label">The number of people</label>
-                      <input name="input_name" class="form-control input-lg" type="number" value="<?php //echo $profile['name'] ?>" placeholder="The number of people"/>
+                      <input name="input_person" class="form-control input-lg" type="number" value="<?php echo $plan['person'] ?>" placeholder="The number of people"/>
                     </div>
 
+                    <!-- Entry field -->
+                    <div class="form-group">
+                      <label class="control-label">Entry field</label>
+                      <textarea name="input_entry_field" class="form-control" rows="5" placeholder="Entry field"><?php echo $plan['entry_field'] ?></textarea>
+                    </div>
 
                     <div class="form-group" style="text-align: right;">
                       <button type="submit" class="btn btn-info btn-md">Update</button>
