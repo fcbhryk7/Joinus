@@ -9,7 +9,7 @@
   require('dbconnect.php'); // 他のファイルの読み込み
 
   // サインインチェック
-  if (isset($_SETTION['user']['id'])) {
+  if (isset($_SESSION['user']['id'])) {
     header('Location: index.php');
     exit();
   }
@@ -124,7 +124,7 @@
       </div>
 
       <!-- ヘッダー読み込み -->
-      <?php //include('header.php'); ?>
+      <?php include('header.php'); ?>
 
       <!-- Body -->
       <div class="main">
@@ -135,13 +135,25 @@
                 <h4 class="font-alt">Signin</h4>
                 <hr class="divider-w mb-10">
                 <form class="form">
+                  
+                  <!-- signupへ転移 -->
                   <div class="form-group" align="right"><a href="register/signup.php">Signup here</a></div>
+                  
                   <form method="POST" action="signin.php">
                     <div class="form-group">
                       <input class="form-control" id="email" type="email" name="email" placeholder="Email"/>
+                      <?php if (isset($errors['email'])){ ?>
+                        <span style="color: red;">Eメールを入力してください</span><br>
+                      <?php } ?>
                     </div>
                     <div class="form-group">
                       <input class="form-control" id="password" type="password" name="password" placeholder="Password"/>
+                      <?php if (isset($errors['password']) && $errors['password'] == 'blank' ){ ?>
+                        <span style="color: red;">パスワードを入力してください</span><br>
+                      <?php } ?>
+                      <?php if (isset($errors['rewrite'])){ ?>
+                        <span style="color: red;">パスワードを再入力してください</span><br>
+                      <?php } ?>
                     </div>
                     <div class="form-group">
                       <button class="btn btn-round btn-b">Signin</button>
@@ -150,14 +162,17 @@
                   <div class="form-group"><a href="">Forgot Password?</a></div>
                 </form>
               </div>
-              <!-- Body終了 -->
-
-              <!-- Footer -->
-              <?php //include('footer.php'); ?>
- 
+            </div>
+          </div>
+        </section>
       </div>
+      <!-- Body終了 -->
+      
+      <!-- Footer -->
+      <?php include('footer.php'); ?>
+
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
- 
+
     </main>
     <!--  
     JavaScripts
