@@ -167,13 +167,13 @@
         </section>
       </div>
       <!-- Body終了 -->
-      
+
       <!-- Footer -->
       <?php include('footer.php'); ?>
 
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
-
     </main>
+    
     <!--  
     JavaScripts
     =============================================
