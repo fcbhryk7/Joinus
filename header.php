@@ -12,7 +12,7 @@
 
     $tags =  $stmt->fetchAll();
 
-    echo_var_dump('$tags', $tags);
+    //echo_var_dump('$tags', $tags);
 
  ?>
 
