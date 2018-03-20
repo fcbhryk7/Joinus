@@ -63,22 +63,19 @@
             $errors['gender'] = 'blank';
         }
 
-        if (empty($errors)) {
-            $_SESSION['register']['email'] = $email;
-            $_SESSION['register']['name'] = $name;
-            $_SESSION['register']['password'] = $password;
-            $_SESSION['register']['gender'] = $gender;
+    if (empty($errors)) {
+        $_SESSION['register']['email'] = $email;
+        $_SESSION['register']['name'] = $name;
+        $_SESSION['register']['password'] = $password;
+        $_SESSION['register']['gender'] = $gender;
 
-            echo '<pre>';
-            var_dump($errors);
-            echo '</pre>';
-
-            header('Location: check.php');
-            exit();
-        }
+        echo '<pre>';
+        var_dump($errors);
+        echo '</pre>';
+    header('Location: check.php');
+    exit();
     }
     // $_SESSION['register'] = $_POST;
-
 
 ?>
 

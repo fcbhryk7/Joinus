@@ -99,6 +99,7 @@
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 3</div>
                     <div class="team-name">Decision plan details</div>
+
                     <div class="team-role">Guests and hosts can decide the details of the trip.</div>
                     <div class="team-role">Chat is not necessary.</div>
                   </div>
@@ -109,6 +110,7 @@
                   <div class="features-icon"><span class="icon-lightbulb"></span></div>
                   <div class="team-descr font-alt">
                     <div class="team-name">STEP 4</div>
+
                     <div class="team-name">On the day of plan</div>
                     <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
                     <div class="team-role">Host will show you the plan.</div>
@@ -132,11 +134,15 @@
           <div class="col-sm-8 col-sm-offset-2">
             <h4 class="font-alt mb-0"><!-- タイトル --></h4>
             <hr class="divider-w mt-10 mb-20">
-            <div role="tabpanel">
-              <ul class="nav nav-tabs font-alt" role="tablist">
-                <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
-                <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
-              </ul>
+
+              <div role="tabpanel">
+                <ul class="nav nav-tabs font-alt" role="tablist">
+                  <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
+                  <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
+                  </ul>
+                <div class="tab-content">
+
+                  <div class="tab-pane active" id="support">
 
               <div class="tab-content">
                 <div class="tab-pane active" id="support">
@@ -202,9 +208,78 @@
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
-              </div> <!-- tab-content -->
+              </div>
+          </div>
+
+          <div class="container">
+
+           <!--  <div class="row">
+              <div class="col-sm-12">
+                <ul class="filter font-alt" id="filters">
+                  <li><a class="current wow fadeInUp" href="#" data-filter="*">All</a></li>
+                  <li><a class="wow fadeInUp" href="#" data-filter=".illustration" data-wow-delay="0.2s">Plan</a></li>
+                  <li><a class="wow fadeInUp" href="#" data-filter=".marketing" data-wow-delay="0.4s">Request</a></li>
+                </ul>
+              </div>
+
+            </div> -->
+          </div>
+          <!-- <ul class="works-grid works-grid-gut works-grid-3 works-hover-w" id="works-grid">
+            <li class="work-item illustration webdesign"><a href="portfolio_single_featured_image1.html">
+                <div class="work-image"><img src="assets/images/portfolio/grid-portfolio1.jpg" alt="Portfolio Item"/></div>
+                <div class="work-caption font-alt">
+                  <h3 class="work-title">セブ観光</h3>
+                  <div class="work-descr">Leah</div>
+                </div></a></li>
+            <li class="work-item marketing photography"><a href="portfolio_single_featured_image2.html">
+                <div class="work-image"><img src="assets/images/portfolio/grid-portfolio2.jpg" alt="Portfolio Item"/></div>
+                <div class="work-caption font-alt">
+                  <h3 class="work-title">アイランドホッピング</h3>
+                  <div class="work-descr">Hiro</div>
+                </div></a></li>
+            <li class="work-item illustration photography"><a href="portfolio_single_featured_slider1.html">
+                <div class="work-image"><img src="assets/images/portfolio/grid-portfolio3.jpg" alt="Portfolio Item"/></div>
+                <div class="work-caption font-alt">
+                  <h3 class="work-title">マクタン観光</h3>
+                  <div class="work-descr">Carla</div>
+                </div></a></li>
+            <li class="work-item marketing photography"><a href="portfolio_single_featured_slider2.htmll">
+                <div class="work-image"><img src="assets/images/portfolio/grid-portfolio4.jpg" alt="Portfolio Item"/></div>
+                <div class="work-caption font-alt">
+                  <h3 class="work-title">バー巡り</h3>
+                  <div class="work-descr">Show</div>
+                </div></a></li>
+            <li class="work-item illustration webdesign"><a href="portfolio_single_featured_video1.html">
+                <div class="work-image"><img src="assets/images/portfolio/grid-portfolio5.jpg" alt="Portfolio Item"/></div>
+                <div class="work-caption font-alt">
+                  <h3 class="work-title">ショッピング</h3>
+                  <div class="work-descr">Kay</div>
+                </div></a></li>
+            <li class="work-item marketing webdesign"><a href="portfolio_single_featured_video2.html">
+                <div class="work-image"><img src="assets/images/portfolio/grid-portfolio6.jpg" alt="Portfolio Item"/></div>
+                <div class="work-caption font-alt">
+                  <h3 class="work-title">自由プラン</h3>
+                  <div class="work-descr">Reika</div>
+                </div></a></li>
+
+          </ul> -->
+        </section>
+
+        <!-- <section class="module-small bg-dark">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-md-8 col-lg-6 col-lg-offset-2">
+                <div class="callout-text font-alt">
+                  <h3 class="callout-title">Want to see more works?</h3>
+                  <p>We are always open to interesting projects.</p>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="callout-btn-box"><a class="btn btn-w btn-round" href="portfolio_boxed_gutter_col_3.html">Lets view portfolio</a></div>
+              </div>
             </div>
           </div>
         </section>
@@ -214,16 +289,47 @@
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
                 <h2 class="module-title font-alt">Our Services</h2>
+
                 <div class="module-subtitle font-serif">There are 4 features.</div>
               </div>
+
+            </div>
+            <div class="row multi-columns-row">
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="features-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+
+                  <h3 class="features-title font-alt">Host plan posting function.</h3>
+>>>>>>> master
+                  <p></p>
+                </div>
               </div>
-              <div class="row multi-columns-row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                  <div class="features-item">
-                    <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                    <h3 class="features-title font-alt">Host plan posting function.</h3>
-                    <p></p>
-                  </div>
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="features-item">
+                  <div class="features-icon"><span class="icon-bike"></span></div>
+
+                  <h3 class="features-title font-alt">Guest request function.</h3>
+>>>>>>> master
+                  <p></p>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="features-item">
+                  <div class="features-icon"><span class="icon-tools"></span></div>
+
+                  <h3 class="features-title font-alt">Plan creation without chat function.</h3>
+>>>>>>> master
+                  <p></p>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="features-item">
+                  <div class="features-icon"><span class="icon-gears"></span></div>
+
+                  <h3 class="features-title font-alt">Comment function.</h3>
+>>>>>>> master
+                  <p></p>
+>>>>>>> master
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="features-item">
