@@ -15,12 +15,21 @@
         exit();
     }
 
+    // プラン詳細情報
     $sql = 'SELECT * FROM plans WHERE user_id = ? AND plan_id = ?';
     $data = array($_SESSION['user']['id'], $_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
     $plan = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // イメージ情報
+    $sql = 'SELECT * FROM images WHERE plan_id = ? ORDER BY image_order';
+    $data = array($_REQUEST['id']);
+    $stmt = $dbh->prepare($sql);
+    $stmt-> execute($data);
+
+    $images = $stmt->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -77,7 +86,7 @@
                 </form>
               </div>
               <div class="col-sm-8 col-sm-offset-2 mt-40">
-                <form method="POST" action="profile_update.php" class="form" role="form" >
+                <form method="POST" action="plan_update.php" class="form" role="form" >
                   <h4 class="font-alt mb-0">Edit Profile</h4>
                   <hr class="divider-w mt-10 mb-20">
 
@@ -131,6 +140,12 @@
                       <input name="input_person" class="form-control input-lg" type="number" value="<?php echo $plan['person'] ?>" placeholder="The number of people"/>
                     </div>
 
+                    <!-- cost -->
+                    <div class="form-group">
+                      <label class="control-label">Cost (php)</label>
+                      <input name="input_cost" class="form-control input-lg" type="number" value="<?php echo $plan['cost'] ?>" placeholder="Cost"/>
+                    </div>
+
                     <!-- Entry field -->
                     <div class="form-group">
                       <label class="control-label">Entry field</label>
@@ -139,7 +154,7 @@
 
                     <div class="form-group" style="text-align: right;">
                       <button type="submit" class="btn btn-info btn-md">Update</button>
-                      <button type="button" onclick="location.href = 'profile.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
+                      <button type="button" onclick="location.href = 'plan_detail.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
                     </div>
                 </form>
               </div>

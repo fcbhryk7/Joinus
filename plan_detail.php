@@ -37,7 +37,7 @@
 
     // echo_var_dump('$images', $images);
     // プラン詳細情報
-    $sql = 'SELECT * FROM plans WHERE plan_id = ?';
+    $sql = 'SELECT * FROM plans WHERE request_type = 0 AND plan_id = ?';
     $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt-> execute($data);
@@ -47,7 +47,7 @@
     // echo_var_dump('$plans', $plans);
 
     // ユーザー情報
-    $sql = 'SELECT u.* FROM plans AS p, users AS u WHERE p.user_id = u.user_id AND p.plan_id = ?';
+    $sql = 'SELECT u.* FROM plans AS p, users AS u WHERE p.request_type = 0 AND p.user_id = u.user_id AND p.plan_id = ?';
     $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt-> execute($data);
@@ -135,6 +135,12 @@
       <?php include('header.php'); ?>
 
       <div class="main">
+        <?php if ($plans == false){ ?>
+        <section class="module">
+          <h1 style="margin-bottom: 50px;">This content is not available.</h1>
+          <<<a href="javascript:history.back()">BACK</a>
+        </section>
+        <?php } else { ?>
         <section class="module">
           <div class="container">
             <div class="row">
@@ -210,7 +216,7 @@
                 </div>
 
                 <!-- JOINUS機能 -->
-                <div class="row mb-20">
+                <div class="row">
                   <form method="POST" action="joinus.php">
                     <input type="hidden" name="plan_id" value="<?php echo $_REQUEST['id'];?>">
                     <div class="col-sm-12 form-group" style="text-align: center;">
@@ -223,6 +229,16 @@
                       <?php } ?>
                     </div>
                   </form>
+                </div>
+
+                <!-- 更新ボタン -->
+                <div class="row">
+                  <div class="col-sm-12 form-group" style="text-align: center;">
+                    <?php if($users['user_id'] == $_SESSION['user']['id']) { ?>
+                    <!-- <button class="btn btn-primary btn-md form-control">Edit</button> -->
+                    <a href="plan_edit.php?id=<?php echo $_REQUEST['id']; ?>" class="btn btn-primary btn-md form-control">edit</a>
+                    <?php } ?>
+                  </div>
                 </div>
                 <?php } ?>
 
@@ -269,6 +285,14 @@
                           <td>The number of people</td>
                           <td><?php echo $plans['person']; ?></td>
                         </tr>
+                        <tr>
+                          <td>Cost</td>
+                          <td><?php echo $plans['cost']; ?>php</td>
+                        </tr>
+                        <tr>
+                          <td>Entry field</td>
+                          <td><?php echo $plans['entry_field']; ?></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -276,12 +300,13 @@
                     <div class="comments reviews" id="InsertComment">
                       <?php foreach ($comments as $comment) { ?>
                       <div class="comment clearfix">
-                        <div class="comment-avatar"><a href="profile.php?id=<?php echo $comment['user_id']; ?>"><img src="user_profile_img/<?php echo $comment['image']; ?>" alt="avatar"/></a></div>
+                        <div class="comment-avatar"><img src="user_profile_img/<?php echo $comment['image']; ?>" alt="avatar"/></div>
                         <div class="comment-content clearfix">
-                          <div class="comment-author font-alt"><?php echo $comment['name']; ?></div>
+                          <div class="comment-author font-alt"><a href="profile.php?id=<?php echo $comment['user_id']; ?>"><?php echo $comment['name']; ?></a></div>
                           <div class="comment-body">
                             <p><?php echo $comment['comment']; ?></p>
                           </div>
+                          <div class="comment-meta font-alt"><?php echo $comment['created']; ?></div>
                         </div>
                       </div>
                       <?php } ?>
@@ -334,12 +359,13 @@
                     <div class="comments reviews">
                       <?php foreach ($joinuses as $joinus) { ?>
                       <div class="comment clearfix">
-                        <div class="comment-avatar"><a href="profile.php?id=<?php echo $joinus['user_id']; ?>"><img src="user_profile_img/<?php echo $joinus['image']; ?>" alt="avatar"/></a></div>
+                        <div class="comment-avatar"><img src="user_profile_img/<?php echo $joinus['image']; ?>" alt="avatar"/></div>
                         <div class="comment-content clearfix">
-                          <div class="comment-author font-alt"><?php echo $joinus['name']; ?></div>
+                          <div class="comment-author font-alt"><a href="profile.php?id=<?php echo $joinus['user_id']; ?>"><?php echo $joinus['name']; ?></a></div>
                           <div class="comment-body">
                             <p><?php echo $joinus['profile']; ?></p>
                           </div>
+                          <div class="comment-meta font-alt"><?php echo $joinus['created']; ?></div>
                         </div>
                       </div>
                       <?php } ?>
@@ -350,6 +376,7 @@
             </div>
           </div>
         </section>
+        <?php } ?>
 
         <!-- footer -->
         <?php include('footer.php'); ?>
