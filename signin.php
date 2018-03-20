@@ -5,60 +5,79 @@
   // likes.phpに乗っている$_SERVERをつかって調べることができる
 
   session_start();
-  require('functions.php'); //ファンクション
   require('dbconnect.php'); // 他のファイルの読み込み
+  require('functions.php'); //ファンクション
 
-  // サインインチェック
-  if (isset($_SESSION['user']['id'])) {
-    header('Location: index.php');
-    exit();
+  // エラーの連想配列を定義
+  $errors = array();
+
+  // ページ遷移元を取得 (前のページへ)
+  
+  if(empty($_POST)) {
+    $_SESSION['before_page'] = get_page_name();
+    echo $_SESSION['before_page'];
   }
 
-    // 画面の送信ボタンが押されたとき発動 / $_POSTが空じゃない時に発動
-    if (!empty($_POST)) {
-      $email = $_POST['email'];
-      $password = $_POST['password'];
+  // echo_var_dump('$_POST', $_POST);
 
-      // $emailが空じゃないかつ&passwordが空じゃない
-      if ($email != '' && $password != '') {
-        $sql = 'SELECT * FROM `users` WHERE `email`=?';
-        $data = array($email);
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute($data);
+  // 画面の送信ボタンが押されたとき発動 / $_POSTが空じゃない時に発動
+  if(!empty($_POST)) {
+    $email = $_POST['input_email'];
+    $password = $_POST['input_password'];
 
-        $record = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo '<pre>';
-        echo '$_POST = ';
-        var_dump($record);
-        echo '</pre>';
+    // $emailが空じゃないかつ&passwordが空じゃない
+    if($email != '' && $password != '') {
+      $sql = 'SELECT * FROM `users` WHERE `email`=?';
+      $data = array($email);
+      $stmt = $dbh->prepare($sql);
+      $stmt->execute($data);
 
-        if ($record == false) {
-          // メールアドレスミス
-        } else {
-          // パスワードが一致しているか
-          echo $record['password'];
-          echo '<br>';
-          echo $password;
-          echo '<br>';
+      $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if($record == false) {
+        // メールアドレスミス
+        $errors['email'] = 'norecord';
+      } else {
+        // パスワードが一致しているか
+
+          // echo $record['password'];
+          // echo '<br>';
+          // echo $password;
+          // echo '<br>';
+            
           // password_verify(普通文字列PW、ハッシュ文字列PW)
           // 一致していればtrueを、そうでなければfalseを返す
           $verify = password_verify($password, $record['password']);
 
-          if ($verify == true) {
+            if ($verify == true) {
             // サインイン処理
 
-            // ①セッションにサインインユーザーのidを保存
-            $_SESSION['user']['id'] = $record['id'];
+              // セッションにサインインユーザーのidを保存
+              $_SESSION['user']['id'] = $record['user_id'];
 
-            // 次のページに遷移するもの/exitとセット
-            header('Location: index.php');
-            exit();
-
-          }
-        }
+              // 次のページに遷移するもの/exitとセット
+              if ($_SESSION['before_page'] == 'thanks.php') {
+                          // profile_edit.phpに遷移
+                header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
+                exit();
+              } else {
+                  // 遷移元に戻る
+                  header('Location:' . $_SESSION['before_page']);
+                  exit();
+              }
+            } else {
+                $errors['password'] = "incorrect";
+            }
       }
-    } 
+    }
+      echo '<pre>';
+      echo '$errors = ';
+      var_dump($errors);
+      echo '</pre>';
+  }
 
+      
+      
  ?>
 
 <!DOCTYPE html>
@@ -124,7 +143,7 @@
       </div>
 
       <!-- ヘッダー読み込み -->
-      <?php include('header.php'); ?>
+      <?php //include('header.php'); ?>
 
       <!-- Body -->
       <div class="main">
@@ -134,33 +153,28 @@
               <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
                 <h4 class="font-alt">Signin</h4>
                 <hr class="divider-w mb-10">
-                <form class="form">
                   
                   <!-- signupへ転移 -->
                   <div class="form-group" align="right"><a href="register/signup.php">Signup here</a></div>
                   
                   <form method="POST" action="signin.php">
                     <div class="form-group">
-                      <input class="form-control" id="email" type="email" name="email" placeholder="Email"/>
-                      <?php if (isset($errors['email'])){ ?>
-                        <span style="color: red;">Eメールを入力してください</span><br>
-                      <?php } ?>
+                      <input class="form-control" id="email" type="email" name="input_email" placeholder="Email"/>
                     </div>
+
                     <div class="form-group">
-                      <input class="form-control" id="password" type="password" name="password" placeholder="Password"/>
-                      <?php if (isset($errors['password']) && $errors['password'] == 'blank' ){ ?>
-                        <span style="color: red;">パスワードを入力してください</span><br>
-                      <?php } ?>
-                      <?php if (isset($errors['rewrite'])){ ?>
-                        <span style="color: red;">パスワードを再入力してください</span><br>
-                      <?php } ?>
+                      <input class="form-control" id="password" type="password" name="input_password" placeholder="Password"/>
                     </div>
+
+                    <?php if(!empty($errors)) { ?>
+                      <p style="color: red;">Either email or password is invaild.</p>
+                    <?php } ?>
+
                     <div class="form-group">
-                      <button class="btn btn-round btn-b">Signin</button>
+                      <button class="btn btn-round btn-b" type="submit">Signin</button>
                     </div>
                   </form>
-                  <div class="form-group"><a href="">Forgot Password?</a></div>
-                </form>
+                  <!-- <div class="form-group"><a href="">Forgot Password?</a></div> -->
               </div>
             </div>
           </div>
