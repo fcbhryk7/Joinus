@@ -9,9 +9,9 @@
     // echo_var_dump('$_POST',$_POST);
     // echo_var_dump('$_FILES',$_FILES);
 
-    // POSTが空の場合は index.php へ強制遷移
+    // POSTが空の場合は signin.php へ強制遷移
     if (empty($_POST)) {
-        header('Location: index.php');
+        header('Location: signin.php');
         exit();
     }
 
