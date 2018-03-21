@@ -248,7 +248,7 @@
                 <div class="row">
                   <div class="col-sm-12 form-group" style="text-align: center;">
                     <!-- <button class="btn btn-primary btn-md form-control">Edit</button> -->
-                    <a href="plan_edit.php?id=<?php echo $_REQUEST['id']; ?>" class="btn btn-primary btn-md form-control">edit</a>
+                    <a href="request_edit.php?id=<?php echo $_REQUEST['id']; ?>" class="btn btn-primary btn-md form-control">edit</a>
                   </div>
                 </div>
                 <?php } ?>

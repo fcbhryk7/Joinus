@@ -45,7 +45,7 @@
                     $add_comment = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     // 最新コメントの追加
-                    echo '<div class="comment clearfix"><div class="comment-avatar"><img src="user_profile_img/'. $add_comment['image'] .'" alt="avatar"/></div><div class="comment-content clearfix"><div class="comment-author font-alt">' . $add_comment['name'] . '</div><div class="comment-body"><p>' . $add_comment['comment'] . '</p></div></div></div>';
+                    echo '<div class="comment clearfix"><div class="comment-avatar"><img src="user_profile_img/'. $add_comment['image'] .'" alt="avatar"/></div><div class="comment-content clearfix"><div class="comment-author font-alt"><a href="profile.php?id=' . $add_comment['user_id'] . '">' . $add_comment['name'] . '</a></div><div class="comment-body"><p>' . $add_comment['comment'] . '</p></div><div class="comment-meta font-alt">' . $add_comment['created'] . '</div></div></div>';
 
                 }
                 // 例外処理

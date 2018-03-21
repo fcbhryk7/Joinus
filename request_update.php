@@ -26,14 +26,27 @@
     $person = htmlspecialchars($_POST['input_person']);
     $cost = htmlspecialchars($_POST['input_cost']);
     $entry_field = htmlspecialchars($_POST['input_entry_field']);
+    $history = htmlspecialchars($_POST['input_history']);
+
+    // 変更履歴がない場合は、強制遷移
+    if ($history == '') {
+        header('Location: request_edit.php?id=' . $plan_id . '&action=rewrite');
+        exit();
+    }
 
     // plansテーブルを更新
-    $sql = 'UPDATE plans SET title = ?, content = ?, place = ?, start_datetime = ?, end_datetime = ?,location = ?, time = ?, person = ?, cost = ?, entry_field = ? , updated = NOW() WHERE plan_id = ? AND user_id = ? ';
-    $data = array($title, $content, $place, $start_datetime, $end_datetime, $location, $time, $person, $cost, $entry_field, $plan_id, $_SESSION['user']['id']);
+    $sql = 'UPDATE plans SET title = ?, content = ?, place = ?, start_datetime = ?, end_datetime = ?,location = ?, time = ?, person = ?, cost = ?, entry_field = ? , updated = NOW() WHERE plan_id = ?';
+    $data = array($title, $content, $place, $start_datetime, $end_datetime, $location, $time, $person, $cost, $entry_field, $plan_id);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
-    header('Location: plan_detail.php?id=' . $plan_id);
+    // historiesテーブルに登録
+    $sql = 'INSERT INTO histories SET user_id = ?, plan_id = ?, comment = ?, created = NOW()';
+    $data = array($_SESSION['user']['id'], $plan_id, $history);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute($data);
+
+    header('Location: request_detail.php?id=' . $plan_id);
     exit();
 
 

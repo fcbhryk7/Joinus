@@ -1,20 +1,16 @@
-<?php 
-
-    session_start(); //セッションスタート
-    require('dbconnect.php'); //DB接続
-    require('functions.php'); //ファンクション
+<?php
 
     $root_dir = search_assets(debug_backtrace());
 
-    // タグ情報取得
-    $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
-    $data = array($_REQUEST['id']);
-    $stmt = $dbh->prepare($sql);
-    $stmt-> execute($data);
+    // // タグ情報取得
+    // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
+    // $data = array($_REQUEST['id']);
+    // $stmt = $dbh->prepare($sql);
+    // $stmt-> execute($data);
 
-    $tags =  $stmt->fetchAll();
+    // $tags =  $stmt->fetchAll();
 
-    echo_var_dump('$tags', $tags);
+    // echo_var_dump('$tags', $tags);
 
  ?>
 
@@ -52,13 +48,13 @@
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
                 <ul class="dropdown-menu">
                   <?php if(isset($_SESSION['user']['id'])) { ?>
-                  <li><a href="profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
+                  <li><a href="<?php $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
+                  <?php } else { ?>
+                  <li><a href="<?php $root_dir; ?>signin.php">My page</a></li>
                   <?php } ?>
-                  <!-- <li><a href="index_op_fullscreen_gradient_overlay.html">Bookmark</a></li> -->
-                  <li><a href="<?php $root_dir; ?>index.php#works">Plan list</a></li>
-                  <li><a href="index_agency.html">Create plan</a></li>
-                  <li><a href="index_portfolio.html">Create request</a></li>
-                  <li><a href="signout.php">Signout</a></li>
+                  <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
+                  <li><a href="<?php $root_dir; ?>Plan_Request_post.php">Create plan / request</a></li>
+                  <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
                 </ul>
               </li>
             </ul>

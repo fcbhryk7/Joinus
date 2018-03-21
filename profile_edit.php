@@ -108,72 +108,72 @@
                 <form method="POST" action="profile_update.php" class="form" role="form" >
                   <h4 class="font-alt mb-0">Edit Profile</h4>
                   <hr class="divider-w mt-10 mb-20">
-                    <div class="form-group">
-                      <label class="control-label">Name</label>
-                      <input name="input_name" class="form-control input-lg" type="text"  value="<?php echo $profile['name'] ?>" placeholder="Name"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Gender</label>
-                      <!-- <input class="form-control input-lg" type="text" placeholder="Country"/> -->
-                      <select name="input_gender" class="form-control input-lg">
-                        <!-- <option <?php if ($profile['gender'] == '---') {echo 'selected';} ?>>---</option> -->
-                        <option <?php if ($profile['gender'] == 'female') {echo 'selected';} ?>>female</option>
-                        <option <?php if ($profile['gender'] == 'male') {echo 'selected';} ?>>male</option>
-                        <option <?php if ($profile['gender'] == 'other') {echo 'selected';} ?>>other</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Country</label>
-                      <!-- <input class="form-control input-lg" type="text" placeholder="Country"/> -->
-                      <select name="input_country" class="form-control input-lg">
-                        <!-- <option <?php if ($profile['gender'] == '---') {echo 'selected';} ?>>---</option> -->
+                  <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input name="input_name" class="form-control input-lg" type="text"  value="<?php echo $profile['name'] ?>" placeholder="Name"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Gender</label>
+                    <!-- <input class="form-control input-lg" type="text" placeholder="Country"/> -->
+                    <select name="input_gender" class="form-control input-lg">
+                      <!-- <option <?php if ($profile['gender'] == '---') {echo 'selected';} ?>>---</option> -->
+                      <option <?php if ($profile['gender'] == 'female') {echo 'selected';} ?>>female</option>
+                      <option <?php if ($profile['gender'] == 'male') {echo 'selected';} ?>>male</option>
+                      <option <?php if ($profile['gender'] == 'other') {echo 'selected';} ?>>other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Country</label>
+                    <!-- <input class="form-control input-lg" type="text" placeholder="Country"/> -->
+                    <select name="input_country" class="form-control input-lg">
+                      <!-- <option <?php if ($profile['gender'] == '---') {echo 'selected';} ?>>---</option> -->
 
-                        <?php foreach ($countries as $key => $value) { ?>
-                        <option <?php if ($countries[$key]['name'] == $profile['country_name']) {echo 'selected';} ?>>
-                          <?php echo $countries[$key]['name']; ?>
-                        </option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Address</label>
-                      <input name="input_address" class="form-control input-lg" value="<?php echo $profile['address'] ?>" type="text" placeholder="Address"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Callnumber</label>
-                      <input name="input_callnumber" class="form-control input-lg" type="text" value="<?php echo $profile['callnumber'] ?>" placeholder="Callnumber"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Staying time</label>
-                      <!-- <input name="input-staying-time" class="form-control input-lg" type="text" value="<?php echo $profile['staying_time'] ?>" placeholder="Staying time"/> -->
-                      <div class="row">
-                        <div class="col-xs-6">
-                          <input type="text" name="input_time_number" value="<?php echo $staying_time[0] ?>" class="form-control input-lg">
-                        </div>
-                        <div class="col-xs-6">
-                          <select name="input_time_unit" class="form-control input-lg">
-                            <option <?php if ($staying_time['1'] == '---') {echo 'selected';} ?>>---</option>
-                            <option <?php if ($staying_time['1'] == 'days') {echo 'selected';} ?>>days</option>
-                            <option <?php if ($staying_time['1'] == 'weeks') {echo 'selected';} ?>>weeks</option>
-                            <option <?php if ($staying_time['1'] == 'months') {echo 'selected';} ?>>months</option>
-                            <option <?php if ($staying_time['1'] == 'years') {echo 'selected';} ?>>years</option>
-                          </select>
-                        </div>
+                      <?php foreach ($countries as $key => $value) { ?>
+                      <option <?php if ($countries[$key]['name'] == $profile['country_name']) {echo 'selected';} ?>>
+                        <?php echo $countries[$key]['name']; ?>
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Address</label>
+                    <input name="input_address" class="form-control input-lg" value="<?php echo $profile['address'] ?>" type="text" placeholder="Address"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Callnumber</label>
+                    <input name="input_callnumber" class="form-control input-lg" type="text" value="<?php echo $profile['callnumber'] ?>" placeholder="Callnumber"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Staying time</label>
+                    <!-- <input name="input-staying-time" class="form-control input-lg" type="text" value="<?php echo $profile['staying_time'] ?>" placeholder="Staying time"/> -->
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <input type="text" name="input_time_number" value="<?php echo $staying_time[0] ?>" class="form-control input-lg">
+                      </div>
+                      <div class="col-xs-6">
+                        <select name="input_time_unit" class="form-control input-lg">
+                          <option <?php if ($staying_time['1'] == '---') {echo 'selected';} ?>>---</option>
+                          <option <?php if ($staying_time['1'] == 'days') {echo 'selected';} ?>>days</option>
+                          <option <?php if ($staying_time['1'] == 'weeks') {echo 'selected';} ?>>weeks</option>
+                          <option <?php if ($staying_time['1'] == 'months') {echo 'selected';} ?>>months</option>
+                          <option <?php if ($staying_time['1'] == 'years') {echo 'selected';} ?>>years</option>
+                        </select>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label class="control-label" for="datepicker">Birthday</label>
-                      <input name="input_birthday" id="datepicker" class="form-control input-lg" type="text" value="<?php echo $profile['birthday'] ?>" placeholder="Birthday"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">Profile</label>
-                      <textarea name="input_profile" class="form-control" rows="7" placeholder="Profile"><?php echo $profile['profile'] ?></textarea>
-                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label" for="datepicker">Birthday</label>
+                    <input name="input_birthday" id="datepicker" class="form-control input-lg" type="text" value="<?php echo $profile['birthday'] ?>" placeholder="Birthday"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Profile</label>
+                    <textarea name="input_profile" class="form-control" rows="7" placeholder="Profile"><?php echo $profile['profile'] ?></textarea>
+                  </div>
 
-                    <div class="form-group" style="text-align: right;">
-                      <button type="submit" class="btn btn-info btn-md">Update</button>
-                      <button type="button" onclick="location.href = 'profile.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
-                    </div>
+                  <div class="form-group" style="text-align: right;">
+                    <button type="submit" class="btn btn-info btn-md">Update</button>
+                    <button type="button" onclick="location.href = 'profile.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
+                  </div>
                 </form>
               </div>
             </div> <!-- row -->

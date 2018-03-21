@@ -8,6 +8,9 @@
     // 配列表示
     echo_var_dump('$_POST',$_POST);
 
+    // 遷移前URLの取得
+    $url = get_page_name();
+
     // $_POSTが未定義の場合は、plan_detail.phpへ強制遷移
     if(empty($_POST)){
       header('Location: signin.php');
@@ -47,7 +50,7 @@
     $dbh=null;
 
     // ページ遷移
-    header('Location: plan_detail.php?id=' . $_POST['plan_id']);
+    header('Location: ' . $url);
     exit();
 
 

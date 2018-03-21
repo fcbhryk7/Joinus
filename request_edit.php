@@ -15,6 +15,13 @@
         exit();
     }
 
+    // エラー配列
+    $errors = array();
+    // $_REQUEST['action'] が定義され、rewriteのときは、エラー配列へ格納
+    if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'rewrite' ) {
+        $errors['history'] = 'blank';
+    }
+
     // プラン詳細情報
     // $sql = 'SELECT * FROM plans WHERE user_id = ? AND plan_id = ?';
     // $data = array($_SESSION['user']['id'], $_REQUEST['id']);
@@ -74,7 +81,11 @@
               <div class="col-sm-8 col-sm-offset-2">
                 <h4 class="font-alt mb-0">Edit Image</h4>
                 <hr class="divider-w mt-10 mb-20">
-                <img class="mb-20 img-thumbnail" width="150" src="user_profile_img/<?php echo $plan['image']; ?>">
+                <?php if($images == false) { ?>
+                <img class="mb-20 img-thumbnail" width="150" src="images/no_image_available.png; ?>">
+                <?php } else { foreach ($images as $image) {?>
+                <img class="mb-20 img-thumbnail" width="150" src="images/<?php echo $image['image_name']; ?>">
+                <?php }} ?>
                 <form method="POST" action="trimming.php" class="form" role="form" enctype="multipart/form-data">
                   <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="profile-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
                   <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
@@ -88,79 +99,90 @@
                 </form>
               </div>
               <div class="col-sm-8 col-sm-offset-2 mt-40">
-                <form method="POST" action="plan_update.php" class="form" role="form" >
+                <form method="POST" action="request_update.php" class="form" role="form" >
                   <h4 class="font-alt mb-0">Edit Profile</h4>
                   <hr class="divider-w mt-10 mb-20">
 
-                    <!-- plan_id -->
-                    <input type="hidden" name="input_plan_id" value="<?php echo $plan['plan_id']; ?>">
+                  <!-- plan_id -->
+                  <input type="hidden" name="input_plan_id" value="<?php echo $plan['plan_id']; ?>">
 
-                    <!-- title -->
-                    <div class="form-group">
-                      <label class="control-label">Title</label>
-                      <input name="input_title" class="form-control input-lg" type="text"  value="<?php echo $plan['title'] ?>" placeholder="Title"/>
-                    </div>
+                  <!-- title -->
+                  <div class="form-group">
+                    <label class="control-label">Title</label>
+                    <input name="input_title" class="form-control input-lg" type="text"  value="<?php echo $plan['title'] ?>" placeholder="Title"/>
+                  </div>
 
-                    <!-- content -->
-                    <div class="form-group">
-                      <label class="control-label">Content</label>
-                      <textarea name="input_content" class="form-control" rows="5" placeholder="Content"><?php echo $plan['content'] ?></textarea>
-                    </div>
+                  <!-- content -->
+                  <div class="form-group">
+                    <label class="control-label">Content</label>
+                    <textarea name="input_content" class="form-control" rows="5" placeholder="Content"><?php echo $plan['content'] ?></textarea>
+                  </div>
 
-                    <!-- destination -->
-                    <div class="form-group">
-                      <label class="control-label">Destination</label>
-                      <input name="input_place" class="form-control input-lg" type="text"  value="<?php echo $plan['place'] ?>" placeholder="Destination"/>
-                    </div>
+                  <!-- destination -->
+                  <div class="form-group">
+                    <label class="control-label">Destination</label>
+                    <input name="input_place" class="form-control input-lg" type="text"  value="<?php echo $plan['place'] ?>" placeholder="Destination"/>
+                  </div>
 
-                    <!-- Start & End -->
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-xs-6">
-                          <label class="control-label">Start time</label>
-                          <input type="text" name="input_start_datetime" value="<?php echo $plan['start_datetime'] ?>" class="form-control input-lg datetimepicker">
-                        </div>
-                        <div class="col-xs-6">
-                          <label class="control-label">End time</label>
-                          <input type="text" name="input_end_datetime" value="<?php echo $plan['end_datetime'] ?>" class="form-control input-lg datetimepicker">
-                        </div>
+                  <!-- Start & End -->
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <label class="control-label">Start time</label>
+                        <input type="text" name="input_start_datetime" value="<?php echo $plan['start_datetime'] ?>" class="form-control input-lg datetimepicker">
+                      </div>
+                      <div class="col-xs-6">
+                        <label class="control-label">End time</label>
+                        <input type="text" name="input_end_datetime" value="<?php echo $plan['end_datetime'] ?>" class="form-control input-lg datetimepicker">
                       </div>
                     </div>
+                  </div>
 
-                    <!-- rendezvous -->
-                    <div class="form-group">
-                      <label class="control-label">Rendezvous</label>
-                      <input name="input_location" class="form-control input-lg" type="text"  value="<?php echo $plan['location'] ?>" placeholder="Rendezvous"/>
-                    </div>
+                  <!-- rendezvous -->
+                  <div class="form-group">
+                    <label class="control-label">Rendezvous</label>
+                    <input name="input_location" class="form-control input-lg" type="text"  value="<?php echo $plan['location'] ?>" placeholder="Rendezvous"/>
+                  </div>
 
-                    <!-- time -->
-                    <div class="form-group">
-                      <label class="control-label">Time</label>
-                      <input type="text" name="input_time" value="<?php echo $plan['time'] ?>" class="form-control input-lg datetimepicker">
-                    </div>
+                  <!-- time -->
+                  <div class="form-group">
+                    <label class="control-label">Time</label>
+                    <input type="text" name="input_time" value="<?php echo $plan['time'] ?>" class="form-control input-lg datetimepicker">
+                  </div>
 
-                    <!-- person -->
-                    <div class="form-group">
-                      <label class="control-label">The number of people</label>
-                      <input name="input_person" class="form-control input-lg" type="number" value="<?php echo $plan['person'] ?>" placeholder="The number of people"/>
-                    </div>
+                  <!-- person -->
+                  <div class="form-group">
+                    <label class="control-label">The number of people</label>
+                    <input name="input_person" class="form-control input-lg" type="number" value="<?php echo $plan['person'] ?>" placeholder="The number of people"/>
+                  </div>
 
-                    <!-- cost -->
-                    <div class="form-group">
-                      <label class="control-label">Cost (php)</label>
-                      <input name="input_cost" class="form-control input-lg" type="number" value="<?php echo $plan['cost'] ?>" placeholder="Cost"/>
-                    </div>
+                  <!-- cost -->
+                  <div class="form-group">
+                    <label class="control-label">Cost (php)</label>
+                    <input name="input_cost" class="form-control input-lg" type="number" value="<?php echo $plan['cost'] ?>" placeholder="Cost"/>
+                  </div>
 
-                    <!-- Entry field -->
-                    <div class="form-group">
-                      <label class="control-label">Entry field</label>
-                      <textarea name="input_entry_field" class="form-control" rows="5" placeholder="Entry field"><?php echo $plan['entry_field'] ?></textarea>
-                    </div>
+                  <!-- Entry field -->
+                  <div class="form-group">
+                    <label class="control-label">Entry field</label>
+                    <textarea name="input_entry_field" class="form-control" rows="5" placeholder="Entry field"><?php echo $plan['entry_field'] ?></textarea>
+                  </div>
 
-                    <div class="form-group" style="text-align: right;">
-                      <button type="submit" class="btn btn-info btn-md">Update</button>
-                      <button type="button" onclick="location.href = 'plan_detail.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
-                    </div>
+                  <h4 class="font-alt mt-40">Change history</h4>
+                  <hr class="divider-w mt-10 mb-20">
+                  <!-- Change history -->
+                  <div class="form-group">
+                    <?php if(isset($errors['history']) && $errors['history'] = 'blank'){ ?>
+                    <span style="color: red;">Please enter change history.</span>
+                    <?php } ?>
+                    <!-- <label class="control-label">The change history</label> -->
+                    <textarea name="input_history" class="form-control" rows="5" placeholder="Change history"></textarea>
+                  </div>
+
+                  <div class="form-group" style="text-align: right;">
+                    <button type="submit" class="btn btn-info btn-md">Update</button>
+                    <button type="button" onclick="location.href = 'plan_detail.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
+                  </div>
                 </form>
               </div>
             </div> <!-- row -->
