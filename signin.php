@@ -61,8 +61,7 @@
                 header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
                 exit();
               } else {
-                  // 遷移元に戻る
-                  header('Location:' . $_SESSION['before_page']);
+                  header('Location: index.php');
                   exit();
               }
             } else {
@@ -70,10 +69,10 @@
             }
       }
     }
-      echo '<pre>';
-      echo '$errors = ';
-      var_dump($errors);
-      echo '</pre>';
+      // echo '<pre>';
+      // echo '$errors = ';
+      // var_dump($errors);
+      // echo '</pre>';
   }
 
       
