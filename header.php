@@ -12,7 +12,7 @@
               <a class="navbar-brand" href="../index.php">Joinus!</a>
           </div>
  <!-- けんさくまど -->
-          <div class="row">
+<!--           <div class="row">
               <div class="col-md-6">
                   <div id="custom-search-input">
                       <div class="input-group col-md-12">
@@ -25,7 +25,21 @@
                       </div>
                   </div>
               </div>
-          </div>
+          </div> -->
+
+
+<!-- <form method="GET" action="index.php" target="_blank">
+<input type="search" name="s" size="31" maxlength="255" value="">
+<input type="submit" name="btng" value="検索">
+<input type="hidden" name="hl" value="ja">
+</form> -->
+
+<form role="search" method="GET" action="index.php">
+<input type="search" placeholder="keyword" name="s">
+<input type="submit" class="button" value="search">
+</form>
+
+
 
 <!-- ヘッダーメニューバー -->
           <div class="collapse navbar-collapse" id="custom-collapse">
@@ -33,7 +47,7 @@
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
                 <ul class="dropdown-menu">
                   <li><a href="../profile.php">My page</a></li>
-                  <li><a href="index_op_fullscreen_gradient_overlay.html">Bookmark</a></li>
+                  <li><a href="index_op_fullscreen_gradient_overlay.html"></a></li>
                   <li><a href="index_agency.html">Create plan</a></li>
                   <li><a href="index_portfolio.html">Create request</a></li>
                   <li><a href="index_restaurant.html">Signout</a></li>
