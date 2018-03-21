@@ -80,31 +80,39 @@
       <section class="home-section home-full-height photography-page" id="home">
         <div class="hero-slider">
           <ul class="slides">
-            <li class="bg-dark" style="background-image:url(assets/images/main1.jpg);">
+            <li class="bg-dark" style="background-image:url(images/main1.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text"><!-- コメント/画像urlの最初と最後に&quot; --></div>
+                  <div class="font-alt mb-40 titan-title-size-4" >Joinus!</div>
+                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(assets/images/main2.jpg);">
+            <li class="bg-dark" style="background-image:url(images/main2.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text"><!-- コメント/ --></div>
+                  <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
+                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(assets/images/main3.jpg);">
+            <li class="bg-dark" style="background-image:url(images/main3.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text"><!-- コメント/ --></div>
+                  <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
+                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(assets/images/main4.jpgg);">
+            <li class="bg-dark" style="background-image:url(images/main4.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text"><!-- コメント/ --></div>
+                  <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
+                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
