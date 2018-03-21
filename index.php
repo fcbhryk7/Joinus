@@ -1,11 +1,7 @@
 <?php 
   session_start();
-  require('functions.php');
   require('dbconnect.php');
-
-
-
-
+  require('functions.php');
 
 
  ?>
@@ -80,57 +76,35 @@
       <!-- Header -->
       <?php //include('header.php'); ?>
 
+      <!-- スライダー -->
       <section class="home-section home-full-height photography-page" id="home">
         <div class="hero-slider">
-          <div class="titan-caption">
-          <div class="caption-content">
-            <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
-            <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
-            <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
-            <a class="section-scroll btn btn-border-w btn-round" href="#about">About us</a>
-          </div>
-          </div>
-        </div>
           <ul class="slides">
-            <li class="bg-dark" style="background-image:url(&quot;assets/images/photography/image6.jpg&quot;);">
+            <li class="bg-dark" style="background-image:url(assets/images/main1.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text">Life in lake</div>
+                  <div class="font-alt caption-text"><!-- コメント/画像urlの最初と最後に&quot; --></div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(&quot;assets/images/photography/image1.jpg&quot;);">
+            <li class="bg-dark" style="background-image:url(assets/images/main2.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text">Image 1 caption</div>
+                  <div class="font-alt caption-text"><!-- コメント/ --></div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(&quot;assets/images/photography/image2.jpg&quot;);">
+            <li class="bg-dark" style="background-image:url(assets/images/main3.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text">Image 2 caption</div>
+                  <div class="font-alt caption-text"><!-- コメント/ --></div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(&quot;assets/images/photography/image3.jpg&quot;);">
+            <li class="bg-dark" style="background-image:url(assets/images/main4.jpgg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt caption-text">Image 3 caption</div>
-                </div>
-              </div>
-            </li>
-            <li class="bg-dark" style="background-image:url(&quot;assets/images/photography/image4.jpg&quot;);">
-              <div class="container">
-                <div class="image-caption">
-                  <div class="font-alt caption-text">Image 4 caption</div>
-                </div>
-              </div>
-            </li>
-            <li class="bg-dark" style="background-image:url(&quot;assets/images/photography/image5.jpg&quot;);">
-              <div class="container">
-                <div class="image-caption">
-                  <div class="font-alt caption-text">Image 5 caption</div>
+                  <div class="font-alt caption-text"><!-- コメント/ --></div>
                 </div>
               </div>
             </li>
@@ -152,65 +126,6 @@
             </form>
           </div>
         </div>
-
-        <!-- サービス使い方 -->
-        <hr class="divider-w">
-        <section class="module" id="team">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">How to use</h2>
-                <div class="module-subtitle font-serif">You can easily share the local experiences and events in Cebu.</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 1</div>
-                    <div class="team-name">Search for plans</div>
-                    <div class="team-role">Guests select favorite plan.</div>
-                    <div class="team-role">Guests can request plan.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 2</div>
-                    <div class="team-name">Confirm reservation</div>
-                    <div class="team-role">Host a pproves.</div>
-                    <div class="team-role">The guest and the host will move to detailed communication.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 3</div>
-                    <div class="team-name">Decision plan details</div>
-                    <div class="team-role">Guests and hosts can decide the details of the trip.</div>
-                    <div class="team-role">Chat is not necessary.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 4</div>
-                    <div class="team-name">On the day of plan</div>
-                    <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
-                    <div class="team-role">Host will show you the plan.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <!-- プランとリクエスト一覧 -->
         <section class="module pb-0" id="works">
@@ -304,6 +219,65 @@
               </div>
           </div>
           <div class="container"></div>
+        </section>
+
+        <!-- サービス使い方 -->
+        <hr class="divider-w">
+        <section class="module" id="team">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">How to use</h2>
+                <div class="module-subtitle font-serif">You can easily share the local experiences and events in Cebu.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 1</div>
+                    <div class="team-name">Search for plans</div>
+                    <div class="team-role">Guests select favorite plan.</div>
+                    <div class="team-role">Guests can request plan.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 2</div>
+                    <div class="team-name">Confirm reservation</div>
+                    <div class="team-role">Host a pproves.</div>
+                    <div class="team-role">The guest and the host will move to detailed communication.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 3</div>
+                    <div class="team-name">Decision plan details</div>
+                    <div class="team-role">Guests and hosts can decide the details of the trip.</div>
+                    <div class="team-role">Chat is not necessary.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 4</div>
+                    <div class="team-name">On the day of plan</div>
+                    <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
+                    <div class="team-role">Host will show you the plan.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- サービスの特徴 -->
