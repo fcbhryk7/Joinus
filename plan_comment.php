@@ -7,15 +7,9 @@
     // 配列表示
     // echo_var_dump('$_POST',$_POST);
 
-    // リクエストがない場合はエラーメッセージ
-    if (!isset($_SESSION['user'])) {
-        echo '$_SESSIONが未定義です';
-        exit();
-    }
-
-    // $_POSTが空の場合は、トップページへ強制遷移
+    // $_POSTが未定義の場合は、signin.phpへ強制遷移
     if (empty($_POST)) {
-        header('Location: top.php');
+        header('Location: signin.php');
         exit();
     }
 
@@ -51,12 +45,12 @@
                     $add_comment = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     // 最新コメントの追加
-                    echo '<div class="comment clearfix"><div class="comment-avatar"><img src="user_profile_img/'. $add_comment['image'] .'" alt="avatar"/></div><div class="comment-content clearfix"><div class="comment-author font-alt">' . $add_comment['name'] . '</div><div class="comment-body"><p>' . $add_comment['comment'] . '</p></div></div></div>';
+                    echo '<div class="comment clearfix"><div class="comment-avatar"><img src="user_profile_img/'. $add_comment['image'] .'" alt="avatar"/></div><div class="comment-content clearfix"><div class="comment-author font-alt"><a href="profile.php?id=' . $add_comment['user_id'] . '">' . $add_comment['name'] . '</a></div><div class="comment-body"><p>' . $add_comment['comment'] . '</p></div><div class="comment-meta font-alt">' . $add_comment['created'] . '</div></div></div>';
 
                 }
                 // 例外処理
                 catch (exception $e) {
-                   echo "インサート失敗" . $e->getMessage();
+                   echo "登録に失敗しました。" . $e->getMessage();
                   //ロールバック
                   $dbh->rollback();
                 }
