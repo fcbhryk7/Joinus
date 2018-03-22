@@ -34,59 +34,64 @@
         // 日付+ファイル名
         $submit_file_name = $date_str . $file_name;
 
-        // ファイルアップロードする関数
-        move_uploaded_file($_FILES['input_img_name']['tmp_name'], 'user_profile_img/' . $submit_file_name);
 
-        // トリミングの値設定
-        $profileImageX = $_POST['profileImageX'];
-        $profileImageY = $_POST['profileImageY'];
-        $profileImageW = $_POST['profileImageW'];
-        $profileImageH = $_POST['profileImageH'];
+        try {
+            // ファイルアップロードする関数
+            move_uploaded_file($_FILES['input_img_name']['tmp_name'], 'user_profile_img/' . $submit_file_name);
+
+            // トリミングの値設定
+            $profileImageX = $_POST['profileImageX'];
+            $profileImageY = $_POST['profileImageY'];
+            $profileImageW = $_POST['profileImageW'];
+            $profileImageH = $_POST['profileImageH'];
 
 
-        // $file = 'images/20180308081536kumamon.jpeg';
-        $file = 'user_profile_img/' . $submit_file_name;
+            // $file = 'images/20180308081536kumamon.jpeg';
+            $file = 'user_profile_img/' . $submit_file_name;
 
-        //元の画像のサイズを取得する
-        // list($w, $h) = getimagesize($file);
+            //元の画像のサイズを取得する
+            // list($w, $h) = getimagesize($file);
 
-        //サムネイルのサイズ
-        $thumbW = 300;
-        $thumbH = 300;
+            //サムネイルのサイズ
+            $thumbW = 300;
+            $thumbH = 300;
 
-        //サムネイルになる土台の画像を作る
-        $thumbnail = imagecreatetruecolor($thumbW, $thumbH);
+            //サムネイルになる土台の画像を作る
+            $thumbnail = imagecreatetruecolor($thumbW, $thumbH);
 
-        //元の画像を読み込む
-        if($file_type == 'jpg' || $file_type == 'jpeg'){
-            $baseImage = imagecreatefromjpeg($file);
+            //元の画像を読み込む
+            if($file_type == 'jpg' || $file_type == 'jpeg'){
+                $baseImage = imagecreatefromjpeg($file);
+            }
+            elseif($file_type == 'png'){
+                $baseImage = imagecreatefrompng($file);
+            }
+            elseif($file_type == 'gif'){
+                $baseImage = imagecreatefromgif($file);
+            }
+
+            //サムネイルになる土台の画像に合わせて元の画像を縮小しコピーペーストする
+            imagecopyresampled($thumbnail, $baseImage, 0, 0, $profileImageX, $profileImageY, $thumbW, $thumbH, $profileImageW, $profileImageH);
+
+            //圧縮率60で保存する
+            if($file_type == 'jpg' || $file_type == 'jpeg'){
+                imagejpeg($thumbnail, $file, 60);
+            }
+            elseif($file_type == 'png'){
+                imagepng($thumbnail, $file, 6);
+            }
+            elseif($file_type == 'gif'){
+                imagegif($thumbnail, $file);
+            }
+
+            // usersテーブルを更新
+            $sql = 'UPDATE users SET image = ?, updated = NOW() WHERE user_id = ? ';
+            $data = array($submit_file_name, $_SESSION['user']['id']);
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute($data);
+        } catch (Exception $e) {
+            
         }
-        elseif($file_type == 'png'){
-            $baseImage = imagecreatefrompng($file);
-        }
-        elseif($file_type == 'gif'){
-            $baseImage = imagecreatefromgif($file);
-        }
-
-        //サムネイルになる土台の画像に合わせて元の画像を縮小しコピーペーストする
-        imagecopyresampled($thumbnail, $baseImage, 0, 0, $profileImageX, $profileImageY, $thumbW, $thumbH, $profileImageW, $profileImageH);
-
-        //圧縮率60で保存する
-        if($file_type == 'jpg' || $file_type == 'jpeg'){
-            imagejpeg($thumbnail, $file, 60);
-        }
-        elseif($file_type == 'png'){
-            imagepng($thumbnail, $file, 6);
-        }
-        elseif($file_type == 'gif'){
-            imagegif($thumbnail, $file);
-        }
-
-        // usersテーブルを更新
-        $sql = 'UPDATE users SET image = ?, updated = NOW() WHERE user_id = ? ';
-        $data = array($submit_file_name, $_SESSION['user']['id']);
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute($data);
     }
 
     header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);

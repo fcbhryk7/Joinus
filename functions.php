@@ -28,9 +28,9 @@
     $path = explode('/', $url['path']);
 
     if($path[3] == 'register') {
-        return $path[4];
+        return $path[4] . '?' . $url['query'];
     } else {
-        return $path[3];
+        return $path[3]  . '?' . $url['query'];
     }
   }
 
@@ -50,6 +50,26 @@
       $dbh = null;
 
       return $countries;
+  }
+
+  // assetsディレクトリを指定する関数
+  function search_assets($full_path) {
+      // 読み込み元のフルパスを取得
+      // $full_path=debug_backtrace();
+      // 各ディレクトリ名を分割
+      $separate_dir = explode('/', $full_path[0]['file']);
+      // カレントディレクトリを取得
+      $current_dir = $separate_dir[count($separate_dir)-2];
+
+      // ディレクトリの階層別にファイルパスを変更
+      if ($current_dir == 'register') {
+          $root_dir = '../';
+      } else {
+          $root_dir = '';
+      }
+      // echo $root_dir;
+
+      return $root_dir;
   }
 
 ?>

@@ -11,6 +11,7 @@
 
     // DBコネクション
     require('../dbconnect.php');
+    require('../functions.php');
 
     if(!isset($_SESSION['register'])) {
         header('Location: signup.php');

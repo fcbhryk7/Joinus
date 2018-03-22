@@ -4,7 +4,9 @@
     session_start();
     require('dbconnect.php'); //DB接続
 
-    $sql = 'SELECT p.* FROM plans AS p, tags AS t, plans_tags AS pt WHERE p.plan_id = pt.plan_id AND t.tag_id = pt.tag_id AND name = ?'
+
+
+    $sql = 'SELECT p.* FROM plans AS p, tags AS t, plans_tags AS pt WHERE p.plan_id = pt.plan_id AND t.tag_id = pt.tag_id AND name = ? ORDER BY p.created ASC'
       $data = array($_GET['s']);
       $stmt = $dbh->prepare($sql);
       $stmt->execute();
