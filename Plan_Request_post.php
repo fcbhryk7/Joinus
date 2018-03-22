@@ -84,6 +84,7 @@
         if (isset($_REQUEST['action'])) {
             $errors['img_name'] = 'rewrite';
         }
+      }
   }
 
  ?>
@@ -168,20 +169,19 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-8 col-sm-offset-2">
-                <h4 class="font-alt mb-0">Plan / Request post</h4>
-                <hr class="divider-w mt-10 mb-20">
                 <form class="form" role="form">
-                  <div class="col-sm-4 mb-sm-20">
-                    <select class="form-control">
+                  <h4 class="font-alt mb-0">Plan / Request post</h4>
+                  <hr class="divider-w mt-10 mb-20">
+                  <div class="form-group">
+                    <label class="control-label">Select plan or request</label>
+                    <select class="form-control input-lg">
                       <option>Plan</option>
                       <option>Request</option>
                     </select>
                   </div>
-                  <div class="col-sm-3">
-                    <button class="btn btn-block btn-round btn-g" type="submit">Select</button>
-                  </div>
                   <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Title"/>
+                    <label class="control-label">Title</label>
+                    <input class="form-control input-lg" type="text" placeholder="Title"/>
                   </div>
                   <div class="form-group">
                     <input class="form-control" type="text" placeholder="Tags"/>

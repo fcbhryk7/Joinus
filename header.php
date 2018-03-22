@@ -1,12 +1,6 @@
 <?php
 
-<<<<<<< HEAD
     $root_dir = search_assets(debug_backtrace());
-=======
-    // session_start(); //セッションスタート
-    // require('dbconnect.php'); //DB接続
-    // require('functions.php'); //ファンクション
->>>>>>> master
 
     // // タグ情報取得
     // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
