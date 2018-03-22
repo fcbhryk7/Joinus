@@ -1,6 +1,7 @@
 <?php
     // セッションスタート
     session_start();
+    require('../functions.php');
 
     //エラー配列定義
     $errors = array();
@@ -61,7 +62,6 @@
         if ($gender == '') {
             $errors['gender'] = 'blank';
         }
-    }
 
     if (empty($errors)) {
         $_SESSION['register']['email'] = $email;
@@ -104,7 +104,7 @@
 
       <!--ヘッダーりくワイヤ -->
       <?php
-          require('../header.php');
+          //require('../header.php');
       ?>
 
       <!-- メイン画像 -->
@@ -130,7 +130,7 @@
               <div class="col-sm-5">
                 <h4 class="font-alt">Signup</h4>
                 <hr class="divider-w mb-10">
-                <form class="form" method="POST" action="">
+                <form class="form" method="POST" action="signup.php">
 
 
                   <div class="form-group">

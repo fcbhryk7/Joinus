@@ -9,12 +9,12 @@
     // ③タグ部分を繋ぐ
     // ④ORDER BY 最新順に並び替え
 
-  $sql SELECT p.＊, i.＊ FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = '?' ORDER BY p.created DESC
-  $data = array(%%);
-  $stmt = $dbh->prepare($sql);
-  $stmt->execute($data);
+  // $sql SELECT p.＊, i.＊ FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = '?' ORDER BY p.created DESC
+  // $data = array(%%);
+  // $stmt = $dbh->prepare($sql);
+  // $stmt->execute($data);
 
-  $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+  // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
 
  ?>
 
@@ -29,27 +29,8 @@
     <title>Joinus!</title>
     <?php 
       require('favicons_link.php');
-      //require('stylesheet_link.php');
+      require('stylesheet_link.php');
     ?>
-
-    <!-- Default stylesheets-->
-    <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Template specific stylesheets-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="assets/lib/animate.css/animate.css" rel="stylesheet">
-    <link href="assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
-    <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
-    <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-    <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-    <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
-    <!-- Main stylesheet and color file-->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
-
   </head>
 
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
