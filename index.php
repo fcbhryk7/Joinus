@@ -3,6 +3,18 @@
   require('dbconnect.php');
   require('functions.php');
 
+  // プランリクエスト一覧表示&検索機能
+    // ①使うテーブルを把握
+    // ②テーブルのid同士を繋ぐ
+    // ③タグ部分を繋ぐ
+    // ④ORDER BY 最新順に並び替え
+
+  $sql SELECT p.＊, i.＊ FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = '?' ORDER BY p.created DESC
+  $data = array(%%);
+  $stmt = $dbh->prepare($sql);
+  $stmt->execute($data);
+
+  $plans = $stmt->fetch(PDO::FETCH_ASSOC);
 
  ?>
 
@@ -13,37 +25,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--  
-    Document Title
-    =============================================
-    -->
+
     <title>Joinus!</title>
-    <!--  
-    Favicons
-    =============================================
-    -->
-    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="assets/images/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <!--  
-    Stylesheets
-    =============================================
-    
-    -->
+    <?php 
+      require('favicons_link.php');
+      //require('stylesheet_link.php');
+    ?>
+
     <!-- Default stylesheets-->
     <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template specific stylesheets-->
@@ -58,12 +46,10 @@
     <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
     <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
     <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
-
     <!-- Main stylesheet and color file-->
     <link href="assets/css/style.css" rel="stylesheet">
     <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
 
-    <!-- HEADER -->
   </head>
 
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
@@ -165,6 +151,7 @@
                           </div>
                         </div>
                       </div>
+
                       <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
@@ -172,6 +159,7 @@
                           </div>
                         </div>
                       </div>
+                      
                       <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
@@ -179,18 +167,10 @@
                           </div>
                         </div>
                       </div>
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
-                          </div>
-                        </div>
-                      </div>
                     </div>
-
                   </div>
-                  <div class="tab-pane" id="sales">
 
+                  <div class="tab-pane" id="sales">
                     <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
                       <div class="owl-item">
                         <div class="col-sm-12">
@@ -199,6 +179,7 @@
                           </div>
                         </div>
                       </div>
+
                       <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
@@ -206,6 +187,7 @@
                           </div>
                         </div>
                       </div>
+
                       <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
@@ -213,15 +195,8 @@
                           </div>
                         </div>
                       </div>
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
-                          </div>
-                        </div>
-                      </div>
-                    </div>
 
+                    </div>
                   </div>
                 </div>
               </div>
