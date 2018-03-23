@@ -1,77 +1,50 @@
-<<<<<<< HEAD
+
 <?php
+  // session_start();
+  // require('dbconnect.php');
+  // require('functions.php');
 
-    // // セッションスタート
-    session_start();
-    require('dbconnect.php'); //DB接続
-
-    $sql = 'SELECT p.*
-    FROM plans AS p, tags AS t, plans_tags AS pt
-    WHERE p.plan_id = pt.plan_id AND t.tag_id = pt.tag_id AND name = ?
-    ORDER BY p.created ASC ';
-     // どのI.D.にするか⇩
-      $data = array($_REQUEST['s']);
-      $stmt = $dbh->prepare($sql);
-      $stmt->execute();
-
-      //フェッチ
-      $plans = $stmt->fetch(PDO::FETCH_ASSOC)
-      // $plans[] = $plan;
-=======
-<?php 
-  session_start();
-  require('dbconnect.php');
-  require('functions.php');
-
-  // プランリクエスト一覧表示&検索機能
-    // ①使うテーブルを把握
-    // ②テーブルのid同士を繋ぐ
-    // ③タグ部分を繋ぐ
-    // ④ORDER BY 最新順に並び替え 
+  // // プランリクエスト一覧表示&検索機能
+  //   // ①使うテーブルを把握
+  //   // ②テーブルのid同士を繋ぐ
+  //   // ③タグ部分を繋ぐ
+  //   // ④ORDER BY 最新順に並び替え
 
 
-  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = ? ORDER BY p.created DESC';
+  // // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = ? ORDER BY p.created DESC';
+  // // $data = array($_REQUEST['id']);
+  // // $stmt = $dbh->prepare($sql);
+  // // $stmt->execute($data);
+
+  // // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id = ? ORDER BY p.created DESC';
   // $data = array($_REQUEST['id']);
   // $stmt = $dbh->prepare($sql);
   // $stmt->execute($data);
 
   // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id = ? ORDER BY p.created DESC';
-  $data = array($_REQUEST['id']);
-  $stmt = $dbh->prepare($sql);
-  $stmt->execute($data);
-
-  $plans = $stmt->fetch(PDO::FETCH_ASSOC);
->>>>>>> master
 
 
 
  ?>
-<<<<<<< HEAD
-=======
 
 
 <!DOCTYPE html>
->>>>>>> master
+
 <html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< HEAD
-    <title>Joinus!</title>
 
+
+    <title>Joinus!</title>
     <?php
-        require('favicons_link.php');
-        require('stylesheet_link.php');
-=======
-
-    <title>Joinus!</title>
-    <?php 
       require('favicons_link.php');
       require('stylesheet_link.php');
->>>>>>> master
+
     ?>
   </head>
 
@@ -81,53 +54,7 @@
       <div class="page-loader">
         <div class="loader">Loading...</div>
       </div>
-      <!--ヘッダーりくワイヤ -->
-      <?php
-          require('header.php');
-      ?>
 
-
-<<<<<<< HEAD
-
-      <section class="home-section home-full-height bg-dark-30" id="home" data-background="assets/images/section-5.jpg">
-        <div class="video-player" data-property="{videoURL:'https://www.youtube.com/watch?v=bNucJgetMjE', containment:'.home-section', startAt:18, mute:false, autoPlay:true, loop:true, opacity:1, showControls:false, showYTLogo:false, vol:25}"></div>
-        <div class="video-controls-box">
-          <div class="container">
-            <div class="video-controls"><a class="fa fa-volume-up" id="video-volume" href="#">&nbsp;</a><a class="fa fa-pause" id="video-play" href="#">&nbsp;</a></div>
-          </div>
-        </div>
-        <div class="titan-caption">
-          <div class="caption-content">
-            <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
-            <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
-            <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
-            <a class="section-scroll btn btn-border-w btn-round" href="#about">About us</a>
-          </div>
-        </div>
-      </section>
-
-      <?php
-          echo '<pre>';
-          echo '$_GET=';
-          echo var_dump($_REQUEST);
-          echo '</pre>';
-       ?>
-
-
-        <br>
-        <br>
-        <h2 class="module-title font-alt">Search</h2>
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="何を探しますか？">
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-primary">Search</button>
-            </span>
-        </div>
-
-
-
-        <!-- plan/requestリスト -->
-=======
       <!-- Header -->
       <?php include('header.php'); ?>
 
@@ -175,6 +102,13 @@
         </div>
       </section>
 
+            <?php
+          echo '<pre>';
+          echo '$_GET=';
+          echo var_dump($_REQUEST);
+          echo '</pre>';
+       ?>
+
       <!-- 検索機能 -->
       <br>
       <br>
@@ -191,7 +125,7 @@
         </div>
 
         <!-- プランとリクエスト一覧 -->
->>>>>>> master
+
         <section class="module pb-0" id="works">
           <div class="container">
             <div class="row">
@@ -232,11 +166,8 @@
                         </div>
                       </div>
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> master
                       <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product">
@@ -247,11 +178,8 @@
                           </div>
                         </div>
                       </div>
-<<<<<<< HEAD
 
-=======
-                      
->>>>>>> master
+
                       <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
@@ -259,17 +187,8 @@
                           </div>
                         </div>
                       </div>
-<<<<<<< HEAD
 
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
-                          </div>
-                        </div>
-                      </div>
-=======
->>>>>>> master
+
                     </div>
                   </div>
 
@@ -295,143 +214,25 @@
                         <div class="col-sm-12">
                           <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
                             <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
-                          </div>
+                          </div>ß
                         </div>
                       </div>
 
-<<<<<<< HEAD
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-4.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£14.00
-                          </div>
-                        </div>
-                      </div>
-=======
->>>>>>> master
+
+
                     </div>
                   </div>
                 </div>
               </div>
           </div>
-<<<<<<< HEAD
-        </section>
 
-
-        <!-- フッターりくワイヤ⇩ -->
-        <?php
-            require('footer.php');
-        ?>
-=======
           <div class="container"></div>
         </section>
 
-        <!-- サービス使い方 -->
-        <hr class="divider-w">
-        <section class="module" id="team">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">How to use</h2>
-                <div class="module-subtitle font-serif">You can easily share the local experiences and events in Cebu.</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 1</div>
-                    <div class="team-name">Search for plans</div>
-                    <div class="team-role">Guests select favorite plan.</div>
-                    <div class="team-role">Guests can request plan.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 2</div>
-                    <div class="team-name">Confirm reservation</div>
-                    <div class="team-role">Host a pproves.</div>
-                    <div class="team-role">The guest and the host will move to detailed communication.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 3</div>
-                    <div class="team-name">Decision plan details</div>
-                    <div class="team-role">Guests and hosts can decide the details of the trip.</div>
-                    <div class="team-role">Chat is not necessary.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 4</div>
-                    <div class="team-name">On the day of plan</div>
-                    <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
-                    <div class="team-role">Host will show you the plan.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- サービスの特徴 -->
-        <section class="module" id="services">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">Our Services</h2>
-                <div class="module-subtitle font-serif">There are 4 features.</div>
-              </div>
-            </div>
-            <div class="row multi-columns-row">
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <h3 class="features-title font-alt">Host plan posting function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-bike"></span></div>
-                  <h3 class="features-title font-alt">Guest request function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-tools"></span></div>
-                  <h3 class="features-title font-alt">Plan creation without chat function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-gears"></span></div>
-                  <h3 class="features-title font-alt">Comment function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
-        </section>
->>>>>>> master
       </div>
 
       <!-- Footer -->
-      <?php include('footer.php'); ?>  
+      <?php include('footer.php'); ?>
 
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
