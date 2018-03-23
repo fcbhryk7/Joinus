@@ -1,76 +1,4 @@
-<?php
 
-<<<<<<< HEAD
-    // 検索窓について
-    // タグがらひっぱてきた情報をトップ画面へ
-    // インナージョインレフトジョイン
-    // タグとプランを紐づけて
-    // 後最新が出るために日付を
-
-    // session_start(); //セッションスタート
-    // require('dbconnect.php'); //DB接続
-    // require('functions.php'); //ファンクション
-
-    // // タグ情報取得
-    // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
-    // // ?のなかを設定↓
-    // $data = array($_REQUEST['id']);
-    // $stmt = $dbh->prepare($sql);
-    // $stmt-> execute($data);
-
-    // $tags =  $stmt->fetchAll();
-
-    // echo_var_dump('$tags', $tags);
-
-    // echo '<pre>';
-    // echo var_dump('$tags', $tags);
-    // echo '</pre>';
-
-    // バリデーション実装
-    // 空チェック
-    // なんのエラーか知るために、エラーを定義
-    // if (!empty($_POST)) {
-
-    //     //データ格納変数定義
-    //     $email = $_POST['input_email'];
-
-    //     // メールアドレスの空チェック
-    //     if ($email == '') {
-    //         $errors['email'] = 'blank';
-    //     }
-    // }
-
-    // if (empty($errors)) {
-    //     $_SESSION['register']['email'] = $email;
-
-    // header('Location: check.php');
-    // exit();
-    // }
-    // $_SESSION['register'] = $_POST;
-
-
-
-=======
-<<<<<<< HEAD
-    $root_dir = search_assets(debug_backtrace());
-=======
-    // session_start(); //セッションスタート
-    // require('dbconnect.php'); //DB接続
-    // require('functions.php'); //ファンクション
->>>>>>> master
-
-    // // タグ情報取得
-    // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
-    // $data = array($_REQUEST['id']);
-    // $stmt = $dbh->prepare($sql);
-    // $stmt-> execute($data);
-
-    // $tags =  $stmt->fetchAll();
-
-    // echo_var_dump('$tags', $tags);
->>>>>>> master
-
- ?>
 
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -88,17 +16,12 @@
           </div>
  <!-- けんさくまど -->
 
-
-<<<<<<< HEAD
           <form role="search" method="GET" action="index.php">
           <input type="search" placeholder="keyword" name="s">
           <input type="submit" class="button" value="search">
           </form>
 
 <!-- <div class="row mb-60">
-=======
-            <div class="row mb-60">
->>>>>>> master
               <div class="col-sm-8 col-sm-offset-2">
                 <form role="form">
                   <div class="search-box">
