@@ -1,24 +1,4 @@
-<?php
 
-<<<<<<< HEAD
-    $root_dir = search_assets(debug_backtrace());
-=======
-    // session_start(); //セッションスタート
-    // require('dbconnect.php'); //DB接続
-    // require('functions.php'); //ファンクション
->>>>>>> master
-
-    // // タグ情報取得
-    // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
-    // $data = array($_REQUEST['id']);
-    // $stmt = $dbh->prepare($sql);
-    // $stmt-> execute($data);
-
-    // $tags =  $stmt->fetchAll();
-
-    // echo_var_dump('$tags', $tags);
-
- ?>
 
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -26,7 +6,7 @@
           <div class="navbar-header">
 
 <!-- ロゴ-->
-　　　　　   <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
