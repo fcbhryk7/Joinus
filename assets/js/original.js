@@ -22,6 +22,18 @@
         dots: true,
         arrows: false,
       });
+
+      // ドットボタンを押した時に、インデックスの値を取得する。
+      $('#image_delete').click(function(){
+      // $('.slick-dots li button').click(function(){
+          if($('form#image-form').length) {
+              // インデックスの値を取得
+              var image_id = $('.slick-dots li button[tabindex = "0"]').text();
+                // console.log(image_id);
+              // ページ遷移
+              window.location.href = 'image_session_delete.php?id=' + image_id;
+          }
+      });
     });
 
     // cropper JS

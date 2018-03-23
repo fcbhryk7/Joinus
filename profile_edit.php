@@ -102,6 +102,7 @@
                   <input type="hidden" id="upload-image-w" name="profileImageW" value="0"/>
                   <input type="hidden" id="upload-image-h" name="profileImageH" value="0"/>
                   <button type="submit" id="image_upload" class="btn btn-default btn-round btn-xs" disabled="disabled">upload</button>
+                  <a href="profile_edit.php?id=<?php echo $_SESSION['user']['id']; ?>" class="btn btn-default btn-round btn-xs">cancel</a>
                 </form>
               </div>
               <div class="col-sm-8 col-sm-offset-2 mt-40">

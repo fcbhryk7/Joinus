@@ -101,7 +101,7 @@
                     <img class="mb-20 img-thumbnail" width="150" src="images/<?php echo $_SESSION['images'][$key]; ?>">
                   <?php }} ?>
                 </div>
-                <form method="POST" action="plan_trimming.php" class="form" role="form" enctype="multipart/form-data">
+                <form method="POST" action="plan_trimming.php" class="form" role="form" enctype="multipart/form-data" id="image-form">
                   <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="plan-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
                   <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
                   <img id="select-image" style="max-width:500px;">
@@ -111,6 +111,7 @@
                   <input type="hidden" id="upload-image-w" name="profileImageW" value="0"/>
                   <input type="hidden" id="upload-image-h" name="profileImageH" value="0"/>
                   <button type="submit" id="image_upload" class="btn btn-default btn-round btn-xs" disabled="disabled">upload</button>
+                  <button type="button" id="image_delete" class="btn btn-default btn-round btn-xs">delete</button>
                 </form>
               </div>
               <form method="POST" action="plan_update.php" class="form" role="form" >
