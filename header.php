@@ -1,20 +1,4 @@
-<?php
 
-    $root_dir = search_assets(debug_backtrace());
-
-    // session_start(); //セッションスタート
-    // require('dbconnect.php'); //DB接続
-    // require('functions.php'); //ファンクション
-
-    // // タグ情報取得
-    // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
-    // $data = array($_REQUEST['id']);
-    // $stmt = $dbh->prepare($sql);
-    // $stmt-> execute($data);
-
-    // $tags =  $stmt->fetchAll();
-
- ?>
 
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">

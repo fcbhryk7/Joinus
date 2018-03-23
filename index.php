@@ -7,14 +7,24 @@
     // ①使うテーブルを把握
     // ②テーブルのid同士を繋ぐ
     // ③タグ部分を繋ぐ
-    // ④ORDER BY 最新順に並び替え
+    // ④ORDER BY 最新順に並び替え 
 
-  // $sql SELECT p.＊, i.＊ FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = '?' ORDER BY p.created DESC
-  // $data = array(%%);
+
+  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = ? ORDER BY p.created DESC';
+  // $data = array($_REQUEST['id']);
   // $stmt = $dbh->prepare($sql);
   // $stmt->execute($data);
 
   // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id = ? ORDER BY p.created DESC';
+  $data = array($_REQUEST['id']);
+  $stmt = $dbh->prepare($sql);
+  $stmt->execute($data);
+
+  $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
 
  ?>
 
@@ -41,7 +51,7 @@
       </div>
 
       <!-- Header -->
-      <?php //include('header.php'); ?>
+      <?php include('header.php'); ?>
 
       <!-- スライダー -->
       <section class="home-section home-full-height photography-page" id="home">
@@ -50,9 +60,9 @@
             <li class="bg-dark" style="background-image:url(images/main1.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt mb-40 titan-title-size-4" >Joinus!</div>
-                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
-                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
+                  <div class="font-alt mb-40 titan-title-size-4" style="color:black">Joinus!</div>
+                  <div class="font-alt mb-30 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1" style="color:black">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
@@ -68,9 +78,9 @@
             <li class="bg-dark" style="background-image:url(images/main3.jpg);">
               <div class="container">
                 <div class="image-caption">
-                  <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
-                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
-                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
+                  <div class="font-alt mb-40 titan-title-size-4" style="color:black">Joinus!</div>
+                  <div class="font-alt mb-30 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1" style="color:black">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
