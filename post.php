@@ -6,9 +6,16 @@
     require('user_session.php'); //セッション確認
 
     // 配列表示
-    // echo_var_dump('$_POST',$_POST);
-    // echo_var_dump('$_FILES',$_FILES);
-    // echo_var_dump('$_SESSION',$_SESSION);
+    if (!empty($_POST)) {
+        // echo_var_dump('$_POST',$_POST);
+        // unset($_SESSION['tags']);
+        // foreach ($_POST['tags'] as $key => $value) {
+        //     $_SESSION['tags'][] = h($value);
+        // }
+        // echo_var_dump('$_SESSION',$_SESSION);
+        // die();
+        // echo_var_dump('$_FILES',$_FILES);
+    }
 
     $errors = array();
 
@@ -27,8 +34,14 @@
         $_POST['input_person'] = $_SESSION['post']['person'];
         $_POST['input_cost'] = $_SESSION['post']['cost'];
         $_POST['input_entry_field'] = $_SESSION['post']['entry_field'];
+
         // バリデーションメッセージ用
         $errors['rewrite'] = true;
+
+        // タグを偽造
+        foreach ($_SESSION['tags'] as $key => $value) {
+            $_POST['tags'][] = $value;
+        }
     }
 
     // 初期化
@@ -59,6 +72,12 @@
         $person = htmlspecialchars($_POST['input_person']);
         $cost = htmlspecialchars($_POST['input_cost']);
         $entry_field = htmlspecialchars($_POST['input_entry_field']);
+
+        // タグをセッションに追加する
+        unset($_SESSION['tags']);
+        foreach ($_POST['tags'] as $key => $value) {
+            $_SESSION['tags'][] = h($value);
+        }
 
         // バリデーション
         if ($title == '') {
@@ -165,13 +184,13 @@
                 <!-- ここに写真を入力 -->
                 <div class="your-class">
                   <?php if (!isset($_SESSION['images'])) { ?>
-                  <img class="mb-20 img-thumbnail" width="150" src="images/no_image_available.png">
+                    <img class="mb-20 img-thumbnail" width="150" src="images/no_image_available.png">
                   <?php } else { foreach ($_SESSION['images'] as $key => $image) { ?>
-                  <img class="mb-20 img-thumbnail" width="150" src="images/<?php echo $_SESSION['images'][$key]; ?>">
+                    <img class="mb-20 img-thumbnail" width="150" src="images/<?php echo $_SESSION['images'][$key]; ?>">
                   <?php }} ?>
                 </div>
                 <form method="POST" action="plan_trimming.php" class="form" role="form" enctype="multipart/form-data">
-                  <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="profile-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
+                  <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="plan-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
                   <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
                   <img id="select-image" style="max-width:500px;">
                   <!-- 切り抜き範囲をhiddenで保持する -->
@@ -183,114 +202,146 @@
                   <button type="submit" name="reset" value="reset" class="btn btn-default btn-round btn-xs">all reset</button>
                 </form>
               </div>
-              <div class="col-sm-8 col-sm-offset-2 mt-40">
-                <form method="POST" action="post.php" class="form" role="form" >
+
+
+              <!-- tag機能 -->
+              <form method="POST" action="post.php" class="form" role="form" >
+                <div class="col-sm-8 col-sm-offset-2 mt-40">
+                  <h4 class="font-alt">post tags</h4>
+                  <hr class="divider-w mt-10 mb-20">
+                  <div class="form-group">
+                    <div class="row">
+                      <!-- <form method="POST" action="tag_control.php" id="tag_form"> -->
+                        <div class="col-xs-9">
+                          <!-- <label class="control-label">Start time</label> -->
+                          <input type="text" name="input_tag_name" class="form-control input-lg" id="TagText" placeholder="Please enter tags">
+                        </div>
+                        <div class="col-xs-3">
+                          <!-- <label class="control-label"> </label> -->
+                          <div class="btn btn-default btn-md form-control" id="TagButton">add</div>
+                        </div>
+                      <!-- </form> -->
+                    </div>
+                  </div>
+                  <div id="TagHead">
+                    <?php if(isset($_SESSION['tags'])) {foreach ($_SESSION['tags'] as $key => $tag) { ?>
+                      <div class="btn btn-default btn-xs btn-round TagDiv">
+                        <button class="close ml-10 TagClose" data-tag="<?php echo $_SESSION['tags'][$key]; ?>">&times;</button>
+                        <label class="button-tag"><?php echo $tag; ?></label>
+                        <input type="hidden" name="tags[]" value="<?php echo $_SESSION['tags'][$key]; ?>">
+                      </div>
+                    <?php }} ?>
+                  </div>
+                </div>
+
+
+                <div class="col-sm-8 col-sm-offset-2 mt-40">
                   <h4 class="font-alt mb-0">post plan / request</h4>
                   <hr class="divider-w mt-10 mb-20">
 
-                    <div class="form-group">
-                      <label class="control-label">Select plan or request</label>
-                      <select name="input_request_type" class="form-control input-lg">
-                        <option>plan</option>
-                        <option>request</option>
-                      </select>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label">Select plan or request</label>
+                    <select name="input_request_type" class="form-control input-lg">
+                      <option>plan</option>
+                      <option>request</option>
+                    </select>
+                  </div>
 
-                    <!-- title -->
-                    <div class="form-group">
-                      <label class="control-label">Title</label>
-                      <?php if(isset($errors['title']) && $errors['title'] == 'blank'){ ?>
-                      <div style="color: red;">Please enter title.</div>
-                      <?php } ?>
-                      <input name="input_title" value="<?php echo $title;?>" class="form-control input-lg" type="text" placeholder="Title"/>
-                    </div>
+                  <!-- title -->
+                  <div class="form-group">
+                    <label class="control-label">Title</label>
+                    <?php if(isset($errors['title']) && $errors['title'] == 'blank'){ ?>
+                    <div style="color: red;">Please enter title.</div>
+                    <?php } ?>
+                    <input name="input_title" value="<?php echo $title;?>" class="form-control input-lg" type="text" placeholder="Title"/>
+                  </div>
 
-                    <!-- content -->
-                    <div class="form-group">
-                      <label class="control-label">Content</label>
-                      <?php if(isset($errors['content']) && $errors['content'] == 'blank'){ ?>
-                      <div style="color: red;">Please enter content.</div>
-                      <?php } ?>
-                      <textarea name="input_content" class="form-control" rows="5" placeholder="Content"><?php echo $content;?></textarea>
-                    </div>
+                  <!-- content -->
+                  <div class="form-group">
+                    <label class="control-label">Content</label>
+                    <?php if(isset($errors['content']) && $errors['content'] == 'blank'){ ?>
+                    <div style="color: red;">Please enter content.</div>
+                    <?php } ?>
+                    <textarea name="input_content" class="form-control" rows="5" placeholder="Content"><?php echo $content;?></textarea>
+                  </div>
 
-                    <!-- destination -->
-                    <div class="form-group">
-                      <label class="control-label">Destination</label>
-                      <?php if(isset($errors['place']) && $errors['place'] == 'blank'){ ?>
-                      <div style="color: red;">Please enter destination.</div>
-                      <?php } ?>
-                      <input name="input_place" value="<?php echo $place;?>" class="form-control input-lg" type="text" placeholder="Destination"/>
-                    </div>
+                  <!-- destination -->
+                  <div class="form-group">
+                    <label class="control-label">Destination</label>
+                    <?php if(isset($errors['place']) && $errors['place'] == 'blank'){ ?>
+                    <div style="color: red;">Please enter destination.</div>
+                    <?php } ?>
+                    <input name="input_place" value="<?php echo $place;?>" class="form-control input-lg" type="text" placeholder="Destination"/>
+                  </div>
 
-                    <!-- Start & End -->
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-xs-6">
-                          <label class="control-label">Start time</label>
-                          <?php if(isset($errors['start_datetime']) && $errors['start_datetime'] == 'blank'){ ?>
-                          <div style="color: red;">Please enter start datetime.</div>
-                          <?php } ?>
-                          <input type="text" name="input_start_datetime" value="<?php echo $start_datetime;?>" class="form-control input-lg datetimepicker" placeholder="0000/00/00 --:--">
-                        </div>
-                        <div class="col-xs-6">
-                          <label class="control-label">End time</label>
-                          <?php if(isset($errors['end_datetime']) && $errors['end_datetime'] == 'blank'){ ?>
-                          <div style="color: red;">Please enter end datetime.</div>
-                          <?php } ?>
-                          <input type="text" name="input_end_datetime" value="<?php echo $end_datetime;?>" class="form-control input-lg datetimepicker" placeholder="0000/00/00 --:--">
-                        </div>
+                  <!-- Start & End -->
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <label class="control-label">Start time</label>
+                        <?php if(isset($errors['start_datetime']) && $errors['start_datetime'] == 'blank'){ ?>
+                        <div style="color: red;">Please enter start datetime.</div>
+                        <?php } ?>
+                        <input type="text" name="input_start_datetime" value="<?php echo $start_datetime;?>" class="form-control input-lg datetimepicker" placeholder="0000/00/00 --:--">
+                      </div>
+                      <div class="col-xs-6">
+                        <label class="control-label">End time</label>
+                        <?php if(isset($errors['end_datetime']) && $errors['end_datetime'] == 'blank'){ ?>
+                        <div style="color: red;">Please enter end datetime.</div>
+                        <?php } ?>
+                        <input type="text" name="input_end_datetime" value="<?php echo $end_datetime;?>" class="form-control input-lg datetimepicker" placeholder="0000/00/00 --:--">
                       </div>
                     </div>
+                  </div>
 
-                    <!-- rendezvous -->
-                    <div class="form-group">
-                      <label class="control-label">Rendezvous place</label>
-                      <?php if(isset($errors['location']) && $errors['location'] == 'blank'){ ?>
-                      <div style="color: red;">Please enter rendezvous place.</div>
-                      <?php } ?>
-                      <input name="input_location" value="<?php echo $location;?>" class="form-control input-lg" type="text" placeholder="Rendezvous"/>
-                    </div>
+                  <!-- rendezvous -->
+                  <div class="form-group">
+                    <label class="control-label">Rendezvous place</label>
+                    <?php if(isset($errors['location']) && $errors['location'] == 'blank'){ ?>
+                    <div style="color: red;">Please enter rendezvous place.</div>
+                    <?php } ?>
+                    <input name="input_location" value="<?php echo $location;?>" class="form-control input-lg" type="text" placeholder="Rendezvous"/>
+                  </div>
 
-                    <!-- time -->
-                    <div class="form-group">
-                      <label class="control-label">Rendezvous time</label>
-                      <?php if(isset($errors['time']) && $errors['time'] == 'blank'){ ?>
-                      <div style="color: red;">Please enter rendezvous time.</div>
-                      <?php } ?>
-                      <input type="text" name="input_time" value="<?php echo $time;?>" class="form-control input-lg datetimepicker" placeholder="0000/00/00 --:--">
-                    </div>
+                  <!-- time -->
+                  <div class="form-group">
+                    <label class="control-label">Rendezvous time</label>
+                    <?php if(isset($errors['time']) && $errors['time'] == 'blank'){ ?>
+                    <div style="color: red;">Please enter rendezvous time.</div>
+                    <?php } ?>
+                    <input type="text" name="input_time" value="<?php echo $time;?>" class="form-control input-lg datetimepicker" placeholder="0000/00/00 --:--">
+                  </div>
 
-                    <!-- person -->
-                    <div class="form-group">
-                      <label class="control-label">The number of people</label>
-                      <?php if(isset($errors['person']) && $errors['person'] == 'blank'){ ?>
-                      <div style="color: red;">Please enter the number of people.</div>
-                      <?php } ?>
-                      <input name="input_person" value="<?php echo $person;?>" class="form-control input-lg" type="number" placeholder="The number of people"/>
-                    </div>
+                  <!-- person -->
+                  <div class="form-group">
+                    <label class="control-label">The number of people</label>
+                    <?php if(isset($errors['person']) && $errors['person'] == 'blank'){ ?>
+                    <div style="color: red;">Please enter the number of people.</div>
+                    <?php } ?>
+                    <input name="input_person" value="<?php echo $person;?>" class="form-control input-lg" type="number" placeholder="The number of people"/>
+                  </div>
 
-                    <!-- cost -->
-                    <div class="form-group">
-                      <label class="control-label">Cost (php)</label>
-                      <?php if(isset($errors['cost']) && $errors['cost'] == 'blank'){ ?>
-                      <div style="color: red;">Please enter cost.</div>
-                      <?php } ?>
-                      <input name="input_cost" value="<?php echo $cost;?>" class="form-control input-lg" type="number" placeholder="Cost"/>
-                    </div>
+                  <!-- cost -->
+                  <div class="form-group">
+                    <label class="control-label">Cost (php)</label>
+                    <?php if(isset($errors['cost']) && $errors['cost'] == 'blank'){ ?>
+                    <div style="color: red;">Please enter cost.</div>
+                    <?php } ?>
+                    <input name="input_cost" value="<?php echo $cost;?>" class="form-control input-lg" type="number" placeholder="Cost"/>
+                  </div>
 
-                    <!-- Entry field -->
-                    <div class="form-group">
-                      <label class="control-label">Entry field</label>
-                      <textarea name="input_entry_field" class="form-control" rows="5" placeholder="Entry field"><?php echo $entry_field;?></textarea>
-                    </div>
+                  <!-- Entry field -->
+                  <div class="form-group">
+                    <label class="control-label">Entry field</label>
+                    <textarea name="input_entry_field" class="form-control" rows="5" placeholder="Entry field"><?php echo $entry_field;?></textarea>
+                  </div>
 
-                    <div class="form-group" style="text-align: right;">
-                      <button type="submit" class="btn btn-info btn-md">Confirm</button>
-                      <button type="button" onclick="javascript:window.history.back(-1);return false;" class="btn btn-default btn-md">Cancel</button>
-                    </div>
-                </form>
-              </div>
+                  <div class="form-group" style="text-align: right;">
+                    <button type="submit" class="btn btn-info btn-md">Confirm</button>
+                    <button type="button" onclick="javascript:window.history.back(-1);return false;" class="btn btn-default btn-md">Cancel</button>
+                  </div>
+                </div>
+              </form>
             </div> <!-- row -->
           </div> <!-- container -->
         </section>
@@ -304,61 +355,5 @@
     <!-- JavaScripts -->
     <?php include('javascript_link.php'); ?>
 
-    <!-- カレンダー表示用JS -->
-    <script src="assets/js/moment.js"></script>
-    <!-- <script src="assets/js/pikaday.js"></script> -->
-    <script src="assets/js/jquery.datetimepicker.full.min.js"></script>
-    <script>
-        // calender表示
-        $(function(){
-            $('.datetimepicker').datetimepicker();
-        });
-    </script>
-
-    <!-- slick Java Script -->
-    <script src="assets/lib/slick/slick.js"></script>
-    <script>
-      $(document).ready(function(){
-        $('.your-class').slick({
-          // setting-name: setting-value,
-          dots: true,
-          arrows: false,
-        });
-      });
-    </script>
-
-    <!-- cropper JS -->
-    <script src="assets/lib/cropper-3.1.6/dist/cropper.min.js"></script>
-    <script type="text/javascript">
-      $(function(){
-          // 初期設定
-          var options =
-          {
-            aspectRatio: 4 / 3,
-            viewMode:1,
-            crop: function(e) {
-                  cropData = $('#select-image').cropper("getData");
-                  $("#upload-image-x").val(Math.floor(cropData.x));
-                  $("#upload-image-y").val(Math.floor(cropData.y));
-                  $("#upload-image-w").val(Math.floor(cropData.width));
-                  $("#upload-image-h").val(Math.floor(cropData.height));
-            },
-            zoomable:false,
-            minCropBoxWidth:160,
-            minCropBoxHeight:120
-          }
-
-          // 初期設定をセットする
-          $('#select-image').cropper(options);
-
-          $("#profile-image").change(function(){
-              // ファイル選択変更時に、選択した画像をCropperに設定する
-              $('#select-image').cropper('replace', URL.createObjectURL(this.files[0]));
-
-              // 無効化ボタンを解除
-              $('#image_upload').removeAttr('disabled');
-          });
-      });
-    </script>
   </body>
 </html>

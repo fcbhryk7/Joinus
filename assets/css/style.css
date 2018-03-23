@@ -2994,3 +2994,16 @@ Google map
     width: 100%;
   }
 }
+
+/* タグ用のCSSを追加 */
+.button-tag {
+  padding: 2px;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: 1px;
+}
+
+.TagDiv{
+  margin-left: 2px;
+  margin-right: 2px;
+}

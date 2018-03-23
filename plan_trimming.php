@@ -8,10 +8,13 @@
     // echo_var_dump('$_FILES', $_FILES);
     // echo_var_dump('$_POST', $_POST);
 
+    // 遷移前のURLを取得
+    $url = get_page_name();
+
     // リセットボタンがクリックされたときは、セッションを削除
     if(isset($_POST['reset']) && $_POST['reset'] == 'reset') {
         unset($_SESSION['images']);
-        header('Location: post.php');
+        header('Location: '. $url);
         exit();
     }
 
@@ -96,12 +99,18 @@
             // 保存完了後、セッション変数にファイル名を保存する
             $_SESSION['images'][] = $submit_file_name;
 
+            if ($url == 'post.php') {
+                header('Location: ' . $url);
+                exit();
+            }
+            else {
+                header('Location: ' . $url . '&image=true');
+                exit();
+            }
         } catch (Exception $e) {
 
         }
     }
 
-    header('Location: post.php');
-    exit();
 
 ?>

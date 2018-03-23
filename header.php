@@ -31,7 +31,7 @@
  <!-- けんさくまど -->
 
 
-            <div class="row mb-60">
+<!--             <div class="row mb-60">
               <div class="col-sm-8 col-sm-offset-2">
                 <form role="form">
                   <div class="search-box">
@@ -40,7 +40,7 @@
                   </div>
                 </form>
               </div>
-            </div>
+            </div> -->
 
 <!-- ヘッダーメニューバー -->
           <div class="collapse navbar-collapse" id="custom-collapse">
@@ -53,7 +53,7 @@
                   <li><a href="<?php $root_dir; ?>signin.php">My page</a></li>
                   <?php } ?>
                   <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
-                  <li><a href="<?php $root_dir; ?>Plan_Request_post.php">Create plan / request</a></li>
+                  <li><a href="<?php $root_dir; ?>post.php">Create plan / request</a></li>
                   <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
                 </ul>
               </li>

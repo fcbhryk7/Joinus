@@ -86,8 +86,20 @@
                 </div>
               </div>
               <div class="col-sm-8 col-sm-offset-2 mt-40">
+                <h4 class="font-alt mb-0">Confirm Image</h4>
+                <hr class="divider-w mt-10 mb-20">
+
+                <!-- タグを追加 -->
+                <div>
+                  <?php if(isset($_SESSION['tags'])) {foreach ($_SESSION['tags'] as $key => $value) { ?>
+                    <div class="btn btn-default btn-xs btn-round TagDiv">
+                      <label class="button-tag"><?php echo $_SESSION['tags'][$key]; ?></label>
+                    </div>
+                  <?php }} ?>
+                </div>
+
                 <form method="POST" action="post_create.php" class="form" role="form" >
-                  <h4 class="font-alt mb-0">Confirm Plan / Request</h4>
+                  <h4 class="font-alt mt-40">Confirm Plan / Request</h4>
                   <hr class="divider-w mt-10 mb-20">
 
                   <input type="hidden" name="hogehoge" value="hogehoge">
@@ -203,16 +215,5 @@
     <!-- JavaScripts -->
     <?php include('javascript_link.php'); ?>
 
-    <!-- slick Java Script -->
-    <script src="assets/lib/slick/slick.js"></script>
-    <script>
-      $(document).ready(function(){
-        $('.your-class').slick({
-          // setting-name: setting-value,
-          dots: true,
-          arrows: false,
-        });
-      });
-    </script>
   </body>
 </html>

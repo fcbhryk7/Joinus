@@ -92,7 +92,7 @@
                 <h4 class="font-alt mb-0">Edit Image</h4>
                 <hr class="divider-w mt-10 mb-20">
                 <img class="mb-20 img-thumbnail" width="150" src="user_profile_img/<?php echo $profile['image']; ?>">
-                <form method="POST" action="trimming.php" class="form" role="form" enctype="multipart/form-data">
+                <form method="POST" action="profile_trimming.php" class="form" role="form" enctype="multipart/form-data">
                   <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="profile-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
                   <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
                   <img id="select-image" style="max-width:500px;">
@@ -189,55 +189,5 @@
     <!-- JavaScripts -->
     <?php include('javascript_link.php'); ?>
 
-    <!-- カレンダー表示用JS -->
-    <script src="assets/js/moment.js"></script>
-    <script src="assets/js/pikaday.js"></script>
-    <script>
-        // calender表示
-        var picker = new Pikaday(
-        {
-            field: document.getElementById('datepicker'),
-            firstDay: 1,
-            minDate: new Date(1900, 01, 01),
-            maxDate: new Date(2020, 12, 31),
-            yearRange: [1900,2020]
-        });
-    </script>
-
-    <!-- cropper JS -->
-    <script src="assets/lib/cropper-3.1.6/dist/cropper.min.js"></script>
-    <script type="text/javascript">
-      $(function(){
-          // 初期設定
-          var options =
-          {
-            aspectRatio: 1 / 1,
-            viewMode:1,
-            crop: function(e) {
-                  cropData = $('#select-image').cropper("getData");
-                  $("#upload-image-x").val(Math.floor(cropData.x));
-                  $("#upload-image-y").val(Math.floor(cropData.y));
-                  $("#upload-image-w").val(Math.floor(cropData.width));
-                  $("#upload-image-h").val(Math.floor(cropData.height));
-            },
-            zoomable:false,
-            minCropBoxWidth:162,
-            minCropBoxHeight:162
-          }
-
-          // 初期設定をセットする
-          $('#select-image').cropper(options);
-
-          $("#profile-image").change(function(){
-              // ファイル選択変更時に、選択した画像をCropperに設定する
-              $('#select-image').cropper('replace', URL.createObjectURL(this.files[0]));
-
-              // 無効化ボタンを解除
-              $('#image_upload').removeAttr('disabled');
-          });
-
-
-      });
-    </script>
   </body>
 </html>

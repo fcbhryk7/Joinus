@@ -46,6 +46,89 @@
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
+    // imagesテーブルの登録
+    if(isset($_SESSION['images'])) {
+        // 一旦imagesテーブルからレコードを削除する。
+        $sql = 'DELETE FROM images WHERE plan_id = ?';
+        $data = array($plan_id);
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute($data);
+
+        // 登録した画像が存在する場合は全て登録する
+        foreach ($_SESSION['images'] as $key => $value) {
+          // 画像表示順
+          $image_order = $key + 1;
+
+          $sql = 'INSERT INTO images SET plan_id = ?, image_name = ?, image_order = ?';
+          $data = array($plan_id, $_SESSION['images'][$key], $image_order);
+          $stmt = $dbh->prepare($sql);
+          $stmt->execute($data);
+        }
+
+        // セッション削除
+        unset($_SESSION['images']);
+    } else {
+        // 登録画像がない場合は、no imageを登録する
+        // 画像表示順
+        $image_order = 1;
+
+        // $sql = 'INSERT INTO images SET plan_id = ?, image_name = 'no_image_available\.png', image_order = ?';
+        // $data = array($plan_id, $image_order);
+        // $stmt = $dbh->prepare($sql);
+        // $stmt->execute($data);
+
+        // セッション削除
+        unset($_SESSION['images']);
+    }
+
+    // tagsテーブルに登録
+    $tag_id = 0; //初期化
+    if(!empty($tags)) {
+        // 一旦plans_tagsテーブルからレコードを削除する。
+        $sql = 'DELETE FROM plans_tags WHERE plan_id = ?';
+        $data = array($plan_id);
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute($data);
+
+        foreach ($tags as $key => $value) {
+            // 同名のタグが存在しないか確認する。
+            $sql = 'SELECT * FROM tags WHERE name = ?';
+            $data = array($value);
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute($data);
+            $tag = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // 存在しない場合
+            if($tag == false) {
+                // tagsテーブルに登録する。
+                $sql = 'INSERT INTO tags SET name = ?';
+                $data = array($value);
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute($data);
+
+                // 最後に登録したtag_idを取得する
+                $sql = 'SELECT LAST_INSERT_ID() AS tag_id';
+                $data = array();
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute($data);
+                $tag = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // 変数に格納する
+                $tag_id = $tag['tag_id'];
+            // 存在する場合
+            } else {
+                // 変数に格納する
+                $tag_id = $tag['tag_id'];
+            }
+
+            // plans_tagsに登録する
+            $sql = 'INSERT INTO plans_tags SET plan_id = ?, tag_id = ?';
+            $data = array($plan_id, $tag_id);
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute($data);
+        }
+    }
+
     header('Location: request_detail.php?id=' . $plan_id);
     exit();
 
