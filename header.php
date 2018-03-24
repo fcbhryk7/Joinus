@@ -6,7 +6,7 @@
           <div class="navbar-header">
 
 <!-- ロゴ-->
-　　　　　   <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
