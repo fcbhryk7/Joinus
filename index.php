@@ -9,7 +9,6 @@
     // ③タグ部分を繋ぐ
     // ④ORDER BY 最新順に並び替え 
 
-
   // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = ? ORDER BY p.created DESC';
   // $data = array($_REQUEST['id']);
   // $stmt = $dbh->prepare($sql);
@@ -17,12 +16,12 @@
 
   // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id = ? ORDER BY p.created DESC';
-  $data = array($_REQUEST['id']);
-  $stmt = $dbh->prepare($sql);
-  $stmt->execute($data);
+  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id ORDER BY p.created DESC';
+  // $data = array($_REQUEST['id']);
+  // $stmt = $dbh->prepare($sql);
+  // $stmt->execute($data);
 
-  $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+  // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 
@@ -58,6 +57,7 @@
         <div class="hero-slider">
           <ul class="slides">
             <li class="bg-dark" style="background-image:url(images/main1.jpg);">
+
               <div class="container">
                 <div class="image-caption">
                   <div class="font-alt mb-40 titan-title-size-4" style="color:black">Joinus!</div>
@@ -194,109 +194,6 @@
           </div>
           <div class="container"></div>
         </section>
-
-        <!-- サービス使い方 -->
-        <hr class="divider-w">
-        <section class="module" id="team">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">How to use</h2>
-                <div class="module-subtitle font-serif">You can easily share the local experiences and events in Cebu.</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 1</div>
-                    <div class="team-name">Search for plans</div>
-                    <div class="team-role">Guests select favorite plan.</div>
-                    <div class="team-role">Guests can request plan.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 2</div>
-                    <div class="team-name">Confirm reservation</div>
-                    <div class="team-role">Host a pproves.</div>
-                    <div class="team-role">The guest and the host will move to detailed communication.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 3</div>
-                    <div class="team-name">Decision plan details</div>
-                    <div class="team-role">Guests and hosts can decide the details of the trip.</div>
-                    <div class="team-role">Chat is not necessary.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
-                <div class="team-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <div class="team-descr font-alt">
-                    <div class="team-name">STEP 4</div>
-                    <div class="team-name">On the day of plan</div>
-                    <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
-                    <div class="team-role">Host will show you the plan.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- サービスの特徴 -->
-        <section class="module" id="services">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">Our Services</h2>
-                <div class="module-subtitle font-serif">There are 4 features.</div>
-              </div>
-            </div>
-            <div class="row multi-columns-row">
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
-                  <h3 class="features-title font-alt">Host plan posting function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-bike"></span></div>
-                  <h3 class="features-title font-alt">Guest request function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-tools"></span></div>
-                  <h3 class="features-title font-alt">Plan creation without chat function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="features-item">
-                  <div class="features-icon"><span class="icon-gears"></span></div>
-                  <h3 class="features-title font-alt">Comment function.</h3>
-                  <p></p>
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
 
       <!-- Footer -->
       <?php include('footer.php'); ?>  

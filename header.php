@@ -16,8 +16,12 @@
           </div>
  <!-- けんさくまど -->
 
+          <form role="search" method="GET" action="index.php">
+          <input type="search" placeholder="keyword" name="s">
+          <input type="submit" class="button" value="search">
+          </form>
 
-            <div class="row mb-60">
+<!-- <div class="row mb-60">
               <div class="col-sm-8 col-sm-offset-2">
                 <form role="form">
                   <div class="search-box">
@@ -26,7 +30,7 @@
                   </div>
                 </form>
               </div>
-            </div>
+            </div> -->
 
 <!-- ヘッダーメニューバー -->
           <div class="collapse navbar-collapse" id="custom-collapse">
