@@ -3,28 +3,42 @@
   require('dbconnect.php');
   require('functions.php');
 
-  // プランリクエスト一覧表示&検索機能
+  // メモ
     // ①使うテーブルを把握
     // ②テーブルのid同士を繋ぐ
     // ③タグ部分を繋ぐ
     // ④ORDER BY 最新順に並び替え 
 
-
+  // 検索機能
   // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = ? ORDER BY p.created DESC';
-  // $data = array($_REQUEST['id']);
+  // $data = array();
   // $stmt = $dbh->prepare($sql);
   // $stmt->execute($data);
 
   // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id ORDER BY p.created DESC';
-  $data = array($_REQUEST['id']);
+
+  // プランリクエスト一覧表示
+  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id ORDER BY p.created DESC';
+  $sql = 'SELECT p.title, i.image_name, u.name FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
+  $data = array();
   $stmt = $dbh->prepare($sql);
   $stmt->execute($data);
 
-  $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+  $plans = array();
+  while (true) {
+    $plan = $stmt->fetch(PDO::FETCH_ASSOC);
+      if($plan == false){
+        break;
+      }
+      $plans[] = $plan;
+    }
 
+  $c = count($plans);
 
+  // echo_var_dump('$plans',$plans);
+  // echo $c;  
+  // die();
 
  ?>
 
@@ -54,41 +68,44 @@
       <?php include('header.php'); ?>
 
       <!-- スライダー -->
-      <section class="home-section home-full-height photography-page" id="home">
+      <section class="home-section home-fade home-full-height" id="home">
         <div class="hero-slider">
           <ul class="slides">
-            <li class="bg-dark" style="background-image:url(images/main1.jpg);">
-              <div class="container">
-                <div class="image-caption">
-                  <div class="font-alt mb-40 titan-title-size-4" style="color:black">Joinus!</div>
-                  <div class="font-alt mb-30 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
+            <li class="bg-dark-30 bg-dark shop-page-header" style="background-image:url(images/main1.jpg);">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-4" style="color:black">Joinus!</div>
+                  <div class="font-alt mb-40 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
                   <div class="font-alt mb-30 titan-title-size-1" style="color:black">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(images/main2.jpg);">
-              <div class="container">
-                <div class="image-caption">
-                  <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
-                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
+
+            <li class="bg-dark-30 bg-dark shop-page-header" style="background-image:url(images/main2.jpg);">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-4">Joinus!</div>
+                  <div class="font-alt mb-40 titan-title-size-2">Let's see. How to spend free travel.</div>
                   <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(images/main3.jpg);">
-              <div class="container">
-                <div class="image-caption">
-                  <div class="font-alt mb-40 titan-title-size-4" style="color:black">Joinus!</div>
-                  <div class="font-alt mb-30 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
+
+            <li class="bg-dark-30 bg-dark shop-page-header" style="background-image:url(images/main3.jpg);">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-4" style="color:black">Joinus!</div>
+                  <div class="font-alt mb-40 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
                   <div class="font-alt mb-30 titan-title-size-1" style="color:black">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
-            <li class="bg-dark" style="background-image:url(images/main4.jpg);">
-              <div class="container">
-                <div class="image-caption">
-                  <div class="font-alt mb-40 titan-title-size-4">Joinus!</div>
-                  <div class="font-alt mb-30 titan-title-size-2">Let's see. How to spend free travel.</div>
+
+            <li class="bg-dark-30 bg-dark shop-page-header" style="background-image:url(images/main4.jpg);">
+              <div class="titan-caption">
+                <div class="caption-content">
+                  <div class="font-alt mb-30 titan-title-size-4">Joinus!</div>
+                  <div class="font-alt mb-40 titan-title-size-2">Let's see. How to spend free travel.</div>
                   <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
@@ -134,36 +151,32 @@
                 <div class="tab-content">
                   <div class="tab-pane active" id="support">
 
-                    <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
-                          </div>
-                        </div>
-                      </div>
+                    <!-- <div class="text-center" data-items="4" data-pagination="false" data-navigation="false"> -->
+                      <div class="row">
+                            <?php for($i=0;$i<$c;$i++){ ?>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
 
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
-                          </div>
+                      <!-- プラン一覧 -->
+                          <!-- <div> -->
+                              <img src="images/<?php echo $plans[$i]['image_name']; ?>">
+                              <div class="panel panel-default"">
+                                <div class="panel-heading">
+                                  <?php echo $plans[$i]['title']; ?>
+                                </div>
+                                <div class="panel-body">
+                                  <?php echo $plans[$i]['name']; ?>
+                                </div>
+                              </div>
+                          <!-- </div> -->
+                          
                         </div>
+                            <?php } ?>
                       </div>
-                      
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    <!-- </div> -->
 
                   <div class="tab-pane" id="sales">
                     <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
-                      <div class="owl-item">
+                      <!-- <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
                             <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
@@ -185,7 +198,7 @@
                             <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                     </div>
                   </div>
@@ -194,6 +207,82 @@
           </div>
           <div class="container"></div>
         </section>
+
+        <!-- チーム紹介 -->
+        <hr class="divider-w">
+        <section class="module" id="team">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Team charlotte</h2>
+                <div class="module-subtitle font-serif">We are team charlotte!!<br>Simple self-introduction and favorite things...</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="team-image"><img src="images/team-1.jpg" alt="Member Photo"/>
+                    <div class="team-detail">
+                      <h5 class="font-alt">Hi all</h5>
+                      <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                      <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">Shoichi Chikushi</div>
+                    <div class="team-role">Guitar</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="team-image"><img src="images/team-2.jpg" alt="Member Photo"/>
+                    <div class="team-detail">
+                      <h5 class="font-alt">Good day</h5>
+                      <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                      <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">Reika Izumi</div>
+                    <div class="team-role">Comedy</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="team-image"><img src="images/team-3.jpg" alt="Member Photo"/>
+                    <div class="team-detail">
+                      <h5 class="font-alt">I love cebu.</h5>
+                      <p class="font-serif">I like to take pictures!<br>I can speak Japanese,English,Spanish and...Cebuano!</p>
+                      <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">Hiroyuki Hasuike</div>
+                    <div class="team-role">Photographer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="team-image"><img src="images/team-4.jpg" alt="Member Photo"/>
+                    <div class="team-detail">
+                      <h5 class="font-alt">Yes, it's me</h5>
+                      <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                      <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
+                    </div>
+                  </div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">Kodai Egoshi</div>
+                    <div class="team-role">Ikemen</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
 
       <!-- Footer -->
       <?php include('footer.php'); ?>  
