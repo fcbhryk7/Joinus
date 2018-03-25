@@ -248,14 +248,14 @@
                 <div class="team-item">
                   <div class="team-image"><img src="images/team-1.jpg" alt="Member Photo"/>
                     <div class="team-detail">
-                      <h5 class="font-alt">Guitar is my life</h5>
-                      <p class="font-serif">I will continue to play the guitar...</p>
+                      <h5 class="font-alt">Flirting guy</h5>
+                      <p class="font-serif">My name is "SHOW".<br>Nice to meet you.</p>
                       <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
                     </div>
                   </div>
                   <div class="team-descr font-alt">
                     <div class="team-name">Shoichi Chikushi</div>
-                    <div class="team-role">Guitar</div>
+                    <div class="team-role">Engineer</div>
                   </div>
                 </div>
               </div>
