@@ -69,13 +69,10 @@
         unset($_SESSION['images']);
     } else {
         // 登録画像がない場合は、no imageを登録する
-        // 画像表示順
-        $image_order = 1;
-
-        // $sql = 'INSERT INTO images SET plan_id = ?, image_name = 'no_image_available\.png', image_order = ?';
-        // $data = array($plan_id, $image_order);
-        // $stmt = $dbh->prepare($sql);
-        // $stmt->execute($data);
+        $sql = 'INSERT INTO images SET plan_id = ?, image_name = "no_image_available.png", image_order = 1';
+        $data = array($plan_id);
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute($data);
 
         // セッション削除
         unset($_SESSION['images']);
