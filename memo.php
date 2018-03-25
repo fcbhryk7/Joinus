@@ -42,8 +42,8 @@
 
     // $data = array();
 
-    // $sql = 'SELECT p.* 
-    // FROM plans AS p, tags AS t, plans_tags AS pt 
+    // $sql = 'SELECT p.*
+    // FROM plans AS p, tags AS t, plans_tags AS pt
     // WHERE p.plan_id = pt.plan_id AND t.tag_id = pt.tag_id AND p.request_type = pt.tag_id AND t.name = "%?%"
     // ORDER BY p.created DESC'
 

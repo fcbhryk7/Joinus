@@ -11,8 +11,8 @@
 	<meta charset="utf-8">
 	<title>Joinus!members</title>
 <?php
-require('../favicons_link.php');
-require('../stylesheet_link.php');
+require('favicons_link.php');
+require('stylesheet_link.php');
 ?>
 <!--ヘッダーりくワイヤ -->
 <?php
@@ -51,7 +51,7 @@ require('../footer.php');
 ?>
 <!-- ジャバスクリプトりくワイヤ -->
 <?php
-require('../javascript_link.php');
+require('javascript_link.php');
 ?>
 </body>
 </html>

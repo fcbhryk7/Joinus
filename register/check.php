@@ -63,8 +63,8 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="../assets/font-awesome/css/font-awesome.css">
 <?php
-  require('../favicons_link.php');
-  require('../stylesheet_link.php');
+  require('favicons_link.php');
+  require('stylesheet_link.php');
 ?>
 </head>
 <body style="margin-top: 60px">
@@ -99,7 +99,7 @@
   <script src="../assets/js/bootstrap.js"></script>
 <!-- ジャバスクリプトりくワイヤ -->
 <?php
-  require('../javascript_link.php');
+  require('javascript_link.php');
 ?>
 </body>
 </html>

@@ -1,9 +1,5 @@
 
 <?php
-  // session_start();
-  // require('dbconnect.php');
-  // require('functions.php');
-
   // // プランリクエスト一覧表示&検索機能
   //   // ①使うテーブルを把握
   //   // ②テーブルのid同士を繋ぐ
@@ -11,22 +7,68 @@
   //   // ④ORDER BY 最新順に並び替え
 
 
-  // // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = ? ORDER BY p.created DESC';
-  // // $data = array($_REQUEST['id']);
-  // // $stmt = $dbh->prepare($sql);
-  // // $stmt->execute($data);
+//if (!empty($_REQUEST)) {
 
-  // // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+  // session_start();
+  // require('dbconnect.php');
+  require('functions.php');
 
-  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id = ? ORDER BY p.created DESC';
-  // $data = array($_REQUEST['id']);
-  // $stmt = $dbh->prepare($sql);
-  // $stmt->execute($data);
+  // $sql = 'SELECT p.*
+  // FROM `plans` AS `p`, `tags` AS `t`, `plans_tags` AS `pt`
+  // WHERE `p`.plan_id = `pt`.plan_id
+  // AND `t`.tag_id = `pt`.tag_id
+  // AND `t`.name LIKE ?
+  // ORDER BY `p`.created DESC';
 
-  // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
+  // if (!empty($_POST)) {
+  //     // XSS攻撃対策
+  //     $target = '%' . h($_POST['input_word']) . '%';
+  //     // echo $target;
+  //     $data = array($target);
+  //     // connectこれはおっけー
+  //     $stmt = $dbh->prepare($sql);
+  //     $stmt -> execute($data);
+
+  //     // $plans:配列を定義する
+  //     $plans = array();
+
+  //     // while文でループする
+  //     while (true){
+  //         // データ1件をフェッチする
+  //         $plan = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  //         // もしデータが存在しない場合は、ループ文を抜ける
+  //         if($plan == false) {
+  //             //とめる
+  //             break;
+  //         }
+
+  //         // 配列$plansにデータを追加する
+  //         $plans[] = $plan;
+  //     }
+  // }
 
 
 
+
+
+
+      //変数へ格納していく
+      // $plans[] = $plan;
+
+
+
+    //  WHERE句にrequest_type
+//     echo '<pre>';
+//     echo var_dump($_POST);
+//     echo '</pre>';
+
+    // echo '<pre>';
+    // echo var_dump($plans);
+    // echo '</pre>';
+    // die();
+
+ // echo $plan["title"];
 
  ?>
 
@@ -56,8 +98,9 @@
       </div>
 
       <!-- Header -->
-      <?php include('header.php'); ?>
-
+      <?php
+      include('header.php');
+       ?>
       <!-- スライダー -->
       <section class="home-section home-full-height photography-page" id="home">
         <div class="hero-slider">
@@ -102,13 +145,6 @@
         </div>
       </section>
 
-            <?php
-          echo '<pre>';
-          echo '$_GET=';
-          echo var_dump($_REQUEST);
-          echo '</pre>';
-       ?>
-
       <!-- 検索機能 -->
       <br>
       <br>
@@ -124,8 +160,7 @@
           </div>
         </div>
 
-        <!-- プランとリクエスト一覧 -->
-
+        <!-- プランとリクエストタブ -->
         <section class="module pb-0" id="works">
           <div class="container">
             <div class="row">
@@ -136,88 +171,61 @@
             </div>
           </div>
 
-
+          <!-- プラン、リクエスト -->
           <div class="col-sm-8 col-sm-offset-2">
             <h4 class="font-alt mb-0"><!-- タイトル --></h4>
             <hr class="divider-w mt-10 mb-20">
               <div role="tabpanel">
                 <ul class="nav nav-tabs font-alt" role="tablist">
-                  <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
-                  <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
-                  </ul>
+                  <li class="active">
+                    <a href="#support" data-toggle="tab">
+                      <span class="icon-tools-2">
+                      </span>Plan
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#sales" data-toggle="tab">
+                      <span class="icon-tools-2">
+                      </span>Request
+                    </a>
+                  </li>
+                </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="support">
-
-
                     <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
 
-
-
-
+                      <!-- プランたち -->
                       <div class="owl-item">
                         <div class="col-sm-12">
                           <div class="ex-product">
-                            <a href="＃">
-                              <img src="assets/images/shop/product-1.jpg" alt="Leather belt"/>
-                            </a>
-                            <h4 class="shop-item-title font-alt">
-                              <a href=""><?php echo $plans['title']; ?></a></h4>£12.00
-                          </div>
-                        </div>
-                      </div>
-
-
-
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product">
-                            <a href="#">
+                            <a href="plan_detail.php?id=<?php echo $plans[0]["plan_id"]; ?>">
                               <img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/>
-                          </a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
+                            </a>
+                              <h4 class="shop-item-title font-alt">
+                                <a href="plan_detail.php?id=<?php echo $plans[0]["plan_id"]; ?>"><?php echo $plans[0]["title"]; ?></a>
+                              </h4><?php echo "$" . $plans[0]["cost"]; ?>
                           </div>
                         </div>
                       </div>
-
-
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
-                          </div>
-                        </div>
-                      </div>
-
-
                     </div>
                   </div>
 
+                  <!-- リクエストたち -->
                   <div class="tab-pane" id="sales">
                     <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
                       <div class="owl-item">
                         <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
+                          <div class="ex-product">
+                            <a href="#">
+                              <img src="assets/images/shop/product-1.jpg" alt="Leather belt"/>
+                            </a>
+                            <h4 class="shop-item-title font-alt">
+                              <a href="#">Leather belt
+                              </a>
+                            </h4>£12.00
                           </div>
                         </div>
                       </div>
-
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
-                          </div>ß
-                        </div>
-                      </div>
-
 
 
                     </div>
@@ -228,7 +236,6 @@
 
           <div class="container"></div>
         </section>
-
       </div>
 
       <!-- Footer -->
