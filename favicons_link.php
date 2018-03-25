@@ -2,10 +2,6 @@
     $root_dir = search_assets(debug_backtrace());
  ?>
 
- <!--  
-    Favicons
-    =============================================
-    -->
     <link rel="apple-touch-icon" sizes="57x57" href="<?php echo $root_dir; ?>assets/images/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="<?php echo $root_dir; ?>assets/images/favicons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="<?php echo $root_dir; ?>assets/images/favicons/apple-icon-72x72.png">
@@ -22,4 +18,5 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="<?php echo $root_dir; ?>assets/images/favicons/ms-icon-144x144.png">
+
     <meta name="theme-color" content="#ffffff">

@@ -42,12 +42,21 @@
 
     // $data = array();
 
+<<<<<<< HEAD
     // $sql = 'SELECT p.* 
     // FROM plans AS p, tags AS t, plans_tags AS pt 
     // WHERE p.plan_id = pt.plan_id AND t.tag_id = pt.tag_id AND p.request_type = pt.tag_id AND t.name = "%?%"
     // ORDER BY p.created DESC'
 
     // $data = array();
+=======
+    $sql = 'SELECT p.* 
+    FROM plans AS p, tags AS t, plans_tags AS pt 
+    WHERE p.plan_id = pt.plan_id AND t.tag_id = pt.tag_id AND p.request_type = pt.tag_id AND t.name = "%?%"
+    ORDER BY p.created DESC'
+
+    $data = array();
+>>>>>>> ba167f05894eec4d95a440373bd3d95ff728127f
 
     // //  WHERE句にrequest_type
 
@@ -70,7 +79,11 @@
 
   <?php
   //組み立てたSQL分を表示する
+<<<<<<< HEAD
   // echo "<p>組み立てたSQL分: ".$sql.@$where;
+=======
+  echo "<p>組み立てたSQL分: ".$sql.@$where;
+>>>>>>> ba167f05894eec4d95a440373bd3d95ff728127f
 
   ?>
 

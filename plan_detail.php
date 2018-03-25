@@ -57,7 +57,7 @@
     // echo_var_dump('$users', $users);
 
     // コメント情報
-    $sql = 'SELECT c.*, u.* FROM comments AS c, users AS u WHERE c.user_id = u.user_id AND c.plan_id = ? ORDER BY c.created';
+    $sql = 'SELECT c.comment, c.created, u.user_id, u.name, u.image FROM comments AS c, users AS u WHERE c.user_id = u.user_id AND c.plan_id = ? ORDER BY c.created';
     $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt-> execute($data);
@@ -70,7 +70,7 @@
     // echo_var_dump('$commmts', $comments);
 
     //JOINUS
-    $sql = 'SELECT u.* FROM matches AS m, users AS u WHERE m.user_id = u.user_id AND plan_id = ? ORDER BY m.created DESC';
+    $sql = 'SELECT m.created, u.user_id, u.name,u.profile, u.image FROM matches AS m, users AS u WHERE m.user_id = u.user_id AND plan_id = ? ORDER BY m.created DESC';
     $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt-> execute($data);
@@ -153,7 +153,7 @@
                     <!-- タグ出力 -->
                     <div class="product_meta">Tags:
                       <?php foreach ($tags as $tag) { ?>
-                      <a href="#" class="badge badge-info"><?php echo $tag['name'];?></a>
+                      <a href="index.php?tag_name=<?php echo $tag['name'];?>#works" class="badge badge-info"><?php echo $tag['name'];?></a>
                       <?php } ?>
                     </div>
                   </div>
@@ -213,6 +213,7 @@
                 </div>
 
                 <!-- JOINUS機能 -->
+                <?php if($users['user_id'] != $_SESSION['user']['id']) { ?>
                 <div class="row">
                   <form method="POST" action="joinus.php">
                     <input type="hidden" name="plan_id" value="<?php echo $_REQUEST['id'];?>">
@@ -227,6 +228,7 @@
                     </div>
                   </form>
                 </div>
+                <?php } ?>
 
                 <!-- 更新ボタン -->
                 <div class="row">
@@ -383,78 +385,6 @@
     </main>
     <!-- JavaScripts -->
     <?php include('javascript_link.php'); ?>
-    <!-- slick Java Script -->
-    <script src="assets/lib/slick/slick.js"></script>
-    <script>
-      $(document).ready(function(){
-        $('.your-class').slick({
-          // setting-name: setting-value,
-          dots: true,
-          arrows: false,
-        });
-      });
-    </script>
-    <script type="text/javascript">
-      // コメント追加機能
-      $(function(){
 
-        $('#favorite_form').submit(function(event){
-            // HTMLでの送信をキャンセル
-            event.preventDefault();
-
-            // 操作対象のフォーム要素を取得
-            var $form = $(this);
-
-            // 送信
-            $.ajax({
-                url: $form.attr('action'),
-                type: $form.attr('method'),
-                data: $form.serialize(),
-
-                success: function(result, textStatus, xhr){
-                    $('.favorite_button input').remove();
-                    $('.favorite_button button').remove();
-                    $('.favorite_button').append(result);
-                    // console.log(result);
-                    // console.log(textStatus);
-                    // console.log(xhr);
-                },
-                error: function(xhr, textStatus, error){
-                    // alert('NG...')
-                }
-            })
-        });
-
-        $('#submit').submit(function(event){
-            // HTMLでの送信をキャンセル
-            event.preventDefault();
-
-            // 操作対象のフォーム要素を取得
-            var $form = $(this);
-
-            // 送信
-            $.ajax({
-                url: $form.attr('action'),
-                type: $form.attr('method'),
-                data: $form.serialize(),
-
-                success: function(result, textStatus, xhr){
-                    $('#InsertComment').append(result);
-                    // console.log(result);
-                    // console.log(textStatus);
-                    // console.log(xhr);
-
-                    // コメント数をカウントアップ
-                    var comment_count = Number($('#CommentCount').text());
-                    comment_count++;
-                    $('#CommentCount').text(comment_count);
-                },
-                error: function(xhr, textStatus, error){
-                    // alert('NG...')
-                }
-            })
-        });
-      });
-    </script>
   </body>
 </html>

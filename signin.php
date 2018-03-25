@@ -1,84 +1,82 @@
-<?php 
-  // 要件メモ
-  // セッションにユーザーのidが存在すれば、サインインチェック
-  // ログインしたらもとの場所に戻したい ifで全て設定する
-  // likes.phpに乗っている$_SERVERをつかって調べることができる
+<?php
 
-  session_start();
-  require('dbconnect.php'); // 他のファイルの読み込み
-  require('functions.php'); //ファンクション
+    session_start();
+    require('dbconnect.php'); // 他のファイルの読み込み
+    require('functions.php'); //ファンクション
 
-  // エラーの連想配列を定義
-  $errors = array();
+    // エラーの連想配列を定義
+    $errors = array();
 
-  // ページ遷移元を取得 (前のページへ)
-  
-  if(empty($_POST)) {
-    $_SESSION['before_page'] = get_page_name();
-    echo $_SESSION['before_page'];
-  }
-
-  // echo_var_dump('$_POST', $_POST);
-
-  // 画面の送信ボタンが押されたとき発動 / $_POSTが空じゃない時に発動
-  if(!empty($_POST)) {
-    $email = $_POST['input_email'];
-    $password = $_POST['input_password'];
-
-    // $emailが空じゃないかつ&passwordが空じゃない
-    if($email != '' && $password != '') {
-      $sql = 'SELECT * FROM `users` WHERE `email`=?';
-      $data = array($email);
-      $stmt = $dbh->prepare($sql);
-      $stmt->execute($data);
-
-      $record = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      if($record == false) {
-        // メールアドレスミス
-        $errors['email'] = 'norecord';
-      } else {
-        // パスワードが一致しているか
-
-          // echo $record['password'];
-          // echo '<br>';
-          // echo $password;
-          // echo '<br>';
-            
-          // password_verify(普通文字列PW、ハッシュ文字列PW)
-          // 一致していればtrueを、そうでなければfalseを返す
-          $verify = password_verify($password, $record['password']);
-
-            if ($verify == true) {
-            // サインイン処理
-
-              // セッションにサインインユーザーのidを保存
-              $_SESSION['user']['id'] = $record['user_id'];
-
-              // 次のページに遷移するもの/exitとセット
-              if ($_SESSION['before_page'] == 'thanks.php') {
-                          // profile_edit.phpに遷移
-                header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
-                exit();
-              } else {
-                  // 遷移元に戻る
-                  header('Location:' . $_SESSION['before_page']);
-                  exit();
-              }
-            } else {
-                $errors['password'] = "incorrect";
-            }
+    // ページ遷移元を取得 (前のページへ)
+    if(empty($_POST)) {
+      // 遷移元のURLを取得
+      $url = get_page_name();
+      // signin.php以外の遷移元を格納
+      if($url != 'signin.php') {
+          $_SESSION['before_page'] = $url;
+          echo $_SESSION['before_page'];
       }
     }
-      echo '<pre>';
-      echo '$errors = ';
-      var_dump($errors);
-      echo '</pre>';
-  }
 
-      
-      
- ?>
+    // echo_var_dump('$_POST', $_POST);
+
+    // 画面の送信ボタンが押されたとき発動 / $_POSTが空じゃない時に発動
+    if(!empty($_POST)) {
+        $email = $_POST['input_email'];
+        $password = $_POST['input_password'];
+
+        // $emailが空じゃないかつ&passwordが空じゃない
+        if($email != '' && $password != '') {
+            $sql = 'SELECT * FROM `users` WHERE `email`=?';
+            $data = array($email);
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute($data);
+
+            $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if($record == false) {
+              // メールアドレスミス
+              $errors['email'] = 'norecord';
+            } else {
+            // パスワードが一致しているか
+
+              // echo $record['password'];
+              // echo '<br>';
+              // echo $password;
+              // echo '<br>';
+
+              // password_verify(普通文字列PW、ハッシュ文字列PW)
+              // 一致していればtrueを、そうでなければfalseを返す
+              $verify = password_verify($password, $record['password']);
+
+                if ($verify == true) {
+                // サインイン処理
+
+                  // セッションにサインインユーザーのidを保存
+                  $_SESSION['user']['id'] = $record['user_id'];
+
+                  // 次のページに遷移するもの/exitとセット
+                  if ($_SESSION['before_page'] == 'thanks.php') {
+                              // profile_edit.phpに遷移
+                    header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
+                    exit();
+                  } else {
+                      header('Location: index.php');
+                      exit();
+                  }
+                } else {
+                    $errors['password'] = "incorrect";
+                }
+            }
+        } else {
+            $errors['email'] = 'blank';
+        }
+        // echo '<pre>';
+        // echo '$errors = ';
+        // var_dump($errors);
+        // echo '</pre>';
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
@@ -86,54 +84,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--  
-    Document Title
-    =============================================
-    -->
+
     <title>Joinus! : Signin</title>
-    <!--  
-    Favicons
-    =============================================
-    -->
-    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="assets/images/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <!--  
-    Stylesheets
-    =============================================
-    
-    -->
-    <!-- Default stylesheets-->
-    <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Template specific stylesheets-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link href="assets/lib/animate.css/animate.css" rel="stylesheet">
-    <link href="assets/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/lib/et-line-font/et-line-font.css" rel="stylesheet">
-    <link href="assets/lib/flexslider/flexslider.css" rel="stylesheet">
-    <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-    <link href="assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-    <link href="assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
-    <!-- Main stylesheet and color file-->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link id="color-scheme" href="assets/css/colors/default.css" rel="stylesheet">
+
+    <?php 
+      require('favicons_link.php');
+      require('stylesheet_link.php');
+    ?>
   </head>
 
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
@@ -143,7 +100,7 @@
       </div>
 
       <!-- ヘッダー読み込み -->
-      <?php //include('header.php'); ?>
+      <?php include('header.php'); ?>
 
       <!-- Body -->
       <div class="main">
@@ -174,7 +131,8 @@
                       <button class="btn btn-round btn-b" type="submit">Signin</button>
                     </div>
                   </form>
-                  <!-- <div class="form-group"><a href="">Forgot Password?</a></div> -->
+                  <!-- 追加機能 PW再設定 -->
+                  <div class="form-group"><a href="">Forgot Password?</a></div>
               </div>
             </div>
           </div>

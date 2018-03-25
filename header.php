@@ -1,5 +1,4 @@
 
-
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -16,8 +15,12 @@
           </div>
  <!-- けんさくまど -->
 
+          <form role="search" method="GET" action="index.php">
+          <input type="search" placeholder="keyword" name="s">
+          <input type="submit" class="button" value="search">
+          </form>
 
-            <div class="row mb-60">
+<!-- <div class="row mb-60">
               <div class="col-sm-8 col-sm-offset-2">
                 <form role="form">
                   <div class="search-box">
@@ -26,7 +29,7 @@
                   </div>
                 </form>
               </div>
-            </div>
+            </div> -->
 
 <!-- ヘッダーメニューバー -->
           <div class="collapse navbar-collapse" id="custom-collapse">
@@ -35,12 +38,14 @@
                 <ul class="dropdown-menu">
                   <?php if(isset($_SESSION['user']['id'])) { ?>
                   <li><a href="<?php $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
-                  <?php } else { ?>
-                  <li><a href="<?php $root_dir; ?>signin.php">My page</a></li>
-                  <?php } ?>
                   <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
-                  <li><a href="<?php $root_dir; ?>Plan_Request_post.php">Create plan / request</a></li>
+                  <li><a href="<?php $root_dir; ?>post.php">Create plan / request</a></li>
                   <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                  <?php } else { ?>
+                  <li><a href="<?php $root_dir; ?>signin.php">Signin</a></li>
+                  <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
+                  <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                  <?php } ?>
                 </ul>
               </li>
             </ul>

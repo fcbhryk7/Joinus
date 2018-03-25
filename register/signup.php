@@ -18,9 +18,9 @@
         $errors['rewrite'] = true;
     }
 
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre>';
+    // echo '<pre>';
+    // var_dump($_POST);
+    // echo '</pre>';
 
     $name = '';
     $email = '';
@@ -63,20 +63,20 @@
             $errors['gender'] = 'blank';
         }
 
-    if (empty($errors)) {
-        $_SESSION['register']['email'] = $email;
-        $_SESSION['register']['name'] = $name;
-        $_SESSION['register']['password'] = $password;
-        $_SESSION['register']['gender'] = $gender;
+        if (empty($errors)) {
+            $_SESSION['register']['email'] = $email;
+            $_SESSION['register']['name'] = $name;
+            $_SESSION['register']['password'] = $password;
+            $_SESSION['register']['gender'] = $gender;
 
-        echo '<pre>';
-        var_dump($errors);
-        echo '</pre>';
-    header('Location: check.php');
-    exit();
+            // echo '<pre>';
+            // var_dump($errors);
+            // echo '</pre>';
+            header('Location: check.php');
+            exit();
+        }
+        // $_SESSION['register'] = $_POST;
     }
-    // $_SESSION['register'] = $_POST;
-
 ?>
 
 
@@ -104,7 +104,7 @@
 
       <!--ヘッダーりくワイヤ -->
       <?php
-          //require('../header.php');
+          require('../header.php');
       ?>
 
       <!-- メイン画像 -->
