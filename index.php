@@ -3,24 +3,8 @@
   require('dbconnect.php');
   require('functions.php');
 
-  // メモ
-    // ①使うテーブルを把握
-    // ②テーブルのid同士を繋ぐ
-    // ③タグ部分を繋ぐ
-    // ④ORDER BY 最新順に並び替え 
-
-  // 検索機能
-  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name = ? ORDER BY p.created DESC';
-  // $data = array();
-  // $stmt = $dbh->prepare($sql);
-  // $stmt->execute($data);
-
-  // $plans = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-  // プランリクエスト一覧表示
-  // $sql = 'SELECT p.*, i.* FROM plans AS p, images AS i, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.plan_id = pt.plan_id ORDER BY p.created DESC';
-  $sql = 'SELECT p.title, i.image_name, u.name FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
+  // プラン/リクエスト一覧表示
+  $sql = 'SELECT p.title, i.image_name, u.name, p.request_type FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
   $data = array();
   $stmt = $dbh->prepare($sql);
   $stmt->execute($data);
@@ -32,9 +16,9 @@
         break;
       }
       $plans[] = $plan;
-    }
+  }
 
-  $c = count($plans);
+  $plan_cnt = count($plans);
 
   // echo_var_dump('$plans',$plans);
   // echo $c;  
@@ -67,16 +51,17 @@
       <!-- Header -->
       <?php include('header.php'); ?>
 
-      <!-- スライダー -->
+      <!-- 画像スライダー -->
       <section class="home-section home-fade home-full-height" id="home">
         <div class="hero-slider">
           <ul class="slides">
+
             <li class="bg-dark-30 bg-dark shop-page-header" style="background-image:url(images/main1.jpg);">
               <div class="titan-caption">
                 <div class="caption-content">
-                  <div class="font-alt mb-30 titan-title-size-4" style="color:black">Joinus!</div>
-                  <div class="font-alt mb-40 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
-                  <div class="font-alt mb-30 titan-title-size-1" style="color:black">Experience and event in Cebu<br>Sharing economy service</div>
+                  <div class="font-alt mb-30 titan-title-size-4">Joinus!</div>
+                  <div class="font-alt mb-40 titan-title-size-2">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
@@ -94,9 +79,9 @@
             <li class="bg-dark-30 bg-dark shop-page-header" style="background-image:url(images/main3.jpg);">
               <div class="titan-caption">
                 <div class="caption-content">
-                  <div class="font-alt mb-30 titan-title-size-4" style="color:black">Joinus!</div>
-                  <div class="font-alt mb-40 titan-title-size-2" style="color:black">Let's see. How to spend free travel.</div>
-                  <div class="font-alt mb-30 titan-title-size-1" style="color:black">Experience and event in Cebu<br>Sharing economy service</div>
+                  <div class="font-alt mb-30 titan-title-size-4">Joinus!</div>
+                  <div class="font-alt mb-40 titan-title-size-2">Let's see. How to spend free travel.</div>
+                  <div class="font-alt mb-30 titan-title-size-1">Experience and event in Cebu<br>Sharing economy service</div>
                 </div>
               </div>
             </li>
@@ -114,98 +99,134 @@
         </div>
       </section>
 
-      <!-- 検索機能 -->
-      <br>
-      <br>
-      <h2 class="module-title font-alt">Search</h2>
-        <div class="row mb-60">
-          <div class="col-sm-8 col-sm-offset-2">
-            <form role="form">
-              <div class="search-box">
-                <input class="form-control" type="text" placeholder="Search..."/>
-                <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- プランとリクエスト一覧 -->
-        <section class="module pb-0" id="works">
+      <!-- プランとリクエスト一覧 -->
+      <section class="module">
           <div class="container">
             <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">Plan / Request list</h2>
-                <div class="module-subtitle font-serif"></div>
+              <div class="col-sm-8 col-sm-offset-2">
+                <h4 class="font-alt mb-0">Plan / Request list</h4>
+                <hr class="divider-w mt-10 mb-20">
+                <div role="tabpanel">
+                  <ul class="nav nav-tabs font-alt" role="tablist">
+                    <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
+                    <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
+                  </ul>
+                
+                 
+                
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="support">
+                      <div class="row">
+                        <?php
+                          for($i=0;$i<$plan_cnt;$i++){
+                            if($plans[$i]['request_type'] == 0) {
+                        ?>
+                          <div class="col-lg-4 col-md-6 col-sm-12">
+                          <img src="images/<?php echo $plans[$i]['image_name']; ?>">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <?php echo $plans[$i]['title']; ?>
+                              </div>
+                              <div class="panel-body">
+                                <?php echo $plans[$i]['name']; ?>
+                              </div>
+                            </div>
+                          </div>
+                        <?php 
+                          }
+                            } 
+                        ?>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane" id="sales">
+                     <div class="row">
+                        <?php
+                          for($i=0;$i<$plan_cnt;$i++){
+                            if($plans[$i]['request_type'] == 1) {
+                        ?>
+                          <div class="col-lg-4 col-md-6 col-sm-12">
+                          <img src="images/<?php echo $plans[$i]['image_name']; ?>">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <?php echo $plans[$i]['title']; ?>
+                              </div>
+                              <div class="panel-body">
+                                <?php echo $plans[$i]['name']; ?>
+                              </div>
+                            </div>
+                          </div>
+                        <?php 
+                          }
+                            } 
+                        ?>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="col-sm-8 col-sm-offset-2">
-            <h4 class="font-alt mb-0"><!-- タイトル --></h4>
-            <hr class="divider-w mt-10 mb-20">
-              <div role="tabpanel">
-                <ul class="nav nav-tabs font-alt" role="tablist">
-                  <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
-                  <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
-                  </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="support">
-
-                    <!-- <div class="text-center" data-items="4" data-pagination="false" data-navigation="false"> -->
-                      <div class="row">
-                            <?php for($i=0;$i<$c;$i++){ ?>
-                        <div class="col-lg-4 col-md-6 col-sm-12">
-
-                      <!-- プラン一覧 -->
-                          <!-- <div> -->
-                              <img src="images/<?php echo $plans[$i]['image_name']; ?>">
-                              <div class="panel panel-default"">
-                                <div class="panel-heading">
-                                  <?php echo $plans[$i]['title']; ?>
-                                </div>
-                                <div class="panel-body">
-                                  <?php echo $plans[$i]['name']; ?>
-                                </div>
-                              </div>
-                          <!-- </div> -->
-                          
-                        </div>
-                            <?php } ?>
-                      </div>
-                    <!-- </div> -->
-
-                  <div class="tab-pane" id="sales">
-                    <div class="owl-carousel text-center" data-items="5" data-pagination="false" data-navigation="false">
-                      <!-- <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-1.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£12.00
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-3.jpg" alt="Derby shoes"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Derby shoes</a></h4>£54.00
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="owl-item">
-                        <div class="col-sm-12">
-                          <div class="ex-product"><a href="#"><img src="assets/images/shop/product-2.jpg" alt="Leather belt"/></a>
-                            <h4 class="shop-item-title font-alt"><a href="#">Leather belt</a></h4>£19.00
-                          </div>
-                        </div>
-                      </div> -->
-
-                    </div>
+        <!-- サービス使い方 -->
+        <hr class="divider-w">
+        <section class="module" id="team">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">How to use</h2>
+                <div class="module-subtitle font-serif">You can easily share the local experiences and events in Cebu.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 1</div>
+                    <div class="team-name">Search for plans</div>
+                    <div class="team-role">Guests select favorite plan.</div>
+                    <div class="team-role">Guests can request plan.</div>
                   </div>
                 </div>
               </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 2</div>
+                    <div class="team-name">Confirm reservation</div>
+                    <div class="team-role">Host a pproves.</div>
+                    <div class="team-role">The guest and the host will move to detailed communication.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 3</div>
+                    <div class="team-name">Decision plan details</div>
+                    <div class="team-role">Guests and hosts can decide the details of the trip.</div>
+                    <div class="team-role">Chat is not necessary.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp">
+                <div class="team-item">
+                  <div class="features-icon"><span class="icon-lightbulb"></span></div>
+                  <div class="team-descr font-alt">
+                    <div class="team-name">STEP 4</div>
+                    <div class="team-name">On the day of plan</div>
+                    <div class="team-role">Guests will gather at the meeting place and enjoy the plan.</div>
+                    <div class="team-role">Host will show you the plan.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="container"></div>
         </section>
 
         <!-- チーム紹介 -->
@@ -214,7 +235,7 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
-                <h2 class="module-title font-alt">Team charlotte</h2>
+                <h2 class="module-title font-alt">About us</h2>
                 <div class="module-subtitle font-serif">We are team charlotte!!<br>Simple self-introduction and favorite things...</div>
               </div>
             </div>
@@ -223,8 +244,8 @@
                 <div class="team-item">
                   <div class="team-image"><img src="images/team-1.jpg" alt="Member Photo"/>
                     <div class="team-detail">
-                      <h5 class="font-alt">Hi all</h5>
-                      <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                      <h5 class="font-alt">Guitar is my life</h5>
+                      <p class="font-serif">I will continue to play the guitar...</p>
                       <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
                     </div>
                   </div>
@@ -238,14 +259,14 @@
                 <div class="team-item">
                   <div class="team-image"><img src="images/team-2.jpg" alt="Member Photo"/>
                     <div class="team-detail">
-                      <h5 class="font-alt">Good day</h5>
-                      <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                      <h5 class="font-alt">Crazy in love</h5>
+                      <p class="font-serif">I am Ika.</p>
                       <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
                     </div>
                   </div>
                   <div class="team-descr font-alt">
                     <div class="team-name">Reika Izumi</div>
-                    <div class="team-role">Comedy</div>
+                    <div class="team-role">Crazy</div>
                   </div>
                 </div>
               </div>
@@ -253,14 +274,14 @@
                 <div class="team-item">
                   <div class="team-image"><img src="images/team-3.jpg" alt="Member Photo"/>
                     <div class="team-detail">
-                      <h5 class="font-alt">I love cebu.</h5>
-                      <p class="font-serif">I like to take pictures!<br>I can speak Japanese,English,Spanish and...Cebuano!</p>
+                      <h5 class="font-alt">I love cebu</h5>
+                      <p class="font-serif">I like to take pictures!<br>I can speak Japanese,English,Spanish and...Cebuano.haha<br>I will continue to study programming.</p>
                       <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
                     </div>
                   </div>
                   <div class="team-descr font-alt">
                     <div class="team-name">Hiroyuki Hasuike</div>
-                    <div class="team-role">Photographer</div>
+                    <div class="team-role">Jeepney driver</div>
                   </div>
                 </div>
               </div>
@@ -268,8 +289,8 @@
                 <div class="team-item">
                   <div class="team-image"><img src="images/team-4.jpg" alt="Member Photo"/>
                     <div class="team-detail">
-                      <h5 class="font-alt">Yes, it's me</h5>
-                      <p class="font-serif">Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&amp;nbsp;iaculis diam.</p>
+                      <h5 class="font-alt">Only Fukuoka</h5>
+                      <p class="font-serif">I am interested only in Fukuoka!</p>
                       <div class="team-social"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-dribbble"></i></a><a href="#"><i class="fa fa-skype"></i></a></div>
                     </div>
                   </div>
@@ -283,29 +304,13 @@
           </div>
         </section>
 
-
       <!-- Footer -->
       <?php include('footer.php'); ?>  
 
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
 
-    <!--  
-    JavaScripts
-    =============================================
-    -->
-    <script src="assets/lib/jquery/dist/jquery.js"></script>
-    <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="assets/lib/wow/dist/wow.js"></script>
-    <script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
-    <script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
-    <script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
-    <script src="assets/lib/flexslider/jquery.flexslider.js"></script>
-    <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
-    <script src="assets/lib/smoothscroll.js"></script>
-    <script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
-    <script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
-    <script src="assets/js/plugins.js"></script>
-    <script src="assets/js/main.js"></script>
+    <?php include('javascript_link.php'); ?> 
+    
   </body>
 </html>

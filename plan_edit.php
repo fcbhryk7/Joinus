@@ -33,6 +33,23 @@
 
     $images = $stmt->fetchAll();
 
+    if($_REQUEST['image'] != true){
+      // セッション初期化
+      unset($_SESSION['images']);
+      // 取得した画像をセンションに格納
+      foreach ($images as $key => $value) {
+          $_SESSION['images'][] = $value['image_name'];
+      }
+    }
+
+    // タグ情報
+    $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
+    $data = array($_REQUEST['id']);
+    $stmt = $dbh->prepare($sql);
+    $stmt-> execute($data);
+
+    $tags = $stmt->fetchAll();
+
 ?>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
@@ -57,6 +74,9 @@
     <!-- cropper CSS -->
     <link rel="stylesheet" type="text/css" href="assets/lib/cropper-3.1.6/dist/cropper.min.css">
 
+    <!-- slick css (画像スライド) -->
+    <link rel="stylesheet" type="text/css" href="assets/lib/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="assets/lib/slick/slick-theme.css">
   </head>
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
@@ -74,9 +94,15 @@
               <div class="col-sm-8 col-sm-offset-2">
                 <h4 class="font-alt mb-0">Edit Image</h4>
                 <hr class="divider-w mt-10 mb-20">
-                <img class="mb-20 img-thumbnail" width="150" src="user_profile_img/<?php echo $plan['image']; ?>">
-                <form method="POST" action="trimming.php" class="form" role="form" enctype="multipart/form-data">
-                  <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="profile-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
+                <div class="your-class">
+                  <?php if (!isset($_SESSION['images'])) { ?>
+                    <img class="mb-20 img-thumbnail" width="150" src="images/no_image_available.png">
+                  <?php } else { foreach ($_SESSION['images'] as $key => $image) { ?>
+                    <img class="mb-20 img-thumbnail" width="150" src="images/<?php echo $_SESSION['images'][$key]; ?>">
+                  <?php }} ?>
+                </div>
+                <form method="POST" action="plan_trimming.php" class="form" role="form" enctype="multipart/form-data" id="image-form">
+                  <label><span class="btn btn-default btn-round btn-xs">select file<input type="file" id="plan-image" name="input_img_name" accept="images/*" style="display: none;"></span></label>
                   <!-- <input type="file" id="profile-image" name="input_img_name" accept="images/*"/> -->
                   <img id="select-image" style="max-width:500px;">
                   <!-- 切り抜き範囲をhiddenで保持する -->
@@ -85,84 +111,114 @@
                   <input type="hidden" id="upload-image-w" name="profileImageW" value="0"/>
                   <input type="hidden" id="upload-image-h" name="profileImageH" value="0"/>
                   <button type="submit" id="image_upload" class="btn btn-default btn-round btn-xs" disabled="disabled">upload</button>
+                  <button type="button" id="image_delete" class="btn btn-default btn-round btn-xs">delete</button>
                 </form>
               </div>
-              <div class="col-sm-8 col-sm-offset-2 mt-40">
-                <form method="POST" action="plan_update.php" class="form" role="form" >
+              <form method="POST" action="plan_update.php" class="form" role="form" >
+                <!-- tag機能 -->
+                <div class="col-sm-8 col-sm-offset-2 mt-40">
+                  <h4 class="font-alt">post tags</h4>
+                  <hr class="divider-w mt-10 mb-20">
+                  <div class="form-group">
+                    <div class="row">
+                      <!-- <form method="POST" action="tag_control.php" id="tag_form"> -->
+                        <div class="col-xs-9">
+                          <!-- <label class="control-label">Start time</label> -->
+                          <input type="text" name="input_tag_name" class="form-control input-lg" id="TagText" placeholder="Please enter tags">
+                        </div>
+                        <div class="col-xs-3">
+                          <!-- <label class="control-label"> </label> -->
+                          <div class="btn btn-default btn-md form-control" id="TagButton">add</div>
+                        </div>
+                      <!-- </form> -->
+                    </div>
+                  </div>
+                  <div id="TagHead">
+                    <?php if(($tags != false)) {foreach ($tags as $key => $tag) { ?>
+                      <div class="btn btn-default btn-xs btn-round TagDiv">
+                        <button class="close ml-10 TagClose" data-tag="<?php echo $tag['name']; ?>">&times;</button>
+                        <label class="button-tag"><?php echo $tag['name']; ?></label>
+                        <input type="hidden" name="tags[]" value="<?php echo $tag['name']; ?>">
+                      </div>
+                    <?php }} ?>
+                  </div>
+                </div>
+
+                <div class="col-sm-8 col-sm-offset-2 mt-40">
                   <h4 class="font-alt mb-0">Edit Profile</h4>
                   <hr class="divider-w mt-10 mb-20">
 
-                    <!-- plan_id -->
-                    <input type="hidden" name="input_plan_id" value="<?php echo $plan['plan_id']; ?>">
+                  <!-- plan_id -->
+                  <input type="hidden" name="input_plan_id" value="<?php echo $plan['plan_id']; ?>">
 
-                    <!-- title -->
-                    <div class="form-group">
-                      <label class="control-label">Title</label>
-                      <input name="input_title" class="form-control input-lg" type="text"  value="<?php echo $plan['title'] ?>" placeholder="Title"/>
-                    </div>
+                  <!-- title -->
+                  <div class="form-group">
+                    <label class="control-label">Title</label>
+                    <input name="input_title" class="form-control input-lg" type="text"  value="<?php echo $plan['title'] ?>" placeholder="Title"/>
+                  </div>
 
-                    <!-- content -->
-                    <div class="form-group">
-                      <label class="control-label">Content</label>
-                      <textarea name="input_content" class="form-control" rows="5" placeholder="Content"><?php echo $plan['content'] ?></textarea>
-                    </div>
+                  <!-- content -->
+                  <div class="form-group">
+                    <label class="control-label">Content</label>
+                    <textarea name="input_content" class="form-control" rows="5" placeholder="Content"><?php echo $plan['content'] ?></textarea>
+                  </div>
 
-                    <!-- destination -->
-                    <div class="form-group">
-                      <label class="control-label">Destination</label>
-                      <input name="input_place" class="form-control input-lg" type="text"  value="<?php echo $plan['place'] ?>" placeholder="Destination"/>
-                    </div>
+                  <!-- destination -->
+                  <div class="form-group">
+                    <label class="control-label">Destination</label>
+                    <input name="input_place" class="form-control input-lg" type="text"  value="<?php echo $plan['place'] ?>" placeholder="Destination"/>
+                  </div>
 
-                    <!-- Start & End -->
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-xs-6">
-                          <label class="control-label">Start time</label>
-                          <input type="text" name="input_start_datetime" value="<?php echo $plan['start_datetime'] ?>" class="form-control input-lg datetimepicker">
-                        </div>
-                        <div class="col-xs-6">
-                          <label class="control-label">End time</label>
-                          <input type="text" name="input_end_datetime" value="<?php echo $plan['end_datetime'] ?>" class="form-control input-lg datetimepicker">
-                        </div>
+                  <!-- Start & End -->
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <label class="control-label">Start time</label>
+                        <input type="text" name="input_start_datetime" value="<?php echo $plan['start_datetime'] ?>" class="form-control input-lg datetimepicker">
+                      </div>
+                      <div class="col-xs-6">
+                        <label class="control-label">End time</label>
+                        <input type="text" name="input_end_datetime" value="<?php echo $plan['end_datetime'] ?>" class="form-control input-lg datetimepicker">
                       </div>
                     </div>
+                  </div>
 
-                    <!-- rendezvous -->
-                    <div class="form-group">
-                      <label class="control-label">Rendezvous</label>
-                      <input name="input_location" class="form-control input-lg" type="text"  value="<?php echo $plan['location'] ?>" placeholder="Rendezvous"/>
-                    </div>
+                  <!-- rendezvous -->
+                  <div class="form-group">
+                    <label class="control-label">Rendezvous</label>
+                    <input name="input_location" class="form-control input-lg" type="text"  value="<?php echo $plan['location'] ?>" placeholder="Rendezvous"/>
+                  </div>
 
-                    <!-- time -->
-                    <div class="form-group">
-                      <label class="control-label">Time</label>
-                      <input type="text" name="input_time" value="<?php echo $plan['time'] ?>" class="form-control input-lg datetimepicker">
-                    </div>
+                  <!-- time -->
+                  <div class="form-group">
+                    <label class="control-label">Time</label>
+                    <input type="text" name="input_time" value="<?php echo $plan['time'] ?>" class="form-control input-lg datetimepicker">
+                  </div>
 
-                    <!-- person -->
-                    <div class="form-group">
-                      <label class="control-label">The number of people</label>
-                      <input name="input_person" class="form-control input-lg" type="number" value="<?php echo $plan['person'] ?>" placeholder="The number of people"/>
-                    </div>
+                  <!-- person -->
+                  <div class="form-group">
+                    <label class="control-label">The number of people</label>
+                    <input name="input_person" class="form-control input-lg" type="number" value="<?php echo $plan['person'] ?>" placeholder="The number of people"/>
+                  </div>
 
-                    <!-- cost -->
-                    <div class="form-group">
-                      <label class="control-label">Cost (php)</label>
-                      <input name="input_cost" class="form-control input-lg" type="number" value="<?php echo $plan['cost'] ?>" placeholder="Cost"/>
-                    </div>
+                  <!-- cost -->
+                  <div class="form-group">
+                    <label class="control-label">Cost (php)</label>
+                    <input name="input_cost" class="form-control input-lg" type="number" value="<?php echo $plan['cost'] ?>" placeholder="Cost"/>
+                  </div>
 
-                    <!-- Entry field -->
-                    <div class="form-group">
-                      <label class="control-label">Entry field</label>
-                      <textarea name="input_entry_field" class="form-control" rows="5" placeholder="Entry field"><?php echo $plan['entry_field'] ?></textarea>
-                    </div>
+                  <!-- Entry field -->
+                  <div class="form-group">
+                    <label class="control-label">Entry field</label>
+                    <textarea name="input_entry_field" class="form-control" rows="5" placeholder="Entry field"><?php echo $plan['entry_field'] ?></textarea>
+                  </div>
 
-                    <div class="form-group" style="text-align: right;">
-                      <button type="submit" class="btn btn-info btn-md">Update</button>
-                      <button type="button" onclick="location.href = 'plan_detail.php?id=<?php echo $_SESSION['user']['id']; ?>';" class="btn btn-default btn-md">Cancel</button>
-                    </div>
-                </form>
-              </div>
+                  <div class="form-group" style="text-align: right;">
+                    <button type="submit" class="btn btn-info btn-md">Update</button>
+                    <button type="button" onclick="location.href = 'plan_detail.php?id=<?php echo $plan['plan_id']; ?>';" class="btn btn-default btn-md">Cancel</button>
+                  </div>
+                </div>
+              </form>
             </div> <!-- row -->
           </div> <!-- container -->
         </section>
@@ -176,51 +232,5 @@
     <!-- JavaScripts -->
     <?php include('javascript_link.php'); ?>
 
-    <!-- カレンダー表示用JS -->
-    <script src="assets/js/moment.js"></script>
-    <!-- <script src="assets/js/pikaday.js"></script> -->
-    <script src="assets/js/jquery.datetimepicker.full.min.js"></script>
-    <script>
-        // calender表示
-        $(function(){
-            $('.datetimepicker').datetimepicker();
-        });
-    </script>
-
-    <!-- cropper JS -->
-    <script src="assets/lib/cropper-3.1.6/dist/cropper.min.js"></script>
-    <script type="text/javascript">
-      $(function(){
-          // 初期設定
-          var options =
-          {
-            aspectRatio: 1 / 1,
-            viewMode:1,
-            crop: function(e) {
-                  cropData = $('#select-image').cropper("getData");
-                  $("#upload-image-x").val(Math.floor(cropData.x));
-                  $("#upload-image-y").val(Math.floor(cropData.y));
-                  $("#upload-image-w").val(Math.floor(cropData.width));
-                  $("#upload-image-h").val(Math.floor(cropData.height));
-            },
-            zoomable:false,
-            minCropBoxWidth:162,
-            minCropBoxHeight:162
-          }
-
-          // 初期設定をセットする
-          $('#select-image').cropper(options);
-
-          $("#profile-image").change(function(){
-              // ファイル選択変更時に、選択した画像をCropperに設定する
-              $('#select-image').cropper('replace', URL.createObjectURL(this.files[0]));
-
-              // 無効化ボタンを解除
-              $('#image_upload').removeAttr('disabled');
-          });
-
-
-      });
-    </script>
   </body>
 </html>
