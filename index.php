@@ -1,108 +1,87 @@
-
 <?php
-  // // プランリクエスト一覧表示&検索機能
-  //   // ①使うテーブルを把握
-  //   // ②テーブルのid同士を繋ぐ
-  //   // ③タグ部分を繋ぐ
-  //   // ④ORDER BY 最新順に並び替え
+  session_start();
+include('dbconnect.php');
+include('functions.php');
 
+  if (!empty($_REQUEST)) {
+      $sql = 'SELECT p.*
+      FROM `plans` AS `p`, `tags` AS `t`, `plans_tags` AS `pt`
+      WHERE `p`.plan_id = `pt`.plan_id
+      AND `t`.tag_id = `pt`.tag_id
+      AND `t`.name LIKE ?
+      ORDER BY `p`.created DESC';
 
-  //if (!empty($_REQUEST)) {
+      if (!empty($_POST)) {
+          // XSS攻撃対策
+          $target = '%' . h($_POST['input_word']) . '%';
+          // echo $target;
+          $data = array($target);
+          // connectこれはおっけー
+          $stmt = $dbh->prepare($sql);
+          $stmt -> execute($data);
+          // $plans:配列を定義する
+          $plans = array();
+          // while文でループする
+          while (true){
+              // データ1件をフェッチする
+              $plan = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  // session_start();
-  // require('dbconnect.php');
-  require('functions.php');
-
-
-  // $sql = 'SELECT p.*
-  // FROM `plans` AS `p`, `tags` AS `t`, `plans_tags` AS `pt`
-  // WHERE `p`.plan_id = `pt`.plan_id
-  // AND `t`.tag_id = `pt`.tag_id
-  // AND `t`.name LIKE ?
-  // ORDER BY `p`.created DESC';
-
-  // if (!empty($_POST)) {
-  //     // XSS攻撃対策
-  //     $target = '%' . h($_POST['input_word']) . '%';
-  //     // echo $target;
-  //     $data = array($target);
-  //     // connectこれはおっけー
-  //     $stmt = $dbh->prepare($sql);
-  //     $stmt -> execute($data);
-
-  //     // $plans:配列を定義する
-  //     $plans = array();
-
-  //     // while文でループする
-  //     while (true){
-  //         // データ1件をフェッチする
-  //         $plan = $stmt->fetch(PDO::FETCH_ASSOC);
-
-  //         // もしデータが存在しない場合は、ループ文を抜ける
-  //         if($plan == false) {
-  //             //とめる
-  //             break;
-  //         }
-
-  //         // 配列$plansにデータを追加する
-  //         $plans[] = $plan;
-  //     }
-  // }
-
-
-
-
-
-
-      //変数へ格納していく
-      // $plans[] = $plan;
-
-  //ひろくんのつくったやつ
-  // プラン/リクエスト一覧表示
-  // $sql = 'SELECT p.title, p.plan_id, i.image_name, u.name, p.request_type FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
-  // $data = array();
-  // $stmt = $dbh->prepare($sql);
-  // $stmt->execute($data);
-
-  // $plans = array();
-  // while (true) {
-  //   $plan = $stmt->fetch(PDO::FETCH_ASSOC);
-  //     if($plan == false){
-  //       break;
-  //     }
-  //     $plans[] = $plan;
-  // }
-
-
-  $plan_cnt = count($plans);
-
-
+              // もしデータが存在しない場合は、ループ文を抜ける
+              if($plan == false) {
+                  //とめる
+                  break;
+              }
+              // 配列$plansにデータを追加する
+              $plans[] = $plan;
+          }
+      }
+  }else{
+      // ひろくんのやつ
+      $sql = 'SELECT p.title, p.plan_id, i.image_name, u.name, p.request_type
+      FROM plans AS p, images AS i, users AS u
+      WHERE p.plan_id = i.plan_id
+      AND p.user_id = u.user_id
+      AND i.image_order = 1
+      ORDER BY p.created DESC';
+      $data = array();
+      $stmt = $dbh->prepare($sql);
+      $stmt->execute($data);
+      $plans = array();
+      while (true) {
+          $plan = $stmt->fetch(PDO::FETCH_ASSOC);
+          if($plan == false){
+              break;
+          }
+          $plans[] = $plan;
+          $plan_cnt = count($plans);
+          echo_var_dump('$plans',$plans);
+          // echo $c;
+          // die();
+      }
+  }
  ?>
 
 
 <!DOCTYPE html>
-
 <html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>Joinus!</title>
     <?php
-      require('favicons_link.php');
-      require('stylesheet_link.php');
-
+      include('favicons_link.php');
+      include('stylesheet_link.php');
     ?>
   </head>
 
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
 
-      <div class="page-loader">
+<!--       <div class="page-loader">
         <div class="loader">Loading...</div>
-      </div>
+      </div> -->
 
       <!-- Header -->
       <?php include('header.php'); ?>
@@ -167,9 +146,7 @@
                     <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
                     <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
                   </ul>
-
-
-
+                  <!-- プラン -->
                   <div class="tab-content">
                     <div class="tab-pane active" id="support">
                       <div class="row">
@@ -190,14 +167,13 @@
                               </div>
                             </a>
                           </div>
-                        <?php 
+                        <?php
                           }
-                            } 
+                            }
                         ?>
                       </div>
                     </div>
-
-
+                    <!-- リクエスト -->
                     <div class="tab-pane" id="sales">
                      <div class="row">
                         <?php
@@ -217,9 +193,9 @@
                               </div>
                             </a>
                           </div>
-                        <?php 
+                        <?php
                           }
-                            } 
+                            }
                         ?>
                       </div>
                     </div>
@@ -371,7 +347,7 @@
       <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
     </main>
 
-
     <?php include('javascript_link.php'); ?>
+
   </body>
 </html>

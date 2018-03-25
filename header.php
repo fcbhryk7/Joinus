@@ -10,7 +10,6 @@
       <a class="navbar-brand" href="<?php echo $root_dir; ?>index.php">Joinus!</a>
     </div>
 
-<<<<<<< HEAD
     <!-- 検索窓 -->
     <ul class="nav navbar-nav">
       <form role="search" method="POST" action="index.php">
@@ -38,7 +37,6 @@
     </div>
   </div>
 </nav>
-=======
           <form role="search" method="GET" action="index.php">
           <input type="search" placeholder="keyword" name="s">
           <input type="submit" class="button" value="search">
@@ -76,4 +74,3 @@
           </div>
         </div>
       </nav>
->>>>>>> master
