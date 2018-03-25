@@ -4,7 +4,7 @@
   require('functions.php');
 
   // プラン/リクエスト一覧表示
-  $sql = 'SELECT p.title, i.image_name, u.name, p.request_type FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
+  $sql = 'SELECT p.title, p.plan_id, i.image_name, u.name, p.request_type FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
   $data = array();
   $stmt = $dbh->prepare($sql);
   $stmt->execute($data);
@@ -122,15 +122,17 @@
                             if($plans[$i]['request_type'] == 0) {
                         ?>
                           <div class="col-lg-4 col-md-6 col-sm-12">
-                          <img src="images/<?php echo $plans[$i]['image_name']; ?>">
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <?php echo $plans[$i]['title']; ?>
+                            <a href="plan_detail.php?id=<?php echo $plans[$i]['plan_id']; ?>">
+                              <img src="images/<?php echo $plans[$i]['image_name']; ?>">
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <?php echo $plans[$i]['title']; ?>
+                                </div>
+                                <div class="panel-body">
+                                  <?php echo $plans[$i]['name']; ?>
+                                </div>
                               </div>
-                              <div class="panel-body">
-                                <?php echo $plans[$i]['name']; ?>
-                              </div>
-                            </div>
+                            </a>
                           </div>
                         <?php 
                           }
@@ -146,15 +148,17 @@
                             if($plans[$i]['request_type'] == 1) {
                         ?>
                           <div class="col-lg-4 col-md-6 col-sm-12">
-                          <img src="images/<?php echo $plans[$i]['image_name']; ?>">
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <?php echo $plans[$i]['title']; ?>
+                            <a href="request_detail.php?id=<?php echo $plans[$i]['plan_id']; ?>">
+                              <img src="images/<?php echo $plans[$i]['image_name']; ?>">
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <?php echo $plans[$i]['title']; ?>
+                                </div>
+                                <div class="panel-body">
+                                  <?php echo $plans[$i]['name']; ?>
+                                </div>
                               </div>
-                              <div class="panel-body">
-                                <?php echo $plans[$i]['name']; ?>
-                              </div>
-                            </div>
+                            </a>
                           </div>
                         <?php 
                           }
