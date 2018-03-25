@@ -21,9 +21,24 @@
                 <div class="widget">
                   <h5 class="widget-title font-alt">Site map</h5>
                   <ul class="icon-list">
+<<<<<<< HEAD
                     <li><a href="#">Create plan</a></li>
                     <li><a href="#">Create request</a></li>
                     <li><a href="<?php echo $root_dir; ?>help.php">Help</a></li>
+=======
+                    <?php if(isset($_SESSION['user']['id'])) { ?>
+                    <li><a href="<?php $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
+                    <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
+                    <li><a href="<?php $root_dir; ?>post.php">Create plan / request</a></li>
+                    <li><a href="<?php $root_dir; ?>help.php">Help</a></li>
+                    <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                    <?php } else { ?>
+                    <li><a href="<?php $root_dir; ?>signin.php">Signin</a></li>
+                    <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
+                    <li><a href="<?php $root_dir; ?>help.php">Help</a></li>
+                    <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                    <?php } ?>
+>>>>>>> master
                   </ul>
                 </div>
               </div>

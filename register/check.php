@@ -1,9 +1,9 @@
 <?php
 
-    echo '<pre>';
-    echo '$_POST=';
-    echo var_dump($_POST);
-    echo '</pre>';
+    // echo '<pre>';
+    // echo '$_POST=';
+    // echo var_dump($_POST);
+    // echo '</pre>';
 
 
     // セッション開始
@@ -18,10 +18,10 @@
         exit();
     }
 
-    echo '<pre>';
-    echo '$_SESSION=';
-    echo var_dump($_SESSION);
-    echo '</pre>';
+    // echo '<pre>';
+    // echo '$_SESSION=';
+    // echo var_dump($_SESSION);
+    // echo '</pre>';
 
     $email = $_SESSION['register']['email'];
     $name = $_SESSION['register']['name'];
@@ -32,8 +32,8 @@
     if(!empty($_POST)){
         // パスワードのハッシュ化
         $hash_password = password_hash($password, PASSWORD_DEFAULT);
-        echo $hash_password;
-        echo '<br>';
+        // echo $hash_password;
+        // echo '<br>';
 
         // STEP2
         $sql = 'INSERT INTO `users` SET `email` = ?, `name` = ?, `password` = ?, `gender` = ?, `created` = now()';
@@ -94,9 +94,6 @@
   <?php
       require('../footer.php');
   ?>
-  <script src="../assets/js/jquery-3.1.1.js"></script>
-  <script src="../assets/js/jquery-migrate-1.4.1.js"></script>
-  <script src="../assets/js/bootstrap.js"></script>
 <!-- ジャバスクリプトりくワイヤ -->
 <?php
   require('javascript_link.php');
