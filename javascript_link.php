@@ -2,10 +2,6 @@
     $root_dir = search_assets(debug_backtrace());
  ?>
 
-     <!--  
-    JavaScripts
-    =============================================
-    -->
     <script src="<?php echo $root_dir; ?>assets/lib/jquery/dist/jquery.js"></script>
     <script src="<?php echo $root_dir; ?>assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="<?php echo $root_dir; ?>assets/lib/wow/dist/wow.js"></script>

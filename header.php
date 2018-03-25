@@ -1,18 +1,6 @@
-<?php
 
     $root_dir = search_assets(debug_backtrace());
 
-    // // タグ情報取得
-    // $sql = 'SELECT t.* FROM plans_tags AS pt, tags AS t WHERE pt.tag_id = t.tag_id AND pt.plan_id = ?';
-    // $data = array($_REQUEST['id']);
-    // $stmt = $dbh->prepare($sql);
-    // $stmt-> execute($data);
-
-    // $tags =  $stmt->fetchAll();
-
-    // echo_var_dump('$tags', $tags);
-
- ?>
 
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -20,7 +8,7 @@
           <div class="navbar-header">
 
 <!-- ロゴ-->
-　　　　　   <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -30,8 +18,12 @@
           </div>
  <!-- けんさくまど -->
 
+          <form role="search" method="GET" action="index.php">
+          <input type="search" placeholder="keyword" name="s">
+          <input type="submit" class="button" value="search">
+          </form>
 
-<!--             <div class="row mb-60">
+<!-- <div class="row mb-60">
               <div class="col-sm-8 col-sm-offset-2">
                 <form role="form">
                   <div class="search-box">
