@@ -33,7 +33,7 @@
     // echo_var_dump('$favorite_plans', $favorite_plans);
 
     // お気に入りリクエストの取得
-    $sql = 'SELECT u.*, p.* FROM favorites AS f, plans AS p, users AS u WHERE f.plan_id = p.plan_id AND p.user_id = u.user_id AND p.request_type = 1 AND f.user_id = ? ORDER BY p.created DESC';
+    $sql = 'SELECT u.*, p.*, i.* FROM images AS i, favorites AS f, plans AS p, users AS u WHERE i.plan_id = p.plan_id AND f.plan_id = p.plan_id AND p.user_id = u.user_id AND p.request_type = 1 AND i.image_order = 1 AND f.user_id = ? ORDER BY p.created DESC';
     $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
@@ -165,7 +165,7 @@
                           <!-- <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp"> -->
                           <div class="mb-sm-20 col-sm-6 col-md-3">
                             <div class="team-item">
-                              <div class="team-image"><!-- <img src="images/<?php echo $request['image_name']; ?>" alt="image" class="img-thumbnail"/> -->
+                              <div class="team-image"><img src="images/<?php echo $request['image_name']; ?>" alt="image" class="img-thumbnail"/>
                                 <div class="team-detail">
                                   <h5 class="font-alt"><?php echo $request['title']; ?></h5>
                                   <!-- <p class="font-serif"></p> -->

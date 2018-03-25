@@ -1,4 +1,6 @@
 
+    $root_dir = search_assets(debug_backtrace());
+
 
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -43,7 +45,7 @@
                   <li><a href="<?php $root_dir; ?>signin.php">My page</a></li>
                   <?php } ?>
                   <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
-                  <li><a href="<?php $root_dir; ?>Plan_Request_post.php">Create plan / request</a></li>
+                  <li><a href="<?php $root_dir; ?>post.php">Create plan / request</a></li>
                   <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
                 </ul>
               </li>
