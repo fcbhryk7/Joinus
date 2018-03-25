@@ -39,8 +39,10 @@
         $errors['rewrite'] = true;
 
         // タグを偽造
-        foreach ($_SESSION['tags'] as $key => $value) {
-            $_POST['tags'][] = $value;
+        if(isset($_SESSION['tags'])){
+            foreach ($_SESSION['tags'] as $key => $value) {
+                $_POST['tags'][] = $value;
+            }
         }
     }
 
@@ -74,9 +76,11 @@
         $entry_field = htmlspecialchars($_POST['input_entry_field']);
 
         // タグをセッションに追加する
-        unset($_SESSION['tags']);
-        foreach ($_POST['tags'] as $key => $value) {
-            $_SESSION['tags'][] = h($value);
+        if (isset($_POST['tags'])) {
+            unset($_SESSION['tags']);
+            foreach ($_POST['tags'] as $key => $value) {
+                $_SESSION['tags'][] = h($value);
+            }
         }
 
         // バリデーション

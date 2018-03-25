@@ -22,8 +22,8 @@
 
     $profile = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // お気に入りプランの取得
-    $sql = 'SELECT u.*, p.*, i.* FROM images AS i, favorites AS f, plans AS p, users AS u WHERE i.plan_id = p.plan_id AND f.plan_id = p.plan_id AND p.user_id = u.user_id AND p.request_type = 0 AND i.image_order = 1 AND f.user_id = ? ORDER BY p.created DESC';
+    // お気に入りプラン/リクエストの取得
+    $sql = 'SELECT u.*, p.*, i.* FROM images AS i, favorites AS f, plans AS p, users AS u WHERE i.plan_id = p.plan_id AND f.plan_id = p.plan_id AND p.user_id = u.user_id AND i.image_order = 1 AND f.user_id = ? ORDER BY p.created DESC';
     $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
@@ -32,15 +32,13 @@
 
     // echo_var_dump('$favorite_plans', $favorite_plans);
 
-    // お気に入りリクエストの取得
-    $sql = 'SELECT u.*, p.*, i.* FROM images AS i, favorites AS f, plans AS p, users AS u WHERE i.plan_id = p.plan_id AND f.plan_id = p.plan_id AND p.user_id = u.user_id AND p.request_type = 1 AND i.image_order = 1 AND f.user_id = ? ORDER BY p.created DESC';
+    // 自分のプラン/リクエストの取得
+    $sql = 'SELECT u.*, p.*, i.* FROM images AS i, plans AS p, users AS u WHERE i.plan_id = p.plan_id AND p.user_id = u.user_id AND i.image_order = 1 AND u.user_id = ? ORDER BY p.created DESC';
     $data = array($_REQUEST['id']);
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
-    $favorite_requests = $stmt->fetchAll();
-
-    // echo_var_dump('$favorite_requests', $favorite_requests);
+    $my_plans = $stmt->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -82,23 +80,33 @@
               <div class="col-xs-7">
                 <div class="well-small">
                   <div class="well-small">
-                    <label class="control-label">Entry：</label>
-                    <?php echo $profile['created'] ?>
-                  </div>
-                  <div class="well-small">
                     <label class="control-label">Name：</label>
-                    <?php echo $profile['name'] ?>
+                    <?php echo $profile['name']; ?>
                     <!-- user_name -->
                   </div>
                   <div class="well-small">
+                    <label class="control-label">Gender：</label>
+                    <?php echo $profile['gender']; ?>
+                    <!-- gender -->
+                  </div>
+                  <div class="well-small">
                     <label class="control-label">Country：</label>
-                    <?php echo $profile['country_name'] ?>
+                    <?php echo $profile['country_name']; ?>
                     <!-- country_name -->
                   </div>
                   <div class="well-small">
-                    <label class="control-label">Gender：</label>
-                    <?php echo $profile['gender'] ?>
+                    <label class="control-label">Staying time：</label>
+                    <?php echo $profile['staying_time']; ?>
                     <!-- gender -->
+                  </div>
+                  <div class="well-small">
+                    <label class="control-label">Birthday：</label>
+                    <?php echo $profile['birthday']; ?>
+                    <!-- gender -->
+                  </div>
+                  <div class="well-small">
+                    <label class="control-label">Entry：</label>
+                    <?php echo $profile['created']; ?>
                   </div>
                   <div class="form-group">
                     <!-- <div class="col-xs-3 col-xs-offset-9"> -->
@@ -131,13 +139,13 @@
                 <legend>Favorite</legend>
                 <div role="tabpanel">
                   <ul class="nav nav-tabs font-alt" role="tablist">
-                    <li class="active"><a href="#plan" data-toggle="tab"><span class="icon-tools-2"></span>plan</a></li>
-                    <li><a href="#request" data-toggle="tab"><span class="icon-tools-2"></span>request</a></li>
+                    <li class="active"><a href="#favorite_plan" data-toggle="tab"><span class="icon-tools-2"></span>plan</a></li>
+                    <li><a href="#favorite_request" data-toggle="tab"><span class="icon-tools-2"></span>request</a></li>
                   </ul>
                   <div class="tab-content">
-                    <div class="tab-pane active" id="plan">
+                    <div class="tab-pane active" id="favorite_plan">
                       <div class="row">
-                        <?php foreach ($favorite_plans AS $key => $plan) { ?>
+                        <?php foreach ($favorite_plans AS $key => $plan) { if($plan['request_type'] == 0){ ?>
                         <a href="plan_detail.php?id=<?php echo $plan['plan_id']; ?>">
                         <!-- <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp"> -->
                           <div class="mb-sm-20 col-sm-6 col-md-3">
@@ -155,12 +163,12 @@
                             </div>
                           </div>
                         </a>
-                        <?php } ?>
+                        <?php }} ?>
                       </div> <!-- row -->
                     </div>
-                    <div class="tab-pane" id="request">
+                    <div class="tab-pane" id="favorite_request">
                       <div class="row">
-                        <?php foreach ($favorite_requests AS $key => $request) { ?>
+                        <?php foreach ($favorite_plans AS $key => $request) { if($request['request_type'] == 1){ ?>
                         <a href="request_detail.php?id=<?php echo $request['plan_id']; ?>">
                           <!-- <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp"> -->
                           <div class="mb-sm-20 col-sm-6 col-md-3">
@@ -178,7 +186,66 @@
                             </div>
                           </div>
                         </a>
-                        <?php } ?>
+                        <?php }} ?>
+                      </div> <!-- row -->
+                    </div>
+                  </div>
+                </div> <!-- tabpanel -->
+              </div>
+
+
+              <div class="col-xs-offset-1 col-xs-10">
+                <legend>My plan / request</legend>
+                <div role="tabpanel">
+                  <ul class="nav nav-tabs font-alt" role="tablist">
+                    <li class="active"><a href="#my_plan" data-toggle="tab"><span class="icon-tools-2"></span>plan</a></li>
+                    <li><a href="#my_request" data-toggle="tab"><span class="icon-tools-2"></span>request</a></li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="my_plan">
+                      <div class="row">
+                        <?php foreach ($my_plans AS $key => $plan) { if($plan['request_type'] == 0){  ?>
+                        <a href="plan_detail.php?id=<?php echo $plan['plan_id']; ?>">
+                        <!-- <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp"> -->
+                          <div class="mb-sm-20 col-sm-6 col-md-3">
+                            <div class="team-item">
+                              <div class="team-image"><img src="images/<?php echo $plan['image_name']; ?>" alt="image" class="img-thumbnail" />
+                                <div class="team-detail">
+                                  <h5 class="font-alt"><?php echo $plan['title']; ?></h5>
+                                  <!-- <p class="font-serif"></p> -->
+                                </div>
+                              </div>
+                              <div class="team-descr font-alt">
+                                <div class="team-name"><?php echo $plan['name']; ?></div>
+                                <!-- <div class="team-role">Art Director</div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <?php }} ?>
+                      </div> <!-- row -->
+                    </div>
+                    <div class="tab-pane" id="my_request">
+                      <div class="row">
+                        <?php foreach ($my_plans AS $key => $request) { if($request['request_type'] == 1){  ?>
+                        <a href="request_detail.php?id=<?php echo $request['plan_id']; ?>">
+                          <!-- <div class="mb-sm-20 wow fadeInUp col-sm-6 col-md-3" onclick="wow fadeInUp"> -->
+                          <div class="mb-sm-20 col-sm-6 col-md-3">
+                            <div class="team-item">
+                              <div class="team-image"><img src="images/<?php echo $request['image_name']; ?>" alt="image" class="img-thumbnail"/>
+                                <div class="team-detail">
+                                  <h5 class="font-alt"><?php echo $request['title']; ?></h5>
+                                  <!-- <p class="font-serif"></p> -->
+                                </div>
+                              </div>
+                              <div class="team-descr font-alt">
+                                <div class="team-name"><?php echo $request['name']; ?></div>
+                                <!-- <div class="team-role"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <?php }} ?>
                       </div> <!-- row -->
                     </div>
                   </div>

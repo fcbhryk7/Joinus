@@ -1,79 +1,82 @@
-<?php 
+<?php
 
-  session_start();
-  require('dbconnect.php'); // 他のファイルの読み込み
-  require('functions.php'); //ファンクション
+    session_start();
+    require('dbconnect.php'); // 他のファイルの読み込み
+    require('functions.php'); //ファンクション
 
-  // エラーの連想配列を定義
-  $errors = array();
+    // エラーの連想配列を定義
+    $errors = array();
 
-  // ページ遷移元を取得 (前のページへ)
-  
-  if(empty($_POST)) {
-    $_SESSION['before_page'] = get_page_name();
-    echo $_SESSION['before_page'];
-  }
-
-  // echo_var_dump('$_POST', $_POST);
-
-  // 画面の送信ボタンが押されたとき発動 / $_POSTが空じゃない時に発動
-  if(!empty($_POST)) {
-    $email = $_POST['input_email'];
-    $password = $_POST['input_password'];
-
-    // $emailが空じゃないかつ&passwordが空じゃない
-    if($email != '' && $password != '') {
-      $sql = 'SELECT * FROM `users` WHERE `email`=?';
-      $data = array($email);
-      $stmt = $dbh->prepare($sql);
-      $stmt->execute($data);
-
-      $record = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      if($record == false) {
-        // メールアドレスミス
-        $errors['email'] = 'norecord';
-      } else {
-        // パスワードが一致しているか
-
-          // echo $record['password'];
-          // echo '<br>';
-          // echo $password;
-          // echo '<br>';
-            
-          // password_verify(普通文字列PW、ハッシュ文字列PW)
-          // 一致していればtrueを、そうでなければfalseを返す
-          $verify = password_verify($password, $record['password']);
-
-            if ($verify == true) {
-            // サインイン処理
-
-              // セッションにサインインユーザーのidを保存
-              $_SESSION['user']['id'] = $record['user_id'];
-
-              // 次のページに遷移するもの/exitとセット
-              if ($_SESSION['before_page'] == 'thanks.php') {
-                          // profile_edit.phpに遷移
-                header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
-                exit();
-              } else {
-                  header('Location: index.php');
-                  exit();
-              }
-            } else {
-                $errors['password'] = "incorrect";
-            }
+    // ページ遷移元を取得 (前のページへ)
+    if(empty($_POST)) {
+      // 遷移元のURLを取得
+      $url = get_page_name();
+      // signin.php以外の遷移元を格納
+      if($url != 'signin.php') {
+          $_SESSION['before_page'] = $url;
+          echo $_SESSION['before_page'];
       }
     }
-      // echo '<pre>';
-      // echo '$errors = ';
-      // var_dump($errors);
-      // echo '</pre>';
-  }
 
-      
-      
- ?>
+    // echo_var_dump('$_POST', $_POST);
+
+    // 画面の送信ボタンが押されたとき発動 / $_POSTが空じゃない時に発動
+    if(!empty($_POST)) {
+        $email = $_POST['input_email'];
+        $password = $_POST['input_password'];
+
+        // $emailが空じゃないかつ&passwordが空じゃない
+        if($email != '' && $password != '') {
+            $sql = 'SELECT * FROM `users` WHERE `email`=?';
+            $data = array($email);
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute($data);
+
+            $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if($record == false) {
+              // メールアドレスミス
+              $errors['email'] = 'norecord';
+            } else {
+            // パスワードが一致しているか
+
+              // echo $record['password'];
+              // echo '<br>';
+              // echo $password;
+              // echo '<br>';
+
+              // password_verify(普通文字列PW、ハッシュ文字列PW)
+              // 一致していればtrueを、そうでなければfalseを返す
+              $verify = password_verify($password, $record['password']);
+
+                if ($verify == true) {
+                // サインイン処理
+
+                  // セッションにサインインユーザーのidを保存
+                  $_SESSION['user']['id'] = $record['user_id'];
+
+                  // 次のページに遷移するもの/exitとセット
+                  if ($_SESSION['before_page'] == 'thanks.php') {
+                              // profile_edit.phpに遷移
+                    header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
+                    exit();
+                  } else {
+                      header('Location: index.php');
+                      exit();
+                  }
+                } else {
+                    $errors['password'] = "incorrect";
+                }
+            }
+        } else {
+            $errors['email'] = 'blank';
+        }
+        // echo '<pre>';
+        // echo '$errors = ';
+        // var_dump($errors);
+        // echo '</pre>';
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
