@@ -1,7 +1,4 @@
 
-    $root_dir = search_assets(debug_backtrace());
-
-
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -41,12 +38,14 @@
                 <ul class="dropdown-menu">
                   <?php if(isset($_SESSION['user']['id'])) { ?>
                   <li><a href="<?php $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
-                  <?php } else { ?>
-                  <li><a href="<?php $root_dir; ?>signin.php">My page</a></li>
-                  <?php } ?>
                   <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
                   <li><a href="<?php $root_dir; ?>post.php">Create plan / request</a></li>
                   <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                  <?php } else { ?>
+                  <li><a href="<?php $root_dir; ?>signin.php">Signin</a></li>
+                  <li><a href="<?php $root_dir; ?>index.php#works">List plan / request</a></li>
+                  <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                  <?php } ?>
                 </ul>
               </li>
             </ul>

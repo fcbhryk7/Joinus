@@ -18,9 +18,9 @@
         $errors['rewrite'] = true;
     }
 
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre>';
+    // echo '<pre>';
+    // var_dump($_POST);
+    // echo '</pre>';
 
     $name = '';
     $email = '';
@@ -69,9 +69,9 @@
             $_SESSION['register']['password'] = $password;
             $_SESSION['register']['gender'] = $gender;
 
-            echo '<pre>';
-            var_dump($errors);
-            echo '</pre>';
+            // echo '<pre>';
+            // var_dump($errors);
+            // echo '</pre>';
             header('Location: check.php');
             exit();
         }

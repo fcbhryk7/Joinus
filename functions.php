@@ -27,10 +27,23 @@
     $url = parse_url($_SERVER['HTTP_REFERER']);
     $path = explode('/', $url['path']);
 
+    // registerフォルダが存在するかの場合わけ
     if($path[3] == 'register') {
-        return $path[4] . '?' . $url['query'];
+        // クエリ(パラメータ)が存在するかの場合わけ
+        if(!empty($url['query'])) {
+            return $path[4] . '?' . $url['query'];
+        }
+        else {
+            return $path[4];
+        }
     } else {
-        return $path[3]  . '?' . $url['query'];
+        // クエリ(パラメータ)が存在するかの場合わけ
+        if(!empty($url['query'])) {
+            return $path[3]  . '?' . $url['query'];
+        }
+        else {
+            return $path[3];
+        }
     }
   }
 

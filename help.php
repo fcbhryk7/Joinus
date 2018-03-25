@@ -1,5 +1,12 @@
+<?php
+    session_start(); //セッションスタート
+    require('dbconnect.php'); //DB接続
+    require('functions.php'); //ファンクション
+    // require('user_session.php'); //セッション確認
+?>
+
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
