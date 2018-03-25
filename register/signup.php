@@ -2,6 +2,7 @@
     // セッションスタート
     session_start();
     require('../functions.php');
+    require('../header.php');
 
     //エラー配列定義
     $errors = array();
@@ -53,7 +54,7 @@
         $str_c = strlen($password);
         if ($password == '') {
             $errors['password'] = 'blank';
-        // ４より大きく、かつ１６より小さい
+        // 4より大きく、かつ16より小さい
         } elseif($str_c < 4 || 16 < $str_c) {
             $errors['password'] = 'length';
         }
@@ -80,15 +81,13 @@
 ?>
 
 
-
-
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Joinus!signuppage</title>
+    <title>Joinus! : Signup</title>
     <?php
         require('../favicons_link.php');
         require('../stylesheet_link.php');
@@ -101,33 +100,12 @@
         </div>
       </div>
 
-
-      <!--ヘッダーりくワイヤ -->
-      <?php
-          require('../header.php');
-      ?>
-
-      <!-- メイン画像 -->
-      <div class="main">
-        <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <h1 class="module-title font-alt mb-0">Signup</h1>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-
-
         <!-- register↓ -->
         <section class="module">
           <div class="container">
             <div class="row">
               <!-- フォームのサイズ↓ -->
-              <div class="col-sm-5">
+              <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
                 <h4 class="font-alt">Signup</h4>
                 <hr class="divider-w mb-10">
                 <form class="form" method="POST" action="signup.php">
@@ -188,7 +166,7 @@
           </div>
         </section>
 
-        <!-- フッターりくワイヤ⇩ -->
+        <!-- フッター⇩ -->
         <?php
             require('../footer.php');
         ?>

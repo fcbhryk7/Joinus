@@ -12,6 +12,7 @@
     // DBコネクション
     require('../dbconnect.php');
     require('../functions.php');
+    require('../header.php');
 
     if(!isset($_SESSION['register'])) {
         header('Location: signup.php');
@@ -67,36 +68,36 @@
   require('../stylesheet_link.php');
 ?>
 </head>
-<body style="margin-top: 60px">
-<!--ヘッダーりくワイヤ -->
-<?php
-    require('../header.php');
-?>
-  <h3>check</h3>
-  <div class="container">
-    <div class="row">
-      <div>
-        <p>メールアドレス:<?php echo htmlspecialchars($email); ?></p>
-        <p>ユーザー名:<?php echo htmlspecialchars($name); ?></p>
-        <p>パスワード:●●●●●●●●</p>
 
-        <form method="POST" actoin="thanks.php">
-          <input type="hidden" name="hoge" value="fuga">
-          <!-- action=rewrite 
-                ユーザーが入力した状態で戻る -->
-          <a href="signup.php?action=rewrite">戻る</a>
-          <input type="submit" value="登録">
-        </form>
+<!-- Body -->
+<div class="main">
+  <section class="module">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
+          <h4 class="font-alt">Check</h4>
+          <hr class="divider-w mb-10">
+          <div>
+            <p>メールアドレス:<?php echo htmlspecialchars($email); ?></p>
+            <p>ユーザー名:<?php echo htmlspecialchars($name); ?></p>
+            <p>パスワード:●●●●●●●●</p>
+
+            <form method="POST" actoin="thanks.php">
+              <input type="hidden" name="hoge" value="fuga">
+              <!-- action=rewrite ユーザーが入力した状態で戻る -->
+              <a href="signup.php?action=rewrite">戻る</a>
+              <input type="submit" value="登録">
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-    <!-- フッターりくワイヤ⇩ -->
-  <?php
-      require('../footer.php');
-  ?>
-<!-- ジャバスクリプトりくワイヤ -->
-<?php
-  require('../javascript_link.php');
-?>
+  </section>
+</div>
+<!-- Body -->
+
+<?php require('../footer.php'); ?>
+<?php require('../javascript_link.php'); ?>
+
 </body>
 </html>
