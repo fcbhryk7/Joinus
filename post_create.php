@@ -120,6 +120,8 @@
     unset($_SESSION['images']);
     unset($_SESSION['tags']);
 
+    // フラッシュメッセージ
+    flash('success', 'You completed create!!');
     header('Location: ' . $request_type . '_detail.php?id=' . $plan_id);
     exit();
 

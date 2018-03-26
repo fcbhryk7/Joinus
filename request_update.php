@@ -126,6 +126,8 @@
         }
     }
 
+    // フラッシュメッセージ
+    flash('success', 'You completed update!!');
     header('Location: request_detail.php?id=' . $plan_id);
     exit();
 

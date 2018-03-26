@@ -4,6 +4,10 @@
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
 
+    // フラッシュメッセージのクリア処理
+    $flash = isset($_SESSION['flash']) ? $_SESSION['flash'] : array();
+    unset($_SESSION['flash']);
+
     if(!isset($_REQUEST['id']) || $_REQUEST['id'] == '') {
         header('Location: index.php');
         exit();
@@ -141,6 +145,18 @@
         <section class="module">
           <div class="container">
             <div class="row">
+            <?php
+                // フラッシュメッセージ表示
+                foreach(array('success', 'info', 'danger', 'warning') as $key) {
+                    if(strlen(@$flash[$key])){
+                        ?>
+                            <div class="flash alert alert-<?php echo $key ?>">
+                                <?php echo $flash[$key] ?>
+                            </div>
+                        <?php
+                    }
+                }
+            ?>
               <!-- タイトル -->
               <div class="col-sm-12">
                 <h1 class="product-title font-alt"><?php echo $plans['title']; ?></h1>
@@ -153,7 +169,7 @@
                     <!-- タグ出力 -->
                     <div class="product_meta">Tags:
                       <?php foreach ($tags as $tag) { ?>
-                      <a href="index.php?tag_name=<?php echo $tag['name'];?>#works" class="badge badge-info"><?php echo $tag['name'];?></a>
+                      <a href="index.php?input_word=<?php echo $tag['name'];?>#PlanRequest" class="badge badge-info"><?php echo $tag['name'];?></a>
                       <?php } ?>
                     </div>
                   </div>
@@ -236,6 +252,16 @@
                     <?php if($users['user_id'] == $_SESSION['user']['id']) { ?>
                     <!-- <button class="btn btn-primary btn-md form-control">Edit</button> -->
                     <a href="plan_edit.php?id=<?php echo $_REQUEST['id']; ?>" class="btn btn-primary btn-md form-control">edit</a>
+                    <?php } ?>
+                  </div>
+                </div>
+
+                <!-- 削除ボタン -->
+                <div class="row">
+                  <div class="col-sm-12 form-group" style="text-align: center;">
+                    <?php if($users['user_id'] == $_SESSION['user']['id']) { ?>
+                    <!-- <button class="btn btn-primary btn-md form-control">Edit</button> -->
+                    <a href="plan_delete.php?id=<?php echo $_REQUEST['id']; ?>" class="btn btn-primary btn-md form-control" onclick="return confirm('Would you delete this plan?');">delete</a>
                     <?php } ?>
                   </div>
                 </div>

@@ -23,6 +23,9 @@
         $data = array($_SESSION['user']['id'], $_POST['plan_id']);
         $stmt = $dbh->prepare($sql);
         $stmt-> execute($data);
+
+        // フラッシュメッセージ
+        flash('success', 'Welcome joinus!!');
     }
     // SQL(JOINUS削除)
     elseif($_POST['btn'] == 'notjoinus'){
@@ -30,6 +33,9 @@
         $data = array($_SESSION['user']['id'], $_POST['plan_id']);
         $stmt = $dbh->prepare($sql);
         $stmt-> execute($data);
+
+        // フラッシュメッセージ
+        flash('info', 'Cancel joinus...');
     }
 
     // JOIN数をカウント
