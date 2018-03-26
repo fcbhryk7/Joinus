@@ -5,6 +5,10 @@
     require('functions.php'); //ファンクション
     // require('user_session.php'); //セッション確認
 
+    // フラッシュメッセージのクリア処理
+    $flash = isset($_SESSION['flash']) ? $_SESSION['flash'] : array();
+    unset($_SESSION['flash']);
+
     // 配列表示
     // echo_var_dump('$_POST',$_POST);
 
@@ -74,6 +78,18 @@
         <section class="module-small">
           <div class="container">
             <div class="row">
+            <?php
+                // フラッシュメッセージ表示
+                foreach(array('success', 'info', 'danger', 'warning') as $key) {
+                    if(strlen(@$flash[$key])){
+                        ?>
+                            <div class="flash alert alert-<?php echo $key ?>">
+                                <?php echo $flash[$key] ?>
+                            </div>
+                        <?php
+                    }
+                }
+            ?>
               <div class="col-xs-offset-1 col-xs-3 mb-40" style="text-align: center;">
                 <img class="img-thumbnail" width="150" src="user_profile_img/<?php echo $profile['image']; ?>">
               </div>

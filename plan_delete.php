@@ -53,6 +53,8 @@
     $stmt = $dbh->prepare($sql);
     $stmt-> execute($data);
 
+    // フラッシュメッセージ
+    // flash('success', 'You completed delete!!');
     header('Location: index.php');
     exit();
 

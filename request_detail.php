@@ -4,6 +4,10 @@
     require('dbconnect.php'); //DB接続
     require('functions.php'); //ファンクション
 
+    // フラッシュメッセージのクリア処理
+    $flash = isset($_SESSION['flash']) ? $_SESSION['flash'] : array();
+    unset($_SESSION['flash']);
+
     if(!isset($_REQUEST['id']) || $_REQUEST['id'] == '') {
         header('Location: index.php');
         exit();
@@ -157,6 +161,18 @@
         <section class="module">
           <div class="container">
             <div class="row">
+            <?php
+                // フラッシュメッセージ表示
+                foreach(array('success', 'info', 'danger', 'warning') as $key) {
+                    if(strlen(@$flash[$key])){
+                        ?>
+                            <div class="flash alert alert-<?php echo $key ?>">
+                                <?php echo $flash[$key] ?>
+                            </div>
+                        <?php
+                    }
+                }
+            ?>
               <!-- タイトル -->
               <div class="col-sm-12">
                 <h1 class="product-title font-alt"><?php echo $plans['title']; ?></h1>
