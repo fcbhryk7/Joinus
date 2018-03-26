@@ -253,6 +253,16 @@
                     <a href="request_edit.php?id=<?php echo $_REQUEST['id']; ?>" class="btn btn-primary btn-md form-control">edit</a>
                   </div>
                 </div>
+
+                <!-- 削除ボタン -->
+                <div class="row">
+                  <div class="col-sm-12 form-group" style="text-align: center;">
+                    <?php if($users['user_id'] == $_SESSION['user']['id']) { ?>
+                    <!-- <button class="btn btn-primary btn-md form-control">Edit</button> -->
+                    <a href="plan_delete.php?id=<?php echo $_REQUEST['id']; ?>" class="btn btn-primary btn-md form-control" onclick="return confirm('Would you delete this plan?');">delete</a>
+                    <?php } ?>
+                  </div>
+                </div>
                 <?php } ?>
 
               </div>
