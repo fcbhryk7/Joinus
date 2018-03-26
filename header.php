@@ -15,8 +15,8 @@
           </div>
  <!-- けんさくまど -->
 
-          <form role="search" method="GET" action="index.php">
-          <input type="search" placeholder="keyword" name="s">
+          <form role="search" method="GET" action="index.php#PlanRequest">
+          <input type="search" placeholder="keyword" name="input_word">
           <input type="submit" class="button" value="search">
           </form>
 

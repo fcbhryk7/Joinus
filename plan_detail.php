@@ -153,7 +153,7 @@
                     <!-- タグ出力 -->
                     <div class="product_meta">Tags:
                       <?php foreach ($tags as $tag) { ?>
-                      <a href="index.php?tag_name=<?php echo $tag['name'];?>#works" class="badge badge-info"><?php echo $tag['name'];?></a>
+                      <a href="index.php?input_word=<?php echo $tag['name'];?>#PlanRequest" class="badge badge-info"><?php echo $tag['name'];?></a>
                       <?php } ?>
                     </div>
                   </div>

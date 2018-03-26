@@ -3,22 +3,45 @@
   require('dbconnect.php');
   require('functions.php');
 
-  // プラン/リクエスト一覧表示
-  $sql = 'SELECT p.title, p.plan_id, i.image_name, u.name, p.request_type FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
-  $data = array();
-  $stmt = $dbh->prepare($sql);
-  $stmt->execute($data);
+  // リクエストがある場合は、検索する
+  if(!empty($_REQUEST) && $_REQUEST['input_word'] != '') {
+      // プラン/リクエスト検索一覧表示
+      $sql = 'SELECT p.title, p.plan_id, i.image_name, u.name, p.request_type FROM plans AS p, images AS i, users AS u, plans_tags AS pt, tags AS t WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND p.plan_id = pt.plan_id AND pt.tag_id = t.tag_id AND i.image_order = 1 AND t.name LIKE ? ORDER BY p.created DESC';
+      $target_str = '%' . h($_REQUEST['input_word']) . '%';
+      $data = array($target_str);
+      $stmt = $dbh->prepare($sql);
+      $stmt->execute($data);
 
-  $plans = array();
-  while (true) {
-    $plan = $stmt->fetch(PDO::FETCH_ASSOC);
-      if($plan == false){
-        break;
+      $plans = array();
+      while (true) {
+        $plan = $stmt->fetch(PDO::FETCH_ASSOC);
+          if($plan == false){
+            break;
+          }
+          $plans[] = $plan;
       }
-      $plans[] = $plan;
+
+      $plan_cnt = count($plans);
+
+  } else {
+      // プラン/リクエスト一覧表示
+      $sql = 'SELECT p.title, p.plan_id, i.image_name, u.name, p.request_type FROM plans AS p, images AS i, users AS u WHERE p.plan_id = i.plan_id AND p.user_id = u.user_id AND i.image_order = 1 ORDER BY p.created DESC';
+      $data = array();
+      $stmt = $dbh->prepare($sql);
+      $stmt->execute($data);
+
+      $plans = array();
+      while (true) {
+        $plan = $stmt->fetch(PDO::FETCH_ASSOC);
+          if($plan == false){
+            break;
+          }
+          $plans[] = $plan;
+      }
+
+      $plan_cnt = count($plans);
   }
 
-  $plan_cnt = count($plans);
 
   // echo_var_dump('$plans',$plans);
   // echo $c;  
@@ -100,7 +123,8 @@
       </section>
 
       <!-- プランとリクエスト一覧 -->
-      <section class="module">
+      <div id="PlanRequest"></div>
+      <section class="module" >
           <div class="container">
             <div class="row">
               <div class="col-sm-8 col-sm-offset-2">
