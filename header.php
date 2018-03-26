@@ -1,4 +1,16 @@
+<?php
+    $root_dir = search_assets(debug_backtrace());
 
+    // プロフィール画像表示用にusersテーブルから抽出
+    if (isset($_SESSION['user']['id'])) {
+        $sql = 'SELECT * FROM users WHERE user_id = ?';
+        $data = array($_SESSION['user']['id']);
+        $stmt = $dbh->prepare($sql);
+        $stmt-> execute($data);
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+ ?>
 <!--ヘッダー -->
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -15,10 +27,14 @@
           </div>
  <!-- けんさくまど -->
 
-          <form role="search" method="GET" action="index.php#PlanRequest">
-          <input type="search" placeholder="keyword" name="input_word">
-          <input type="submit" class="button" value="search">
-          </form>
+          <div class="collapse navbar-collapse">
+            <form class="navbar-form navbar-left" role="search" method="GET" action="index.php#PlanRequest">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Please input tag name" name="input_word">
+              </div>
+              <button type="submit" class="btn btn-default">SEARCH</button>
+            </form>
+          </div>
 
 <!-- <div class="row mb-60">
               <div class="col-sm-8 col-sm-offset-2">
@@ -34,20 +50,26 @@
 <!-- ヘッダーメニューバー -->
           <div class="collapse navbar-collapse" id="custom-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
+
+              <?php if(isset($_SESSION['user']['id'])) { ?>
+              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><img src="<?php echo $root_dir; ?>user_profile_img/<?php echo $user['image']; ?>" width="30"></a>
                 <ul class="dropdown-menu">
-                  <?php if(isset($_SESSION['user']['id'])) { ?>
-                  <li><a href="<?php $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
-                  <li><a href="<?php $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
-                  <li><a href="<?php $root_dir; ?>post.php">Create plan / request</a></li>
-                  <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
-                  <?php } else { ?>
-                  <li><a href="<?php $root_dir; ?>signin.php">Signin</a></li>
-                  <li><a href="<?php $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
-                  <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
-                  <?php } ?>
+                  <li><a href="<?php echo $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
+                  <li><a href="<?php echo $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
+                  <li><a href="<?php echo $root_dir; ?>post.php">Create plan / request</a></li>
+                  <li><a href="<?php echo $root_dir; ?>signout.php">Signout</a></li>
                 </ul>
               </li>
+              <?php } else { ?>
+              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Home</a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?php echo $root_dir; ?>signin.php">Signin</a></li>
+                  <li><a href="<?php echo $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
+                  <li><a href="<?php echo $root_dir; ?>signout.php">Signout</a></li>
+                </ul>
+              </li>
+              <?php } ?>
+
             </ul>
           </div>
         </div>

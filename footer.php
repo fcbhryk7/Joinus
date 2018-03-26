@@ -1,3 +1,6 @@
+<?php
+    $root_dir = search_assets(debug_backtrace());
+ ?>
 <!-- フッター -->
 <!-- アバウトtemecharlotte -->
         <div class="module-small bg-dark">
@@ -20,16 +23,16 @@
                   <h5 class="widget-title font-alt">Site map</h5>
                   <ul class="icon-list">
                     <?php if(isset($_SESSION['user']['id'])) { ?>
-                    <li><a href="<?php $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
-                    <li><a href="<?php $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
-                    <li><a href="<?php $root_dir; ?>post.php">Create plan / request</a></li>
-                    <li><a href="<?php $root_dir; ?>help.php">Help</a></li>
-                    <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                    <li><a href="<?php echo $root_dir; ?>profile.php?id=<?php echo $_SESSION['user']['id']; ?>">My page</a></li>
+                    <li><a href="<?php echo $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
+                    <li><a href="<?php echo $root_dir; ?>post.php">Create plan / request</a></li>
+                    <li><a href="<?php echo $root_dir; ?>help.php">Help</a></li>
+                    <li><a href="<?php echo $root_dir; ?>signout.php">Signout</a></li>
                     <?php } else { ?>
-                    <li><a href="<?php $root_dir; ?>signin.php">Signin</a></li>
-                    <li><a href="<?php $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
-                    <li><a href="<?php $root_dir; ?>help.php">Help</a></li>
-                    <li><a href="<?php $root_dir; ?>signout.php">Signout</a></li>
+                    <li><a href="<?php echo $root_dir; ?>signin.php">Signin</a></li>
+                    <li><a href="<?php echo $root_dir; ?>index.php#PlanRequest">List plan / request</a></li>
+                    <li><a href="<?php echo $root_dir; ?>help.php">Help</a></li>
+                    <li><a href="<?php echo $root_dir; ?>signout.php">Signout</a></li>
                     <?php } ?>
                   </ul>
                 </div>

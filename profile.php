@@ -75,6 +75,12 @@
       <?php include('header.php'); ?>
 
       <div class="main">
+        <?php if ($profile == false){ ?>
+        <section class="module">
+          <h1 style="margin-bottom: 50px;">This content is not available.</h1>
+          <<<a href="javascript:history.back()">BACK</a>
+        </section>
+        <?php } else { ?>
         <section class="module-small">
           <div class="container">
             <div class="row">
@@ -271,6 +277,7 @@
             </div> <!-- row -->
           </div> <!-- container -->
         </section>
+        <?php } ?>
 
         <!-- footer -->
         <?php include('footer.php'); ?>

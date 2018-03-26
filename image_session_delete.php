@@ -18,7 +18,15 @@
     // echo_var_dump('$split', $split);
     // echo_var_dump('$_SESSION["images"]', $_SESSION['images']);
 
-    header('Location: ' . $url . '&image=true');
-    exit();
+    // フラッシュメッセージ
+    flash('success', 'You completed delete image');
 
+    if ($url == 'post.php') {
+        header('Location: ' . $url);
+        exit();
+    }
+    else {
+        header('Location: ' . $url . '&image=true');
+        exit();
+    }
 ?>

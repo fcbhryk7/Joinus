@@ -64,7 +64,8 @@
                 $('#select-image').cropper('replace', URL.createObjectURL(this.files[0]));
 
                 // 無効化ボタンを解除
-                $('#image_upload').removeAttr('disabled');
+                // UPLOADボタンをdefault->dangerへ変更
+                $('#image_upload').removeAttr('disabled').removeClass('btn-default').addClass('btn-danger');
             });
         // plan / request用
         } else if ($('input#plan-image').length) {
@@ -92,7 +93,8 @@
                 $('#select-image').cropper('replace', URL.createObjectURL(this.files[0]));
 
                 // 無効化ボタンを解除
-                $('#image_upload').removeAttr('disabled');
+                // UPLOADボタンをdefault->dangerへ変更
+                $('#image_upload').removeAttr('disabled').removeClass('btn-default').addClass('btn-danger');
             });
         }
 
