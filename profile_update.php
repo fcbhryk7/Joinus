@@ -43,6 +43,8 @@
     $stmt = $dbh->prepare($sql);
     $stmt->execute($data);
 
+    // フラッシュメッセージ
+    flash('success', 'You completed update!!');
     header('Location: profile.php?id=' . $_SESSION['user']['id']);
     exit();
 
