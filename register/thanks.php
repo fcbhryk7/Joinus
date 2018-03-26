@@ -21,41 +21,44 @@
     ?>
   </head>
 
-<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
-    <main>
-      <div class="page-loader">
-        <div class="loader">Loading...</div>
-      </div>
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+      <main>
+        <div class="page-loader">
+          <div class="loader">Loading...</div>
+        </div>
 
-      <!-- ヘッダー読み込み -->
-      <?php include('../header.php'); ?>
+        <!-- ヘッダー読み込み -->
+        <?php include('../header.php'); ?>
 
-      <!-- Body -->
-      <div class="main">
-        <section class="module">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
-                <h4 class="font-alt">thank's!!!You are Joinus member.</h4>
-                <hr class="divider-w mb-10">
-                  <div class="form-group">
-                    <a href="../signin.php">
-                      <button class="btn btn-block btn-round btn-b" type="submit" name='action' value='send'>Signin</button>
-                    </a>
-                  </div>
+        <!-- Body -->
+        <div class="main">
+          <section class="module">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
+                  <h4 class="font-alt">Thanks you so much!<br>You are Joinus member.</h4>
+                  <hr class="divider-w mb-10">
+                    <div class="form-group"> 
+                      <div class="btn-group btn-group-justified" role="group">
+                        <a href="../signin.php">
+                          <p>
+                            <button class="btn btn-border-d btn-round" type="submit"><i class="fa fa-child"></i> Signin</button>
+                          </p>
+                        </a>
+                      </div>
+                    </div>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-      <!-- Body終了 -->
-      <!-- Footer -->
-      <?php include('../footer.php'); ?>
+          </section>
+        </div>
+        <!-- Body終了 -->
+        <!-- Footer -->
+        <?php include('../footer.php'); ?>
 
-      <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
-    </main>
-    
-    <?php include('../javascript_link.php'); ?> 
-
+        <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+      </main>
+      
+      <?php include('../javascript_link.php'); ?> 
   </body>
 </html>

@@ -58,46 +58,59 @@
 
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>Learn SNS</title>
-  <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="../assets/font-awesome/css/font-awesome.css">
-<?php
-  require('../favicons_link.php');
-  require('../stylesheet_link.php');
-?>
-</head>
-
-<!-- Body -->
-<div class="main">
-  <section class="module">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
-          <h4 class="font-alt">Check</h4>
-          <hr class="divider-w mb-10">
-          <div>
-            <p>メールアドレス:<?php echo htmlspecialchars($email); ?></p>
-            <p>ユーザー名:<?php echo htmlspecialchars($name); ?></p>
-            <p>パスワード:●●●●●●●●</p>
-
-            <form method="POST" actoin="thanks.php">
-              <input type="hidden" name="hoge" value="fuga">
-              <!-- action=rewrite ユーザーが入力した状態で戻る -->
-              <a href="signup.php?action=rewrite">戻る</a>
-              <input type="submit" value="登録">
-            </form>
-          </div>
+  <head>
+    <meta charset="utf-8">
+    <title>Learn SNS</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../assets/font-awesome/css/font-awesome.css">
+  <?php
+    require('../favicons_link.php');
+    require('../stylesheet_link.php');
+  ?>
+  </head>
+  <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+      <div class="page-loader">
+        <div class="loader">Loading...
         </div>
       </div>
+
+    <!-- Header -->
+    <?php include('../header.php'); ?>
+
+    <!-- Body -->
+    <div class="main">
+      <section class="module">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4 col-sm-offset-4 mb-sm-40">
+              <h4 class="font-alt">Check</h4>
+              <hr class="divider-w mb-10">
+              <div>
+                <p>メールアドレス:<?php echo htmlspecialchars($email); ?></p>
+                <p>ユーザー名:<?php echo htmlspecialchars($name); ?></p>
+                <p>パスワード:●●●●●●●●</p>
+
+                <form method="POST" actoin="thanks.php">
+                  <input type="hidden" name="hoge" value="fuga">
+                  <!-- action=rewrite ユーザーが入力した状態で戻る -->
+                  <a href="signup.php?action=rewrite">戻る</a>
+                  <input type="submit" value="登録">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
-</div>
-<!-- Body -->
+    <!-- Body -->
+    <!-- Footer -->
+    <?php include('../footer.php'); ?>  
 
-<?php require('../footer.php'); ?>
-<?php require('../javascript_link.php'); ?>
+      <div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+    </main>
 
-</body>
+    <?php include('../javascript_link.php'); ?> 
+
+  </body>
 </html>
