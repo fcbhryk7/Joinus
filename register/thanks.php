@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    require('../dbconnect.php');
     require('../functions.php');
 
     // サインアップ初回のフラグ

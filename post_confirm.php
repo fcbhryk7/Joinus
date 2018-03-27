@@ -48,7 +48,7 @@
     Document Title
     =============================================
     -->
-    <title>Titan | Multipurpose HTML5 Template</title>
+    <title>Joinus! : Post confirm</title>
 
     <!-- favicons -->
     <?php include('favicons_link.php'); ?>

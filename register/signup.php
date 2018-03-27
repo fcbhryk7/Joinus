@@ -99,6 +99,8 @@
         <div class="loader">Loading...
         </div>
       </div>
+      <!-- ヘッダー読み込み -->
+      <?php include('../header.php'); ?>
 
       <!-- Header -->
       <?php include('../header.php'); ?>

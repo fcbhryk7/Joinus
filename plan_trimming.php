@@ -14,6 +14,8 @@
     // リセットボタンがクリックされたときは、セッションを削除
     if(isset($_POST['reset']) && $_POST['reset'] == 'reset') {
         unset($_SESSION['images']);
+        // フラッシュメッセージ
+        flash('success', 'You completed reset image');
         header('Location: '. $url);
         exit();
     }
@@ -99,6 +101,13 @@
             // 保存完了後、セッション変数にファイル名を保存する
             $_SESSION['images'][] = $submit_file_name;
 
+            // フラッシュメッセージ
+            flash('success', 'You completed setting image');
+
+        } catch (Exception $e) {
+            // フラッシュメッセージ
+            flash('danger', $e->getMessage());
+        } finally {
             if ($url == 'post.php') {
                 header('Location: ' . $url);
                 exit();
@@ -107,8 +116,6 @@
                 header('Location: ' . $url . '&image=true');
                 exit();
             }
-        } catch (Exception $e) {
-
         }
     }
 
