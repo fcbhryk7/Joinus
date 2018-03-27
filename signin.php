@@ -61,8 +61,14 @@
                     header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
                     exit();
                   } else {
-                      header('Location: index.php');
-                      exit();
+                      try{
+                          header('Location: ' . $_SESSION['before_page']);
+                          exit();
+                      }
+                      catch (Exception $e) {
+                          header('Location: index.php');
+                          exit();
+                      }
                   }
                 } else {
                     $errors['password'] = "incorrect";

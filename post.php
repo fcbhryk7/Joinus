@@ -5,6 +5,10 @@
     require('functions.php'); //ファンクション
     require('user_session.php'); //セッション確認
 
+    // フラッシュメッセージのクリア処理
+    $flash = isset($_SESSION['flash']) ? $_SESSION['flash'] : array();
+    unset($_SESSION['flash']);
+
     // 配列表示
     if (!empty($_POST)) {
         // echo_var_dump('$_POST',$_POST);
@@ -182,6 +186,18 @@
         <section class="module">
           <div class="container">
             <div class="row">
+            <?php
+                // フラッシュメッセージ表示
+                foreach(array('success', 'info', 'danger', 'warning') as $key) {
+                    if(strlen(@$flash[$key])){
+                        ?>
+                            <div class="flash alert alert-<?php echo $key ?>">
+                                <?php echo $flash[$key] ?>
+                            </div>
+                        <?php
+                    }
+                }
+            ?>
               <div class="col-sm-8 col-sm-offset-2">
                 <h4 class="font-alt mb-0">Post Image</h4>
                 <hr class="divider-w mt-10 mb-20">

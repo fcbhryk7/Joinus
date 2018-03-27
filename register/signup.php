@@ -1,8 +1,8 @@
 <?php
     // セッションスタート
     session_start();
+    require('../dbconnect.php');
     require('../functions.php');
-    require('../header.php');
 
     //エラー配列定義
     $errors = array();
@@ -99,6 +99,8 @@
         <div class="loader">Loading...
         </div>
       </div>
+      <!-- ヘッダー読み込み -->
+      <?php include('../header.php'); ?>
 
         <!-- register↓ -->
         <section class="module">

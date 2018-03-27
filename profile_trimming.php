@@ -89,12 +89,20 @@
             $data = array($submit_file_name, $_SESSION['user']['id']);
             $stmt = $dbh->prepare($sql);
             $stmt->execute($data);
+
+            // フラッシュメッセージ
+            flash('success', 'You completed setting image');
+
         } catch (Exception $e) {
-            
+
+            // フラッシュメッセージ
+            flash('danger', $e->getMessage());
+
+        } finally {
+            header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
+            exit();
         }
     }
 
-    header('Location: profile_edit.php?id=' . $_SESSION['user']['id']);
-    exit();
 
 ?>

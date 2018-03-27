@@ -227,8 +227,16 @@
                     </div>
                   </form>
                 </div>
+                <?php } else { ?>
+                <div class="row">
+                  <div class="col-sm-12 form-group favorite_button" style="text-align: center;">
+                    <a href="signin.php" class="btn btn-primary btn-md form-control"><i class="fa fa-star solid"></i>favorite!</a>
+                  </div>
+                </div>
+                <?php } ?>
 
                 <!-- JOINUS機能 -->
+                <?php if ($display_flg == 1) { ?>
                 <?php if($users['user_id'] != $_SESSION['user']['id']) { ?>
                 <div class="row">
                   <form method="POST" action="joinus.php">
@@ -245,8 +253,16 @@
                   </form>
                 </div>
                 <?php } ?>
+                <?php } else { ?>
+                <div class="row">
+                  <div class="col-sm-12 form-group favorite_button" style="text-align: center;">
+                    <a href="signin.php" class="btn btn-primary btn-md form-control"><i class="fa fa-star solid"></i>joinus!</a>
+                  </div>
+                </div>
+                <?php } ?>
 
                 <!-- 更新ボタン -->
+                <?php if ($display_flg == 1) { ?>
                 <div class="row">
                   <div class="col-sm-12 form-group" style="text-align: center;">
                     <?php if($users['user_id'] == $_SESSION['user']['id']) { ?>
