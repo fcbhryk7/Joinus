@@ -34,6 +34,14 @@
         exit();
     }
 
+    // タグをセッションに追加する
+    $tags = array(); // 初期化
+    if(!empty($_POST['tags'])){
+        foreach ($_POST['tags'] as $key => $value) {
+            $tags[] = h($value);
+        }
+    }
+
     // plansテーブルを更新
     $sql = 'UPDATE plans SET title = ?, content = ?, place = ?, start_datetime = ?, end_datetime = ?,location = ?, time = ?, person = ?, cost = ?, entry_field = ? , updated = NOW() WHERE plan_id = ?';
     $data = array($title, $content, $place, $start_datetime, $end_datetime, $location, $time, $person, $cost, $entry_field, $plan_id);

@@ -37,7 +37,7 @@
 
     $images = $stmt->fetchAll();
 
-    if($_REQUEST['image'] != true){
+    if(!isset($_REQUEST['image']) || $_REQUEST['image'] != 'true'){
       // セッション初期化
       unset($_SESSION['images']);
       // 取得した画像をセンションに格納
@@ -188,11 +188,11 @@
                   <!-- Start & End -->
                   <div class="form-group">
                     <div class="row">
-                      <div class="col-xs-6">
+                      <div class="col-md-6">
                         <label class="control-label">Start time</label>
                         <input type="text" name="input_start_datetime" value="<?php echo $plan['start_datetime'] ?>" class="form-control input-lg datetimepicker">
                       </div>
-                      <div class="col-xs-6">
+                      <div class="col-md-6">
                         <label class="control-label">End time</label>
                         <input type="text" name="input_end_datetime" value="<?php echo $plan['end_datetime'] ?>" class="form-control input-lg datetimepicker">
                       </div>
