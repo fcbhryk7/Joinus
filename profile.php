@@ -81,7 +81,7 @@
           <<<a href="javascript:history.back()">BACK</a>
         </section>
         <?php } else { ?>
-        <section class="module-small">
+        <section class="module">
           <div class="container">
             <div class="row">
             <?php

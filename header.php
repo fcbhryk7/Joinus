@@ -9,6 +9,14 @@
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
   }
  ?>
+<style type="text/css">
+    /* 検索窓のテキスト用 */
+    @media (min-width: 768px) {
+      .navbar-form .form-control {
+          width: 300px;
+      }
+    }
+</style>
 
 <!--ヘッダー -->
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
