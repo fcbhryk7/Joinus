@@ -116,7 +116,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Titan | Multipurpose HTML5 Template</title>
+    <title>Joinus! : Plan detail</title>
 
     <!-- favicons -->
     <?php include('favicons_link.php'); ?>

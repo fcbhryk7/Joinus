@@ -102,6 +102,9 @@
       <!-- ヘッダー読み込み -->
       <?php include('../header.php'); ?>
 
+      <!-- Header -->
+      <?php include('../header.php'); ?>
+
         <!-- register↓ -->
         <section class="module">
           <div class="container">

@@ -132,7 +132,7 @@
     Document Title
     =============================================
     -->
-    <title>Titan | Multipurpose HTML5 Template</title>
+    <title>Joinus! : Request detail</title>
 
     <!-- favicons -->
     <?php include('favicons_link.php'); ?>

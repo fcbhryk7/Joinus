@@ -72,7 +72,7 @@
     Document Title
     =============================================
     -->
-    <title>Titan | Multipurpose HTML5 Template</title>
+    <title>Joinus! : Request edit</title>
 
     <!-- favicons -->
     <?php include('favicons_link.php'); ?>

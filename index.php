@@ -66,7 +66,6 @@
 
   <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <main>
-
       <div class="page-loader">
         <div class="loader">Loading...</div>
       </div>
@@ -135,16 +134,11 @@
                     <li class="active"><a href="#support" data-toggle="tab"><span class="icon-tools-2"></span>Plan</a></li>
                     <li><a href="#sales" data-toggle="tab"><span class="icon-tools-2"></span>Request</a></li>
                   </ul>
-                
-                 
-                
+                   
                   <div class="tab-content">
                     <div class="tab-pane active" id="support">
                       <div class="row">
-                        <?php
-                          for($i=0;$i<$plan_cnt;$i++){
-                            if($plans[$i]['request_type'] == 0) {
-                        ?>
+                        <?php for($i=0;$i<$plan_cnt;$i++) { if($plans[$i]['request_type'] == 0) { ?>
                           <div class="col-lg-4 col-md-6 col-sm-12">
                             <a href="plan_detail.php?id=<?php echo $plans[$i]['plan_id']; ?>">
                               <img src="images/<?php echo $plans[$i]['image_name']; ?>">
@@ -158,10 +152,7 @@
                               </div>
                             </a>
                           </div>
-                        <?php 
-                          }
-                            } 
-                        ?>
+                        <?php } } ?>
                       </div>
                     </div>
 
@@ -309,7 +300,7 @@
                   </div>
                   <div class="team-descr font-alt">
                     <div class="team-name">Hiroyuki Hasuike</div>
-                    <div class="team-role">Jeepney driver</div>
+                    <div class="team-role">English Teacher</div>
                   </div>
                 </div>
               </div>
